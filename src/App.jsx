@@ -4,7 +4,7 @@ import SignIn from './pages/SignIn'
 function App() {
 	return (
 		<>
-			<div className='h-screen'>
+			<div className='h-screen flex items-center justify-center w-screen'>
 				<SignIn />
 			</div>
 		</>
