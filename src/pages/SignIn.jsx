@@ -3,22 +3,34 @@ import SocialAuth from "../components/form/SocialAuth";
 
 function SignIn() {
   return (
-		<div className='w-screen p-10'>
+		<main className='relative w-screen h-screen justify-center p-6 flex flex-col gap-12 bg-[url("/src/assets/bg-signin.png")] bg-cover'>
 			<div>
-				<h1 className='text-2xl '>Registrarme</h1>
-				<p className='text-gray-800'>Crea tu cuenta para continuar</p>
+				<h1 className='text-4xl uppercase font-extrabold'>Regístrate</h1>
+				<p className='text-gray-800 text-balance'>
+					Crea tu cuenta para continuar y obtener una experiencia unica con
+					nuestro servicio
+				</p>
 			</div>
-			<form action='' className='flex flex-col'>
-				<InputForm type='text' placeholder='Nombre' />
-				<InputForm type='text' placeholder='Apellido' />
-				<InputForm type='email' placeholder='Correo electrónico' />
-				<InputForm type='password' placeholder='Contraseña' visibility={true} />
-				<button className='bg-blue-800 text-white w-full py-2 rounded mt-4'>
+			<form action='' className='flex flex-col gap-6 z-10'>
+				<InputForm type='text' placeholder='Nombre' required={true} />
+				<InputForm type='text' placeholder='Apellido' required={true} />
+				<InputForm
+					type='email'
+					placeholder='Correo electrónico'
+					required={true}
+				/>
+				<InputForm
+					type='password'
+					placeholder='Contraseña'
+					visibility={true}
+					required={true}
+				/>
+				<button className='bg-blue-800 text-white w-full py-3 rounded-xl mt-6'>
 					Registrarme
 				</button>
 				<SocialAuth name='Google' icon='Google' />
 			</form>
-		</div>
+		</main>
 	)
 }
 
