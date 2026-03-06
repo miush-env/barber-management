@@ -4,7 +4,7 @@ import SocialAuth from "../components/form/SocialAuth";
 function SignIn() {
   return (
 		<main className='relative w-screen h-screen justify-center p-6 flex flex-col gap-12 bg-[url("/src/assets/bg-signin.png")] bg-cover'>
-			<div>
+			<div className='flex flex-col gap-2'>
 				<h1 className='text-4xl uppercase font-extrabold'>Regístrate</h1>
 				<p className='text-gray-800 text-balance'>
 					Crea tu cuenta para continuar y obtener una experiencia unica con
@@ -24,7 +24,7 @@ function SignIn() {
 					placeholder='Contraseña'
 					visibility={true}
 					required={true}
-				/>
+				/>w
 				<button className='bg-blue-800 text-white w-full py-3 rounded-xl mt-6'>
 					Registrarme
 				</button>
