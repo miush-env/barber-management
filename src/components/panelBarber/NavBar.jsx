@@ -1,11 +1,11 @@
 function NavBar({name, photo, notifications}) {
   return (
-    <nav className="flex w-full items-center justify-between p-6 bg-blue-800 text-white">
+    <nav className="flex w-full items-center justify-between px-6 h-24 bg-blue-800 text-white">
       <div className="flex gap-2 items-center">
         <img src={photo} alt={name} className="rounded-full w-14" />
         <div className="">
           <span className="text-sm text-gray-300 font-semibold">07 vie Mar 2026</span>
-          <h1 className="text-xl font-bold">{name}</h1>
+          <h1 className="text-3xl font-bold">{name}</h1>
         </div>
       </div>
       <div className="relative">
