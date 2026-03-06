@@ -1,11 +1,13 @@
 import './styles/index.css'
 import SignIn from './pages/SignIn'
+import Login from './pages/Login'
 
 function App() {
 	return (
 		<>
-			<div className=''>
-				<SignIn />
+			<div>
+				{/* <SignIn /> */}
+				<Login />
 			</div>
 		</>
 	)
