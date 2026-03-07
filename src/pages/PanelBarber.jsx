@@ -1,5 +1,6 @@
 import NavBar from "../components/panelBarber/NavBar"
 import NextAppointment from "../components/panelBarber/NextAppointment"
+import UpcomingAppointment from "../components/panelBarber/UpcomingAppointment"
 
 function PanelBarber() {
 return (
@@ -9,6 +10,9 @@ return (
       </header>
       <article>
         <NextAppointment />
+      </article>
+      <article>
+        <UpcomingAppointment />
       </article>
     </main>
 )
