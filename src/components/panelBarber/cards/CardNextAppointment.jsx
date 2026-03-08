@@ -21,10 +21,8 @@ function CardNextAppointment({
   }
 
 	return (
-		<article className='bg-white border border-gray-200 shadow-xl shadow-gray-300 rounded-xl p-4 shadow-sm'>
-			{/* Header */}
+		<article className='bg-white border border-slate-300 shadow-lg shadow-slate-200 rounded-xl p-4 '>
 			<section className='flex justify-between items-start'>
-				{/* Cliente */}
 				<div className='flex gap-3'>
 					<img
 						src='https://i.pinimg.com/736x/01/73/df/0173df79cfd82180c0ccc0ae9eb36836.jpg'
@@ -35,9 +33,6 @@ function CardNextAppointment({
 					<div className='flex flex-col'>
 						<h3 className='text-lg text-gray-900 font-bold'>{nameClient}</h3>
 
-						{/* Estado */}
-						{/* <span className={`flex items-center gap-1 text-base font-medium text-green-700 ${statusStyle}`}>
-							<span className={`w-2 h-2 bg-green-500 rounded-full ${datacolor}`}></span> */}
 						<span
 							className={`flex items-center gap-1 text-base font-medium ${statusStyle}`}
 						>
@@ -47,24 +42,24 @@ function CardNextAppointment({
 					</div>
 				</div>
 
-				{/* Hora */}
 				<div className='flex flex-col items-end leading-none'>
 					<span className='text-3xl font-bold text-gray-900'>{time}</span>
 					<span className='text-xs uppercase text-gray-500'>am</span>
 				</div>
 			</section>
 
-			{/* Servicio */}
-			<section className='mt-3 flex flex-col text-sm text-gray-600'>
-				<span className='font-semibold text-gray-800'>{serviceName}</span>
+			<section className='mt-3  flex justify-between items-center'>
+				<div className='flex flex-col text-sm text-gray-600'>
+					<span className='font-semibold text-gray-800'>{serviceName}</span>
 
-				<span className='font-semibold'>
-					{timeService} • ${price}
-				</span>
+					<span className='font-semibold'>
+						{timeService} • ${price}
+					</span>
+				</div>
+				<button className='flex items-center active:bg-blue-500 justify-center bg-blue-600/90 w-12 h-9 rounded-lg'>
+					<img src="/src/assets/edit.svg" alt="icon edit" width={22.5}/>
+				</button>
 			</section>
-			<button className="text-lg text-center shadow-lg transition-shadow duration-300 active:shadow-red-600 bg-red-500 w-full h-9 rounded-lg mt-2">
-				<span className="text-white">Eliminar</span>
-			</button>
 		</article>
 	)
 }

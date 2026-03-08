@@ -2,8 +2,8 @@ import CardUpcomingAppointment from "./cards/CardUpcomingAppointment"
 
 function UpcomingAppointment() {
   return (
-		<section className='p-6 flex flex-col gap-2'>
-			<h2 className='text-2xl text-gray-700 font-bold'>Próximas Citas</h2>
+		<article className='px-6 flex flex-col gap-2'>
+			<h2 className='text-xl text-black font-bold'>Próximas Citas</h2>
 			<div className="flex flex-col gap-4">
 				<CardUpcomingAppointment
 					clientName='Juan Ramirez'
@@ -24,7 +24,7 @@ function UpcomingAppointment() {
 					status={false}
 				/>
 			</div>
-		</section>
+		</article>
 	)
 }
 
