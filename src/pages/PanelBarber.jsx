@@ -7,7 +7,7 @@ import NavBar from '../components/NavBar'
 
 function PanelBarber() {
 	return (
-		<main className='bg-gray-100 min-h-screen flex flex-col'>
+		<main className='bg-gray-100 min-h-screen flex flex-col relative'>
 			<Header
 				name='John Doe'
 				photo='https://i.pinimg.com/736x/4a/d1/13/4ad113eaace2e06b92f78dc15c1cf8de.jpg'
@@ -27,6 +27,13 @@ function PanelBarber() {
 			<footer>
 				<NavBar />
 			</footer>
+
+			<a
+				href='#'
+				className='absolute right-3 bottom-15 bg-linear-to-t from-green-500 to-green-600 shadow-lg shadow-green-300 rounded-full p-1'
+			>
+				<img src='/src/assets/plus.svg' alt='crear cita' className='w-9' />
+			</a>
 		</main>
 	)
 }
