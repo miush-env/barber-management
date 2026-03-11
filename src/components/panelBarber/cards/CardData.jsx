@@ -8,7 +8,7 @@ function CardData({title, value, style}) {
 			<span className='font-medium text-gray-500 text-sm'>{title}</span>
 			<h2 className='text-xl font-bold tracking-wider flex items-center gap-3'>
 				<picture
-					className={`bg-green-500 bg-linear-to-t ${style === 'clients' ? 'from-blue-400 to-blue-500' : 'from-green-400 to-green-500'} rounded-full p-2`}
+					className={`bg-linear-to-t ${style === 'clients' ? 'from-blue-400 to-blue-500' : 'from-green-400 to-green-500'} rounded-full p-2`}
 				>
 					<img
 						src={`/src/assets/${style === 'earnings' ? 'dollar.svg' : 'users-group.svg'}`}
