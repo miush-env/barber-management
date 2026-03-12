@@ -1,4 +1,5 @@
-import React from 'react'
+import EditAppointment from '@components/modal/EditAppointment.jsx'
+import { useState } from 'react';
 
 function CardNextAppointment({
 	nameClient,
@@ -8,9 +9,10 @@ function CardNextAppointment({
 	timeService,
 	price,
 }) {
-
-	 let statusStyle = "";
+	let statusStyle = "";
   let dotColor = "";
+
+	const [isOpen, setIsOpen] = useState(false)
 
   if (status === "confirmada") {
     statusStyle = "text-green-700";
@@ -47,7 +49,6 @@ function CardNextAppointment({
 					<span className='text-xs uppercase text-gray-500'>am</span>
 				</div>
 			</section>
-
 			<section className='mt-3  flex justify-between items-center'>
 				<div className='flex flex-col text-sm text-gray-600'>
 					<span className='font-semibold text-gray-800'>{serviceName}</span>
@@ -56,10 +57,19 @@ function CardNextAppointment({
 						{timeService} • ${price}
 					</span>
 				</div>
-				<button className='flex items-center active:bg-blue-500 justify-center bg-blue-600/90 w-12 h-9 rounded-lg'>
-					<img src="/src/assets/edit.svg" alt="icon edit" width={22.5}/>
+				<button
+					onClick={() => setIsOpen(!isOpen)}
+					className='flex items-center active:bg-blue-500 justify-center bg-blue-600/90 w-12 h-9 rounded-lg'
+				>
+					<img src='/src/assets/edit.svg' alt='icon edit' width={22.5} />
 				</button>
 			</section>
+			<EditAppointment
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				services={[1, 3, 4, 5, 6, 2, 6, 8, 2, 34, 90]}
+				time='12:23'
+			/>
 		</article>
 	)
 }
