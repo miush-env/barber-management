@@ -12,6 +12,7 @@ function InputForm({type, visibility, placeholder, required}) {
 		>
 			<input
 				className=' h-full w-full invalid:border-red-500 pl-2 pr-11 outline-0  focus:text-slate-900 placeholder:text-slate-500 valid:border valid:border-green-500 border-2 rounded-xl'
+				name={inputType}
 				type={inputType}
 				placeholder={placeholder}
 				required={required}
