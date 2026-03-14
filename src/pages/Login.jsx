@@ -9,7 +9,7 @@ function Login() {
 		e.preventDefault()
 
 		// aquí luego pondrás validaciones
-		navigate('/home')
+		navigate('/inicio')
 	}
 	
 	return (
