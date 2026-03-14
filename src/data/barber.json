@@ -1,0 +1,46 @@
+{
+	"barberId": "barber_01",
+
+	"workSchedule": {
+		"start": "09:00",
+		"end": "17:00"
+	},
+
+	"daysOff": ["2026-03-15"],
+
+	"services": [
+		{
+			"id": "cut",
+			"name": "Corte de pelo",
+			"price": 5000,
+			"duration": 30
+		},
+		{
+			"id": "beard",
+			"name": "Arreglo de barba",
+			"price": 3000,
+			"duration": 20
+		},
+		{
+			"id": "premium",
+			"name": "Corte + Barba",
+			"price": 7500,
+			"duration": 50
+		}
+	],
+
+	"appointments": [
+		{
+			"date": "2026-03-12",
+			"start": "10:00",
+			"end": "10:30",
+			"serviceId": "cut"
+		},
+		{
+			"date": "2026-03-12",
+			"start": "11:00",
+			"end": "11:50",
+			"serviceId": "premium"
+		}
+	]
+}

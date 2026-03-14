@@ -4,7 +4,7 @@ function CardUpcomingAppointment({time, clientName = 'Sin nombre', service = "co
 
   return (
 		<section
-			className={`relative w-full h-18 px-4 bg-white active:bg-gray-100 rounded-xl border-l-3 ${status ? 'border-green-500' : 'border-red-500'} flex items-center gap-4`}
+			className={`relative w-full h-18 px-4 bg-white active:bg-gray-100 rounded-xl border-l-4 ${status ? 'border-green-500' : 'border-red-500'} flex items-center gap-4`}
 		>
 			<div className='flex flex-col text-center items-center justify-center'>
 				<span className='font-bold uppercase text-base text-gray-600'>
