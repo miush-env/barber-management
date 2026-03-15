@@ -8,6 +8,7 @@ import PanelBarber from './pages/admin/PanelBarber.jsx'
 import CreateAppointment from './pages/ViewAppointment.jsx'
 import ViewAppointment from './pages/ViewAppointment.jsx'
 import TabletClient from './pages/admin/TabletClient.jsx'
+import Profile from './pages/Profile.jsx'
 
 function App() {
 	return (
@@ -20,7 +21,7 @@ function App() {
 				<Route path='/inicio' element={<PanelBarber />} />
 				<Route path='/ver-citas' element={<ViewAppointment />} />
 				<Route path='/ver-clientes' element={<TabletClient/>} />
-				<Route path='/perfil' element={<h1>Aquí veras tu perfil</h1>} />
+				<Route path='/perfil' element={<Profile />} />
 			</Routes>
 		</BrowserRouter>
 	)
