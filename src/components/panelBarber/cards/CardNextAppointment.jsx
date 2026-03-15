@@ -67,7 +67,7 @@ function CardNextAppointment({
 			<EditAppointment
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
-				services={[1, 3, 4, 5, 6, 2, 6, 8, 2, 34, 90]}
+				services={[1,2,3]}
 				time='12:23'
 			/>
 		</article>
