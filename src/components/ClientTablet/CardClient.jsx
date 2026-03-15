@@ -7,7 +7,7 @@ function CardClient({
 	birthday,
 }) {
 	return (
-		<article className='flex bg-gray-200/60 rounded-xl h-36 p-4 gap-4'>
+		<article className='flex bg-gray-200/60 rounded-xl h-36 p-3 gap-4'>
 			<section>
 				<picture className='bg-gray-300'>
 					<img src={photo} alt={name} className='rounded-full w-14' />
