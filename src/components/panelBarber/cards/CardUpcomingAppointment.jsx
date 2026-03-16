@@ -16,7 +16,7 @@ function CardUpcomingAppointment({time, clientName = 'Sin nombre', service = "co
 				<span className='text-gray-500 text-sm font-semibold'>{service}</span>
 				<button>
 					<img
-						src='/src/assets/arrow-up-right.svg'
+						src='../../assets/arrow-up-right.svg'
 						alt='icon'
 						className='absolute right-4 top-1/2 transform -translate-y-1/2 rounded-full'
 					/>

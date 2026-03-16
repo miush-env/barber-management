@@ -11,11 +11,15 @@ function CardData({title, value, style}) {
 					className={`bg-linear-to-t ${style === 'clients' ? 'from-blue-400 to-blue-500' : 'from-green-400 to-green-500'} rounded-full p-2`}
 				>
 					<img
-						src={`/src/assets/${style === 'earnings' ? 'dollar.svg' : 'users-group.svg'}`}
+						src={`../../assets/${style === 'earnings' ? 'dollar.svg' : 'users-group.svg'}`}
 						alt='icon'
 					/>
 				</picture>
-				<span className={`${style === 'earnings' ? 'text-green-600' :  'text-blue-600'}`}>{value}</span>
+				<span
+					className={`${style === 'earnings' ? 'text-green-600' : 'text-blue-600'}`}
+				>
+					{value}
+				</span>
 			</h2>
 		</section>
 	)

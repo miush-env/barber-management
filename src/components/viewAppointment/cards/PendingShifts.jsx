@@ -47,7 +47,7 @@ function PendingShifts({ service, time, status, price }) {
 						onClick={() => setIsOpen(!isOpen)}
 						className='flex items-center active:bg-blue-500 justify-center bg-blue-600/90 w-10 h-8 rounded-lg'
 					>
-						<img src='/src/assets/edit.svg' alt='icon edit' width={20} />
+						<img src='../../assets/edit.svg' alt='icon edit' width={20} />
 					</button>
 					<EditAppointment
 						isOpen={isOpen}

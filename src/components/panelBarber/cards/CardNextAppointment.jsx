@@ -61,7 +61,7 @@ function CardNextAppointment({
 					onClick={() => setIsOpen(!isOpen)}
 					className='flex items-center active:bg-blue-500 justify-center bg-blue-600/90 w-12 h-9 rounded-lg'
 				>
-					<img src='/src/assets/edit.svg' alt='icon edit' width={22.5} />
+					<img src='../..//assets/edit.svg' alt='icon edit' width={22.5} />
 				</button>
 			</section>
 			<EditAppointment

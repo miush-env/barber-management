@@ -31,7 +31,7 @@ function PanelBarber() {
 				className='fixed right-3 bottom-15 bg-linear-to-t from-green-500 to-green-600 shadow-lg active:to-green-500/90 
 				active:from-green-600/90 shadow-green-300 rounded-full p-1 transition-colors duration-300 '
 			>
-				<img src='/src/assets/plus.svg' alt='crear cita' className='w-9' />
+				<img src='../../assets/plus.svg' alt='crear cita' className='w-9' />
 			</NavLink>
 		</main>
 	)
