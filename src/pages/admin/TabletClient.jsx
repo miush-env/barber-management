@@ -82,7 +82,7 @@ function TabletClient() {
 					</svg>
 				</span>
 
-				<h1 className='flex-1 text-center text-xl font-bold'>Tus Citas</h1>
+				<h1 className='flex-1 text-center text-xl font-bold'>Clientes</h1>
 			</header>
 
 			<section className='p-4'>
