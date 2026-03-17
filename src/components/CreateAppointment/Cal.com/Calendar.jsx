@@ -5,19 +5,44 @@
 
 /* If you are using npm */
 // npm install @calcom/embed-react
-  
-import { getCalApi } from "@calcom/embed-react";
-import { useEffect } from "react";
+
+import { getCalApi } from '@calcom/embed-react'
 export default function Calendar() {
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({"namespace":"corte-clasico"});
-      cal("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
-    })();
-  }, [])
-  return <button className="bg-gray-300" data-cal-namespace="corte-clasico"
-    data-cal-link="multipurpose-ki7ln0/corte-clasico"
-    
-    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-  >Abrir modal</button>;
-};
+	const openCorte = async () => {
+		const cal = await getCalApi({ namespace: 'corte-clasico' })
+		cal('modal', {
+			calLink: 'multipurpose-ki7ln0/corte-clasico',
+			config: {
+				layout: 'month_view',
+			},
+		})
+	}
+
+	const openCorteBarba = async () => {
+		const cal = await getCalApi({ namespace: 'corte-clasico-barba' })
+		cal('modal', {
+			calLink: 'multipurpose-ki7ln0/corte-clasico-barba',
+			config: {
+				layout: 'month_view',
+			},
+		})
+	}
+
+	return (
+		<div className='flex flex-col items-center p-2 gap-2'>
+			<button
+				onClick={openCorte}
+				className='bg-blue-500 text-white p-2 rounded-md font-semibold text-md'
+			>
+				Corte clásico
+			</button>
+
+			<button
+				onClick={openCorteBarba}
+				className='bg-blue-500 text-white p-2 rounded-md font-semibold text-md'
+			>
+				Corte + barba
+			</button>
+		</div>
+	)
+}
