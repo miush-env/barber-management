@@ -11,7 +11,7 @@ function CardData({title, value, style}) {
 					className={`bg-linear-to-t ${style === 'clients' ? 'from-blue-400 to-blue-500' : 'from-green-400 to-green-500'} rounded-full p-2`}
 				>
 					<img
-						src={`../../assets/${style === 'earnings' ? 'dollar.svg' : 'users-group.svg'}`}
+						src={`./src/assets/${style === 'earnings' ? 'dollar.svg' : 'users-group.svg'}`}
 						alt='icon'
 					/>
 				</picture>

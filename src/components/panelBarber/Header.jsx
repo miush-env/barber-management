@@ -25,7 +25,7 @@ function Header ({name, photo, notifications}) {
 				>
 					{notifications}
 				</span>
-				<img src='../../assets/bell.svg' alt='icon bell' className='w-7' />
+				<img src='./src/assets/bell.svg' alt='icon bell' className='w-7' />
 			</div>
 		</header>
 	)

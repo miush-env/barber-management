@@ -14,7 +14,7 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<img src='../../assets/home.svg' className='w-6 mb-1' />
+						<img src='./src/assets/home.svg' className='w-6 mb-1' />
 						<span>Inicio</span>
 
 						{isActive && (
@@ -34,7 +34,7 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<img src='../../assets/calendar-week.svg' className='w-6 mb-1' />
+						<img src='./src/assets/calendar-week.svg' className='w-6 mb-1' />
 						<span>Agenda</span>
 
 						{isActive && (
@@ -54,7 +54,7 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<img src='../../assets/users-group-nav.svg' className='w-6 mb-1' />
+						<img src='./src/assets/users-group-nav.svg' className='w-6 mb-1' />
 						<span>Clientes</span>
 
 						{isActive && (
@@ -74,7 +74,7 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<img src='../../assets/user.svg' className='w-6 mb-1' />
+						<img src='./src/assets/user.svg' className='w-6 mb-1' />
 						<span>Perfil</span>
 
 						{isActive && (
