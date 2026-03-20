@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import EditAppointment from '../../modal/EditAppointment'
 
-function PendingShifts({ service, time, status, price }) {
+function PendingShifts({ service, time, status, price, onCancel, cita}) {
 	const [isOpen, setIsOpen] = useState(false)
 
 	return (
@@ -52,7 +52,8 @@ function PendingShifts({ service, time, status, price }) {
 					<EditAppointment
 						isOpen={isOpen}
 						setIsOpen={setIsOpen}
-						services={[1, 3, 4, 5, 6, 2, 6, 8, 2, 34, 90]}
+						onCancel={onCancel}
+						cita={cita}
 						time='12:23'
 					/>
 				</div>
