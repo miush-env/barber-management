@@ -28,6 +28,26 @@ export default function Calendar() {
 		})
 	}
 
+	const openGlobal = async () => {
+		const cal = await getCalApi({ namespace: 'global' })
+		cal('modal', {
+			calLink: 'multipurpose-ki7ln0/global',
+			config: {
+				layout: 'month_view',
+			},
+		})
+	}
+
+	const openSoloPuntas = async () => {
+		const cal = await getCalApi({ namespace: 'tinte-solo-puntas' })
+		cal('modal', {
+			calLink: 'multipurpose-ki7ln0/tinte-solo-puntas',
+			config: {
+				layout: 'month_view',
+			},
+		})
+	}
+
 	return (
 		<div className='flex flex-col items-center p-2 gap-2'>
 			<button
@@ -43,6 +63,22 @@ export default function Calendar() {
 			>
 				Corte + barba
 			</button>
+
+			<button
+				onClick={openSoloPuntas}
+				className='bg-blue-500 text-white p-2 rounded-md font-semibold text-md'
+			>
+				Tinte {`(solo puntas)`}
+			</button>
+
+			<button
+				onClick={openGlobal}
+				className='bg-blue-500 text-white p-2 rounded-md font-semibold text-md'
+			>
+				Tinte Global
+			</button>
+
+			
 		</div>
 	)
 }
