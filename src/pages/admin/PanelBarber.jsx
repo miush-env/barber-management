@@ -4,8 +4,43 @@ import UpcomingAppointment from '../../components/panelBarber/UpcomingAppointmen
 import CardData from '../../components/panelBarber/cards/CardData'
 import NavBar from '../../components/NavBar'
 import { NavLink } from 'react-router'
+import { useEffect, useState } from 'react'
 
 function PanelBarber() {
+	const [appointments, setAppointments] = useState([])
+
+	const getTodayBookings = async () => {
+		const today = new Date()
+		const startOfDay = new Date(
+			today.getFullYear(),
+			today.getMonth(),
+			today.getDate(),
+		).toISOString()
+		const endOfDay = new Date(
+			today.getFullYear(),
+			today.getMonth(),
+			today.getDate() + 1,
+		).toISOString()
+
+		const url = `https://api.cal.com/v2/bookings?afterStart=${startOfDay}&beforeEnd=${endOfDay}&status=upcoming`
+
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				Authorization: 'Bearer cal_live_c144e9d89987946024fa42e93413a28b',
+				'cal-api-version': '2026-02-25',
+			},
+		})
+
+		const data = await response.json()
+		console.log(data.data)
+		return data.data
+	}
+
+	useEffect(() => {
+		getTodayBookings()
+	}, [])
+
 	return (
 		<main className='bg-gray-100 flex flex-col relative min-h-screen pb-20'>
 			<Header
@@ -15,7 +50,14 @@ function PanelBarber() {
 			/>
 
 			<div className=''>
-				<NextAppointment />
+				<NextAppointment
+					nameClient='Ariel Dundo'
+					status='confirmada'
+					time='10:30'
+					serviceName='Corte clasico'
+					timeService='30 min'
+					price='7000'
+				/>
 				<UpcomingAppointment />
 
 				<article className='flex justify-between p-6 gap-6'>
@@ -31,7 +73,6 @@ function PanelBarber() {
 				className='fixed right-3 bottom-15 bg-linear-to-t from-green-500 to-green-600 shadow-lg active:to-green-500/90 
 				active:from-green-600/90 shadow-green-300 rounded-full p-1 transition-colors duration-300 '
 			>
-				
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					width='34'
