@@ -3,7 +3,7 @@ import { NavLink } from "react-router"
 function NavBar() {
 
 	return (
-		<nav className='fixed bottom-0 *:font-bold left-0 w-full h-16 bg-white border-t border-gray-200 flex justify-around items-center'>
+		<nav className='fixed bottom-0 *:font-bold left-0 w-full h-16 bg-sky-[#0DBDF4] flex justify-around items-center'>
 			<NavLink
 				to='/inicio'
 				className={({ isActive }) =>
@@ -83,7 +83,6 @@ function NavBar() {
 					</>
 				)}
 			</NavLink>
-		
 		</nav>
 	)
 }
