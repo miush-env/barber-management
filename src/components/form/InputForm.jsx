@@ -8,10 +8,10 @@ function InputForm({type, visibility, placeholder, required}) {
   return (
 		<label
 			htmlFor=''
-			className='relative flex w-full rounded-xl text-slate-500 focus:ring-primary/20 border-slate-200  bg-slate-200 h-14 transition-all'
+			className='relative flex w-full rounded-xl text-slate-500 group focus:ring-primary/20 border-slate-200  bg-white h-14 transition-all'
 		>
 			<input
-				className=' h-full w-full invalid:border-red-500 pl-2 pr-11 outline-0  focus:text-slate-900 placeholder:text-slate-500 valid:border valid:border-green-500 border-2 rounded-xl'
+				className=' h-full w-full invalid:border-red-500 pl-2 pr-11 outline-0  focus:text-slate-900 placeholder:text-slate-500 	 valid:border-green-500 border-2 rounded-xl'
 				name={inputType}
 				type={inputType}
 				placeholder={placeholder}
@@ -31,6 +31,7 @@ function InputForm({type, visibility, placeholder, required}) {
 								: '/src/assets/eye-closed.svg'
 						}
 						alt=''
+						className="opacity-55 group-focus-within:opacity-100"
 					/>
 				</button>
 			)}
