@@ -1,6 +1,5 @@
 function Header ({name, photo, notifications}) {
   return (
-		// border-b-2 border-b-gray-300
 		<header className='flex w-full items-center justify-between px-6 h-24 '>
 			<div className='flex gap-2 items-center'>
 				<img
