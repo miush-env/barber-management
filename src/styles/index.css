@@ -148,3 +148,21 @@
     opacity: 1;
   }
 }
+
+@keyframes clipReveal {
+  0% {
+    clip-path: circle(0% at 50% 100%);
+  }
+  100% {
+    clip-path: circle(60% at 50% 100%);
+  }
+}
+
+@keyframes clipHide {
+  0% {
+    clip-path: circle(60% at 50% 100%);
+  }
+  100% {
+    clip-path: circle(0% at 50% 100%);
+  }
+}
