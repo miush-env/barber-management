@@ -149,7 +149,10 @@ function ViewAppointment() {
 					))}
 				</section>
 			</article>
-			<NavBar />
+
+			<section className='fixed bottom-0 w-full h-14'>
+				<NavBar />
+			</section>
 		</main>
 	)
 }
