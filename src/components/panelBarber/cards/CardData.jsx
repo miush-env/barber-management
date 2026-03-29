@@ -1,26 +1,28 @@
-function CardData({title, value, style}) {
-
-  return (
+function CardData({ title, value, style }) {
+	return (
 		<section
-			// ${style === 'clients' ? 'from-gray-200 to-gray-300' : 'from-amber-200 to-amber-300'}
-			className='flex-1 bg-white p-2 rounded-lg flex flex-col gap-1'
+			className={`flex-1 p-2 rounded-lg flex flex-col gap-1 border-2
+				${
+					style === 'earnings'
+						? 'bg-green-300 border-green-500'
+						: 'bg-blue-300 border-blue-500'
+				}`}
 		>
-			<span className='font-medium text-gray-500 text-sm'>{title}</span>
-			<h2 className='text-xl font-bold tracking-wider flex items-center gap-3'>
+			<span className='font-semibold text-gray-800 text-sm'>{title}</span>
+
+			<div className='flex items-center gap-3'>
 				<picture
-					className={`bg-linear-to-t ${style === 'clients' ? 'from-blue-400 to-blue-500' : 'from-green-400 to-green-500'} rounded-full p-2`}
+					className={`bg-linear-to-t ${style === 'earnings' ? 'from-green-400 to-green-500' : 'from-blue-400 to-blue-500'} rounded-full p-2`}
 				>
 					<img
-						src={`./src/assets/${style === 'earnings' ? 'dollar.svg' : 'users-group.svg'}`}
+						src={`./src/assets/${style === 'earnings' ? 'dollar' : 'users-group'}.svg`}
 						alt='icon'
 					/>
 				</picture>
-				<span
-					className={`${style === 'earnings' ? 'text-green-600' : 'text-blue-600'}`}
-				>
+				<h2 className={`text-2xl font-bold tracking-wider ${style === 'earnings' ? 'text-black' : 'text-black'}`}>
 					{value}
-				</span>
-			</h2>
+				</h2>
+			</div>
 		</section>
 	)
 }
