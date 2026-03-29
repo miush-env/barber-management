@@ -3,63 +3,25 @@ import CardClientsStatus from '@components/viewAppointment/cards/CardClientsStat
 import PendingShifts from '../components/viewAppointment/cards/PendingShifts.jsx'
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
-
+import { getNameEvent, bookingEvent } from '../utils/Bookings.js'
 function ViewAppointment() {
 	const navigate = useNavigate()
 
 	const [appointments, setAppointments] = useState([])
-	const [arrayEventsCal, setArrayEventsCal] = useState([])
-
-	const nameEventsCal = (arrayEvents) => {
-		arrayEvents.map((e) => {
-			console.log(e.description)
-		})
-	}
 
 	useEffect(() => {
-		const getNameEvent = async () => {
+		const GetApiCal = async ()=> {
 			try {
-				const response = await fetch('https://api.cal.com/v2/event-types', {
-					method: 'GET',
-					headers: {
-						Authorization: 'Bearer cal_live_c144e9d89987946024fa42e93413a28b',
-						'cal-api-version': '2024-08-14', // ⚠️ misma versión
-						'Content-Type': 'application/json',
-					},
-				})
+				const [nameEvent, booking]= await Promise.all([getNameEvent(), bookingEvent()]) 
 
-				const data = await response.json()
-				const events = data.data.eventTypeGroups[0].eventTypes
-				setArrayEventsCal(events)
+				setAppointments(booking)
+				console.log('Eventos :',nameEvent)
+				console.log('Citas :',booking)
 			} catch (error) {
-				console.error('Error:', error)
+				console.log('Error: ', error)		
 			}
 		}
-
-		const bookingEvent = async () => {
-			try {
-				const res = await fetch(
-					'https://api.cal.com/v2/bookings?status=upcoming',
-					{
-						method: 'GET',
-						headers: {
-							Authorization: 'Bearer cal_live_c144e9d89987946024fa42e93413a28b',
-							'cal-api-version': '2026-02-25',
-							'Content-Type': 'application/json',
-						},
-					},
-				)
-				const dataEnd = await res.json()
-				setAppointments(dataEnd.data)
-			} catch (error) {
-				console.log('Error: ', error)
-			}
-		}
-
-		getNameEvent()
-		bookingEvent()
-		nameEventsCal(arrayEventsCal)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		GetApiCal()
 	}, [])
 
 	const formatDate = (dateString) => {
@@ -79,7 +41,7 @@ function ViewAppointment() {
 			await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
 				method: 'POST',
 				headers: {
-					Authorization: 'Bearer cal_live_c144e9d89987946024fa42e93413a28b',
+					Authorization: `Bearer ${import.meta.env.VITE_API_SECRET}`,
 					'cal-api-version': '2024-08-13',
 					'Content-Type': 'application/json',
 				},
