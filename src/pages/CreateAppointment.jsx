@@ -33,11 +33,13 @@ function CreateAppointment() {
 				<h1 className='text-xl font-bold text-center flex-1 '>Agendar Cita</h1>
 			</header>
 
-			<div className='h-screen bg-gray-100'>
+			<div className='h-full bg-gray-100'>
         <Calendar />
 			</div>
 
-			<NavBar />
+			<section className='fixed bottom-0 w-full h-14'>
+				<NavBar />
+			</section>
 		</main>
 	)
 }
