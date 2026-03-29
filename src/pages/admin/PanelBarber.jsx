@@ -3,7 +3,6 @@ import NextAppointment from '../../components/panelBarber/NextAppointment'
 import UpcomingAppointment from '../../components/panelBarber/UpcomingAppointment'
 import CardData from '../../components/panelBarber/cards/CardData'
 import NavBar from '../../components/NavBar'
-import { NavLink } from 'react-router'
 import { useEffect } from 'react'
 import { getTodayBookings } from '../../utils/Bookings'
 
@@ -19,6 +18,11 @@ function PanelBarber() {
 				photo='https://i.pinimg.com/736x/4a/d1/13/4ad113eaace2e06b92f78dc15c1cf8de.jpg'
 				notifications={5}
 			/>
+
+			<section className='flex justify-between gap-4 items-center px-4'>
+				<CardData title='Citas de hoy' value={5}/>
+				<CardData title='Ingresos totales' value={50000} style='earnings'/>
+			</section>
 
 			<section>
 				<NextAppointment
