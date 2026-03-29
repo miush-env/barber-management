@@ -9,7 +9,7 @@ export default function RescheduleIframe({
 		<iframe
 			src={src}
 			width='100%'
-			height='700px'
+			height='800px'
 			frameBorder='0'
 			style={{ border: 'none' }}
 		/>
