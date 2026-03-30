@@ -8,17 +8,23 @@ function ViewAppointment() {
 	const navigate = useNavigate()
 
 	const [appointments, setAppointments] = useState([])
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		const GetApiCal = async ()=> {
+		const GetApiCal = async () => {
 			try {
-				const [nameEvent, booking]= await Promise.all([getNameEvent(), bookingEvent()]) 
+				const [nameEvent, booking] = await Promise.all([
+					getNameEvent(),
+					bookingEvent(),
+				])
 
 				setAppointments(booking)
-				console.log('Eventos :',nameEvent)
-				console.log('Citas :',booking)
+				// console.log('Eventos :',nameEvent)
+				// console.log('Citas :',booking)
 			} catch (error) {
-				console.log('Error: ', error)		
+				console.log('Error: ', error)
+			} finally {
+				setLoading(false)
 			}
 		}
 		GetApiCal()
@@ -57,7 +63,7 @@ function ViewAppointment() {
 	}
 
 	return (
-		<main className='bg-white min-h-screen pb-20'>
+		<main className='bg-white min-h-screen flex flex-col pb-20'>
 			<header className='flex items-center p-4 border-b border-gray-500 bg-white'>
 				<span
 					className=''
@@ -86,29 +92,63 @@ function ViewAppointment() {
 				<h1 className='text-xl font-bold text-center flex-1 '>Tus Citas</h1>
 			</header>
 
-			<article className='p-4 flex gap-4'>
+			<article className='p-4 h-28 flex gap-4'>
 				<CardClientsStatus title='Totales' value='20' style='total' />
 				<CardClientsStatus title='Atendidos' value='20' style='complete' />
 				<CardClientsStatus title='Cancelados' value='20' style='delete' />
 			</article>
 
-			<article>
+			<article className='flex-1 flex flex-col'>
 				<h2 className='text-xl pl-4 font-bold uppercase my-8'>
 					Turnos pendientes
 				</h2>
-				<section>
-					{appointments.map((cita) => (
-						<PendingShifts
-							key={cita.id}
-							service={cita.title}
-							time={formatDate(cita.start)}
-							status={true}
-							barber={cita.attendees?.[0]?.name || 'Sin nombre'}
-							price={10000}
-							cita={cita}
-							onCancel={cancelBooking}
-						/>
-					))}
+				<section
+					className={`flex-1  ${loading ? 'flex flex-col items-center justify-center' : 'flex flex-col items-center justify-center'}`}
+				>
+					{loading ? (
+						<div className='flex flex-col items-center gap-4'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								width='45'
+								height='45'
+								fill='none'
+								stroke='currentColor'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
+								className='animate-spin stroke-blue-700'
+								viewBox='0 0 24 24'
+							>
+								<path fill='none' stroke='none' d='M0 0h24v24H0z' />
+								<path d='M4.05 11a8 8 0 1 1 .5 4m-.5 5v-5h5' />
+							</svg>
+							<p className='text-center animate-pulse text-xl font-bold text-gray-700'>
+								Cargando...
+							</p>
+						</div>
+					) : appointments.length > 0 ? (
+						<div className='flex-1'>
+						{	appointments.map((cita) => (
+								<PendingShifts
+									key={cita.id}
+									service={cita.title}
+									time={formatDate(cita.start)}
+									status={true}
+									barber={cita.attendees?.[0]?.name || 'Sin nombre'}
+									price={10000}
+									cita={cita}
+									onCancel={cancelBooking}
+								/>
+							))}
+						</div>
+					) : (
+						<div className='p-4 flex flex-col items-center gap-4'>
+							<p className='text-center text-3xl font-bold text-blue-600'>
+								No tienes citas pendientes
+							</p>
+							<img src='/src/assets/relax-home.svg' alt='SVG de espera' />
+						</div>
+					)}
 				</section>
 			</article>
 
