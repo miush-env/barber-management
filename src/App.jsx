@@ -1,7 +1,7 @@
 import './styles/index.css'
 
 import { BrowserRouter, Routes, Route } from 'react-router'
-
+import { ProtectedRoute } from './ProtectedRoute.jsx'
 import SignIn from './pages/SignIn'
 import Login from './pages/Login'
 import PanelBarber from './pages/admin/PanelBarber.jsx'
@@ -17,11 +17,31 @@ function App() {
 				<Route path='/' index element={<Login />} />
 				<Route path='/sign-in' element={<SignIn />} />
 
-				<Route path='/crear-cita' element={<CreateAppointment />} />
-				<Route path='/inicio' element={<PanelBarber />} />
-				<Route path='/ver-citas' element={<ViewAppointment />} />
-				<Route path='/ver-clientes' element={<TabletClient/>} />
-				<Route path='/perfil' element={<Profile />} />
+				<Route path='/crear-cita' element={
+					<ProtectedRoute>
+						<CreateAppointment />
+					</ProtectedRoute>
+				} />
+				<Route path='/inicio' element={
+					<ProtectedRoute>
+						<PanelBarber />
+					</ProtectedRoute>
+				} />
+				<Route path='/ver-citas' element={
+					<ProtectedRoute>
+						<ViewAppointment />
+					</ProtectedRoute>
+				} />
+				<Route path='/ver-clientes' element={
+					<ProtectedRoute>
+						<TabletClient/>
+					</ProtectedRoute>
+				} />
+				<Route path='/perfil' element={
+					<ProtectedRoute>
+						<Profile />
+					</ProtectedRoute>
+				} />
 			</Routes>
 		</BrowserRouter>
 	)
