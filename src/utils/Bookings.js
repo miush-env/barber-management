@@ -79,9 +79,41 @@ export const bookingEvent = async () => {
 		return data.data		
 		// console.log('Citas obtenidas:', data.data)
 		// setAppointments(data.data)
-
-		
 	} catch (error) {
 		console.log('Error: ', error)
 	}
+}
+
+export const cancelBooking2 = async (uid, setAppointments) => {
+	try {
+		const res = await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${import.meta.env.VITE_API_SECRET}`,
+				'cal-api-version': '2024-08-13',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				cancellationReason: 'Cancelado desde la app',
+			}),
+		})
+
+		if (!res.ok) throw new Error('Error al cancelar')
+
+		setAppointments((prev) => prev.filter((cita) => cita.uid !== uid))
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+export const formatDate = (dateString) => {
+		const date = new Date(dateString)
+
+		return date.toLocaleString('es-AR', {
+			// weekday: 'long',
+			day: 'numeric',
+			month: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+		})
 }
