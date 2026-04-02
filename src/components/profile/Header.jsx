@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserAvatar, useUser } from '@clerk/react'
+import { useUser } from '@clerk/react'
 function Header() {
 	const { user } = useUser()
 
