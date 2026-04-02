@@ -35,7 +35,7 @@ function Profile() {
 						<path d='M5 12l6 -6' />
 					</svg>
 				</span>
-				<h2 className='text-xl font-bold text-center flex-1 '>Tus Citas</h2>
+				<h2 className='text-xl font-bold text-center flex-1 '>Perfil</h2>
 			</header>
 
 			<article className='bg-gray-200/40 min-h-screen'>
