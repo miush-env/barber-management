@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router'
+import { SignOutButton } from '@clerk/react'
 
 function AccountSettings() {
   const navigate = useNavigate()
@@ -23,8 +24,14 @@ function AccountSettings() {
 					<path d='M9 12h12l-3 -3' />
 					<path d='M18 15l3 -3' />
 				</svg>
-				<span className='uppercase text-red-500 font-bold text-sm' onClick={()=>{	navigate('/')}}>Cerrar Sesion</span>
+				{/* onClick={()=>{	navigate('/')}} */}
+				<span className='uppercase text-red-500 font-bold text-sm'>
+					 <SignOutButton>
+				Cerrar Sesion
+			 </SignOutButton>
+				</span>
 			</div>
+
 		</section>
 	)
 }
