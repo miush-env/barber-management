@@ -4,10 +4,12 @@ import PendingShifts from '../components/viewAppointment/cards/PendingShifts.jsx
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
 import { getNameEvent, bookingEvent } from '../utils/Bookings.js'
+
 function ViewAppointment() {
 	const navigate = useNavigate()
 
 	const [appointments, setAppointments] = useState([])
+	const [nameEvent, setNameEvent] = useState([])
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
@@ -19,6 +21,7 @@ function ViewAppointment() {
 				])
 
 				setAppointments(booking)
+				setNameEvent(nameEvent)
 				// console.log('Eventos :',nameEvent)
 				// console.log('Citas :',booking)
 			} catch (error) {
@@ -30,37 +33,11 @@ function ViewAppointment() {
 		GetApiCal()
 	}, [])
 
-	const formatDate = (dateString) => {
-		const date = new Date(dateString)
+	const PRICE = nameEvent.map(e => {
+		console.log('Evento:', e)
+	})
 
-		return date.toLocaleString('es-AR', {
-			weekday: 'long',
-			day: 'numeric',
-			month: 'short',
-			hour: '2-digit',
-			minute: '2-digit',
-		})
-	}
-
-	const cancelBooking = async (uid) => {
-		try {
-			await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${import.meta.env.VITE_API_SECRET}`,
-					'cal-api-version': '2024-08-13',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					cancellationReason: 'Cancelado desde la app',
-				}),
-			})
-
-			setAppointments((prev) => prev.filter((cita) => cita.uid !== uid))
-		} catch (error) {
-			console.error(error)
-		}
-	}
+	PRICE
 
 	return (
 		<main className='bg-white min-h-screen flex flex-col pb-20'>
@@ -103,7 +80,7 @@ function ViewAppointment() {
 					Turnos pendientes
 				</h2>
 				<section
-					className={`flex-1  ${loading ? 'flex flex-col items-center justify-center' : 'flex flex-col items-center justify-center'}`}
+					className='flex-1 flex flex-col items-center justify-center'
 				>
 					{loading ? (
 						<div className='flex flex-col items-center gap-4'>
@@ -127,17 +104,12 @@ function ViewAppointment() {
 							</p>
 						</div>
 					) : appointments.length > 0 ? (
-						<div className='flex-1'>
+						<div className='flex-1 w-full px-4'>
 						{	appointments.map((cita) => (
 								<PendingShifts
 									key={cita.id}
-									service={cita.title}
-									time={formatDate(cita.start)}
-									status={true}
-									barber={cita.attendees?.[0]?.name || 'Sin nombre'}
-									price={10000}
 									cita={cita}
-									onCancel={cancelBooking}
+									setAppointments={setAppointments}
 								/>
 							))}
 						</div>
