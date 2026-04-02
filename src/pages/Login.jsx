@@ -99,13 +99,17 @@ function Login() {
 					<button className='bg-blue-700 active:bg-blue-600 shadow-md active:shadow-blue-500 transition-all duration-200 delay-75	 text-white w-full font-semibold py-3 rounded-xl'>
 						Iniciar Sesion
 					</button>
-					 <Show when="signed-out">
-          <SignInButton />
-          <SignUpButton />
-        </Show>
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
+					<Show when="signed-out">
+       	  	<SignInButton mode='modal'>
+							<span>Iniciar sesion</span>
+       	  	</SignInButton>
+        	  <SignUpButton mode='modal'>
+      				<button>Registrarse</button>
+    				</SignUpButton>
+        	</Show>
+        	<Show when="signed-in">
+         		<UserButton />
+	        </Show>
 				</div>
 				<section className='flex items-center'>
 					<SocialAuth name='Google' icon='Google' />
