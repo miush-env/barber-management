@@ -9,6 +9,7 @@ function ViewAppointment() {
 	const navigate = useNavigate()
 
 	const [appointments, setAppointments] = useState([])
+	// eslint-disable-next-line no-unused-vars
 	const [nameEvent, setNameEvent] = useState([])
 	const [loading, setLoading] = useState(true)
 
@@ -33,11 +34,11 @@ function ViewAppointment() {
 		GetApiCal()
 	}, [])
 
-	const PRICE = nameEvent.map(e => {
-		console.log('Evento:', e)
-	})
+	// const PRICE = nameEvent.map(e => {
+	// 	console.log('Evento:', e)
+	// })
 
-	PRICE
+	// PRICE
 
 	return (
 		<main className='bg-white min-h-screen flex flex-col pb-20'>
@@ -104,7 +105,7 @@ function ViewAppointment() {
 							</p>
 						</div>
 					) : appointments.length > 0 ? (
-						<div className='flex-1 w-full px-4'>
+						<div className='flex-1 w-full px-4 flex flex-col gap-4'>
 						{	appointments.map((cita) => (
 								<PendingShifts
 									key={cita.id}
