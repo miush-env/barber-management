@@ -1,6 +1,9 @@
 import React from 'react'
+import { useUser } from '@clerk/react'
 
 function PersonalInfo() {
+	const { user } = useUser()
+	console.log('Datos del usuario:', user)
 	return (
 		<section className='flex flex-col gap-4'>
 			<div className='flex gap-4 bg-white rounded-lg p-2'>
@@ -23,7 +26,7 @@ function PersonalInfo() {
 						Correo Electrónico
 					</span>
 					<span className='text-md font-bold text-gray-800 uppercase'>
-						correoEmpresa12@gmail.com
+						{user.emailAddresses[0].emailAddress}
 					</span>
 				</div>
 			</div>
