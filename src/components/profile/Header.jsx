@@ -1,11 +1,13 @@
 import React from 'react'
-
+import { UserAvatar, useUser } from '@clerk/react'
 function Header() {
+	const { user } = useUser()
+
   return (
 		<section className='p-4 flex flex-col items-center gap-2'>
 			<div className='relative'>
 				<img
-					src='https://i.pinimg.com/736x/1a/82/4f/1a824fb4646435b5113f75ad5cff2256.jpg'
+					src={user?.imageUrl}
 					alt='usuario o admin'
 					className='w-28 h-28 rounded-full object-cover'
 				/>
@@ -27,7 +29,7 @@ function Header() {
 				</svg>
 			</div>
 			<div className='flex flex-col items-center gap-1'>
-				<h1 className='text-lg font-bold uppercase'>Juan Torres</h1>
+				<h1 className='text-lg font-bold uppercase'>{user?.fullName}</h1>
 				<span className=' text-gray-500 font-semibold uppercase text-sm'>
 					Dueño
 				</span>
