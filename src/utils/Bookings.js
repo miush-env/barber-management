@@ -106,14 +106,18 @@ export const cancelBooking2 = async (uid, setAppointments) => {
 	}
 }
 
-export const formatDate = (dateString) => {
+export const formatDate = (dateString, intuitive = true) => {
 		const date = new Date(dateString)
 
 		return date.toLocaleString('es-AR', {
-			// weekday: 'long',
 			day: 'numeric',
-			month: 'numeric',
-			hour: '2-digit',
-			minute: '2-digit',
+			month: '2-digit',
+			...(intuitive ? {
+ 			weekday: 'short',
+	    hour: "2-digit",
+      minute: "2-digit",
+    } : {
+			year: 'numeric',
+		})
 		})
 }
