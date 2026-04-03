@@ -1,59 +1,30 @@
 import NavBar from '@components/NavBar'
 import CardClient from '@components/ClientTablet/CardClient'
 import { useNavigate } from 'react-router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function TabletClient() {
 	const navigate = useNavigate()
 	const [search, setSearch] = useState('')
+	const [clients, setClients] = useState([])
 
-	const userClient = [
-		{
-			id: 1,
-			name: 'Juan Torres Ezequiel',
-			photo: 'https://randomuser.me/api/portraits/men/32.jpg',
-			phone: '1167973134',
-			email: 'correoEmail23@gmail.com',
-			point: 203,
-			birthday: '12 OCT',
-		},
-		{
-			id: 2,
-			name: 'Lucía Fernández',
-			photo: 'https://randomuser.me/api/portraits/women/44.jpg',
-			phone: '1154829176',
-			email: 'lucia.fernandez91@gmail.com',
-			point: 18450,
-			birthday: '03 MAR',
-		},
-		{
-			id: 3,
-			name: 'Matías Gómez',
-			photo: 'https://randomuser.me/api/portraits/men/51.jpg',
-			phone: '1176542089',
-			email: 'matias.gomez24@gmail.com',
-			point: 927,
-			birthday: '21 JUL',
-		},
-		{
-			id: 4,
-			name: 'Camila Rodríguez',
-			photo: 'https://randomuser.me/api/portraits/women/68.jpg',
-			phone: '1162034981',
-			email: 'camila.rodriguez88@gmail.com',
-			point: 48213,
-			birthday: '09 SEP',
-		},
-		{
-			id: 5,
-			name: 'Franco López',
-			photo: 'https://randomuser.me/api/portraits/men/75.jpg',
-			phone: '1149982371',
-			email: 'franco.lopez17@gmail.com',
-			point: 75632,
-			birthday: '27 DEC',
-		},
-	]
+	useEffect(()=>{
+		const clients = async () => {
+			try {
+				const res = await fetch('http://localhost:3000/api/users')
+				const data = await res.json()
+				console.log(data)
+				setClients(data)
+			
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
+		clients()
+	},[])
+
+	const userClient = clients
 
 	const filteredClients = userClient.filter((client) =>
 		client.name.toLowerCase().includes(search.toLowerCase()),
@@ -119,7 +90,7 @@ function TabletClient() {
 						filteredClients.map((client) => (
 							<CardClient
 								key={client.id}
-								name={client.name}
+								name={client.name + ' ' + client.last_name}
 								photo={client.photo}
 								phone={client.phone}
 								email={client.email}
