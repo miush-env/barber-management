@@ -26,8 +26,11 @@ function TabletClient() {
 
 	const userClient = clients
 
-	const filteredClients = userClient.filter((client) =>
-		client.name.toLowerCase().includes(search.toLowerCase()),
+	const filteredClients = userClient.filter((client) =>{
+		const name = client.firstName + ' ' + client.lastName
+
+		return name.toLowerCase().includes(search.toLowerCase())
+	}
 	)
 
 	return (
@@ -90,11 +93,11 @@ function TabletClient() {
 						filteredClients.map((client) => (
 							<CardClient
 								key={client.id}
-								name={client.name + ' ' + client.last_name}
-								photo={client.photo}
+								name={client.firstName + ' ' + client.lastName}
+								photo={client.imageUrl}
 								phone={client.phone}
 								email={client.email}
-								point={client.point}
+								point={client.points}
 								birthday={client.birthday}
 							/>
 						))
