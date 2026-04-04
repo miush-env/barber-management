@@ -3,7 +3,7 @@ import { useUser } from '@clerk/react'
 
 function PersonalInfo() {
 	const { user } = useUser()
-	console.log('Datos del usuario:', user)
+	
 	return (
 		<section className='flex flex-col gap-4'>
 			<div className='flex gap-4 bg-white rounded-lg p-2'>
