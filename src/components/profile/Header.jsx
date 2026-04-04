@@ -1,8 +1,6 @@
-import React from 'react'
 import { useUser } from '@clerk/react'
 function Header() {
 	const { user } = useUser()
-
   return (
 		<section className='p-4 flex flex-col items-center gap-2'>
 			<div className='relative'>
