@@ -1,18 +1,6 @@
-import InputForm from '../components/form/InputForm'
-import SocialAuth from '../components/form/SocialAuth'
-import { NavLink, useNavigate } from 'react-router'
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/react'
+import { SignIn } from '@clerk/react'
 
 function Login() {
-	const navigate = useNavigate()
-
-	const handleSubmit = (e) => {
-		e.preventDefault()
-
-		// aquí luego pondrás validaciones
-		navigate('/inicio')
-	}
-
 	return (
 		<main className='relative w-full h-screen overflow-hidden justify-center p-6 flex flex-col gap-12'>
 			<div
@@ -51,7 +39,7 @@ function Login() {
 					animation: 'pulseSoft 5s ease-in-out infinite',
 				}}
 			></div>
-			<div className='flex flex-col gap-2'>
+			<header className='flex w-full items-center justify-center flex-col gap-2'>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					width='70'
@@ -73,48 +61,10 @@ function Login() {
 				</svg>
 				<h1 className='text-4xl uppercase font-extrabold'>Iniciar Sesion</h1>
 				<p className='text-gray-500 font-semibold'>Bienvenido de vuelta</p>
-			</div>
-			<form onSubmit={handleSubmit} className='flex flex-col gap-6 z-10'>
-				<InputForm
-					type='email'
-					placeholder='Correo electrónico'
-					required={true}
-				/>
-				<InputForm
-					type='password'
-					placeholder='Contraseña'
-					visibility={true}
-					required={true}
-				/>
-
-				<div className='mt-6 flex flex-col gap-2'>
-					<div className='flex gap-2 active:bg-gray-100/40 rounded-md px-2 py-1'>
-						<NavLink
-							to='/sign-in'
-							className='font-semibold text-blue-600/80 text-sm underline decoration-blue-600/80 underline-offset-4'
-						>
-							Eres nuevo? Regístrate
-						</NavLink>
-					</div>
-					<button className='bg-blue-700 active:bg-blue-600 shadow-md active:shadow-blue-500 transition-all duration-200 delay-75	 text-white w-full font-semibold py-3 rounded-xl'>
-						Iniciar Sesion
-					</button>
-					<Show when="signed-out">
-       	  	<SignInButton mode='modal'>
-							<span>Iniciar sesion</span>
-       	  	</SignInButton>
-        	  <SignUpButton mode='modal'>
-      				<button>Registrarse</button>
-    				</SignUpButton>
-        	</Show>
-        	<Show when="signed-in">
-         		<UserButton />
-	        </Show>
-				</div>
-				<section className='flex items-center'>
-					<SocialAuth name='Google' icon='Google' />
-				</section>
-			</form>
+			</header>
+			<article className="flex w-full items-center justify-center">
+				<SignIn fallbackRedirectUrl={'/perfil'} />
+			</article>
 		</main>
 	)
 }
