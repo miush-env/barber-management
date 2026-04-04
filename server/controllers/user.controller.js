@@ -58,28 +58,6 @@ export const getUsersClerk = async (req, res) => {
   }
 }
 
-export const checkRelation = async (req, res) => {
-  try {
-    // Traer ambas APIs en paralelo (más rápido)
-    const [resUsers, resClerk] = await Promise.all([
-      fetch("http://localhost:3000/Api/users"),
-      fetch("http://localhost:3000/Api/users/clerk")
-    ]);
-
-    const users = await resUsers.json();
-    const clerkUsers = await resClerk.json();
-
-    for (const user of users) {
-      const match = clerkUsers.find(cu => cu.email_addresses[0].email_address === user.email);
-      if (match) {
-        console.log(`✅ Usuario ${user._id} tiene relación con Clerk ID/EMAIL ${user.email}`);
-      } else {
-        console.log(`❌ Usuario ${user._id} NO tiene relación con Clerk ID/EMAIL ${user.email}`);
-      }
-    }
-
-    res.json({ message: "Relaciones verificadas, revisa la consola" });
-  } catch (error) {
-    console.error("Error:", error);
-  }
+export const checkRelation =  (req, res) => {
+  return res.status(200).json(req.user);
 };
