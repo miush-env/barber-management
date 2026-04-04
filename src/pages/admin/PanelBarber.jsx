@@ -6,8 +6,36 @@ import NavBar from '../../components/NavBar'
 import { useEffect } from 'react'
 import { getTodayBookings } from '../../utils/Bookings'
 
+import { useUser } from '@clerk/react'
+
 function PanelBarber() {
+	const { user, isSignedIn } = useUser()
+
+	const sendEmail = async (email, clerkId, firstName, lastName, imageUrl) => {
+  try {
+    const res = await fetch("http://localhost:3000/Api/users/relation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, clerkId, firstName, lastName, imageUrl })
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 	useEffect(() => {
+		if (isSignedIn) {
+			sendEmail(user.emailAddresses[0].emailAddress, user.id, user.firstName, user.lastName, user.imageUrl);
+		} else {
+			console.log('no tienes sesión iniciada')
+		}
+
 		getTodayBookings()
 	}, [])
 
