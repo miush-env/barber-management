@@ -9,12 +9,14 @@ import CreateAppointment from './pages/CreateAppointment.jsx'
 import ViewAppointment from './pages/ViewAppointment.jsx'
 import TabletClient from './pages/admin/TabletClient.jsx'
 import Profile from './pages/Profile.jsx'
+import LoginClerk from './pages/LoginClerk.jsx'
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' index element={<Login />} />
+				<Route path='/login-clerk' element={<LoginClerk />} />
 				<Route path='/sign-in' element={<SignIn />} />
 
 				<Route path='/crear-cita' element={
