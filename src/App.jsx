@@ -2,7 +2,6 @@ import './styles/index.css'
 
 import { BrowserRouter, Routes, Route } from 'react-router'
 import { ProtectedRoute } from './ProtectedRoute.jsx'
-import SignIn from './pages/SignIn'
 import Login from './pages/Login'
 import PanelBarber from './pages/admin/PanelBarber.jsx'
 import CreateAppointment from './pages/CreateAppointment.jsx'
@@ -15,7 +14,6 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' index element={<Login />} />
-				<Route path='/sign-in' element={<SignIn />} />
 
 				<Route path='/crear-cita' element={
 					<ProtectedRoute>
