@@ -1,34 +1,41 @@
 import mongoose from "mongoose";
 
 const User = new mongoose.Schema({
-  photo: {
-    type: String
+  imageUrl: {
+    type: String,
   },
-  name: {
+  firstName: {
     type: String,
     required: true
   },
-  last_name: {
+  lastName: {
     type: String,
     required: true
   },
   email: {
     type: String,
     required: true,
-    unique: true
   },
   phone: {
     type: Number,
-    required: true
   },
   birthday: {
     type: Date,
-    required: true
   },
-  point: {
-    type: Number
-  }
-
+  points: {
+    type: Number,
+    default: 0
+  },
+  clerkId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  appointments: {
+    type: Array,
+    default: []
+  },
 });
+
 
 export default mongoose.model("User", User);
