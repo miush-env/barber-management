@@ -23,8 +23,6 @@ function ViewAppointment() {
 
 				setAppointments(booking)
 				setNameEvent(nameEvent)
-				// console.log('Eventos :',nameEvent)
-				// console.log('Citas :',booking)
 			} catch (error) {
 				console.log('Error: ', error)
 			} finally {
