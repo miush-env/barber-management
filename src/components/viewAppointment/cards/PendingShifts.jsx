@@ -2,9 +2,12 @@ import { useState } from 'react'
 import EditAppointment from '../../modal/EditAppointment'
 import { formatDate, cancelBooking2 } from '../../../utils/Bookings'
 
-function PendingShifts({ setAppointments, cita }) {
+function PendingShifts({ setAppointments, cita, event }) {
 	const [isOpen, setIsOpen] = useState(false)
-	console.log('la cita actual es:', cita)
+	const getPriceFromDescription = (description) => {
+		const match = description.match(/\$(\d+)/);
+		return match ? Number(match[1]) : null;
+  };
 
 	return (
 		<article className='bg-linear-to-r from-blue-500 to-blue-600 rounded-2xl p-[2px]'>
@@ -16,7 +19,7 @@ function PendingShifts({ setAppointments, cita }) {
 
 				<section className='flex-1 flex flex-col justify-between items-center px-4'>
 					<div className='flex justify-between w-full flex-1 items-center'>
-						<h3 className='font-semibold text-lg uppercase'>{cita.eventType.slug}</h3>
+						<h3 className='font-semibold text-lg uppercase'>{event.title}</h3>
 
 						<span className={`text-sm ${cita.status === 'accepted' ? 'bg-green-300 text-green-800' : 'bg-red-300 text-red-800'} uppercase font-semibold rounded-xl p-[6px]`}>
 							{cita.status === 'accepted' ? 'Confirmada' : 'Cancelada'}
@@ -24,7 +27,7 @@ function PendingShifts({ setAppointments, cita }) {
 					</div>
 
 					<div className='flex justify-between w-full flex-1 items-center'>
-						<span className='text-xl font-bold'>$15000</span>
+						<span className='text-xl font-bold'>${getPriceFromDescription(event.description)}</span>
 
 						<div className=''>
 							<button
