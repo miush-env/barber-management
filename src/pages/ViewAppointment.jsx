@@ -13,31 +13,25 @@ function ViewAppointment() {
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		const GetApiCal = async () => {
-			try {
-				const booking = await bookingEvent()
+		const loadAllData = async () => {
+    setLoading(true); // Aseguramos que empiece en true
+    try {
+      // Ejecutamos ambas peticiones en paralelo para mayor velocidad
+      const [booking, events] = await Promise.all([
+        bookingEvent(),
+        getNameEvent()
+      ]);
 
-				setAppointments(booking)
-			} catch (error) {
-				console.log('Error: ', error)
-			} finally {
-				setLoading(false)
-			}
-		}
+      setAppointments(booking);
+      if (events) setDataEvent(events);
+    } catch (error) {
+      console.error('Error cargando datos:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-		const fetchNameEvent = async () => {
-			try {
-				const res = await getNameEvent();
-				if (res) {
-					setDataEvent(res);
-				}
-			} catch (error) {
-				console.error('Error en la petición:', error);
-			}
-    };
-
-		GetApiCal()
-		fetchNameEvent();
+  loadAllData();
 	}, [])
 
 	return (
@@ -111,12 +105,14 @@ function ViewAppointment() {
             			(e) => e.eventType?.slug === cita.slug
          				);
 
-								return (<PendingShifts
-									key={cita.id}
-									cita={cita}
-									event={matchedEvent}
-									setAppointments={setAppointments}
-								/>)
+								return (
+									<PendingShifts
+										key={cita.id}
+										cita={cita}
+										event={matchedEvent}
+										setAppointments={setAppointments}
+									/>
+								)
 							})}
 						</div>
 					) : (
