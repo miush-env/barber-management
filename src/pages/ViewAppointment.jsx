@@ -3,40 +3,42 @@ import CardClientsStatus from '@components/viewAppointment/cards/CardClientsStat
 import PendingShifts from '../components/viewAppointment/cards/PendingShifts.jsx'
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
-import { getNameEvent, bookingEvent } from '../utils/Bookings.js'
+import { bookingEvent, getNameEvent } from '../utils/Bookings.js'
 
 function ViewAppointment() {
 	const navigate = useNavigate()
 
 	const [appointments, setAppointments] = useState([])
-	// eslint-disable-next-line no-unused-vars
-	const [nameEvent, setNameEvent] = useState([])
+	const [ dataEvent, setDataEvent ] = useState([])
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		const GetApiCal = async () => {
 			try {
-				const [nameEvent, booking] = await Promise.all([
-					getNameEvent(),
-					bookingEvent(),
-				])
+				const booking = await bookingEvent()
 
 				setAppointments(booking)
-				setNameEvent(nameEvent)
 			} catch (error) {
 				console.log('Error: ', error)
 			} finally {
 				setLoading(false)
 			}
 		}
+
+		const fetchNameEvent = async () => {
+			try {
+				const res = await getNameEvent();
+				if (res) {
+					setDataEvent(res);
+				}
+			} catch (error) {
+				console.error('Error en la petición:', error);
+			}
+    };
+
 		GetApiCal()
+		fetchNameEvent();
 	}, [])
-
-	// const PRICE = nameEvent.map(e => {
-	// 	console.log('Evento:', e)
-	// })
-
-	// PRICE
 
 	return (
 		<main className='bg-white min-h-screen flex flex-col pb-20'>
@@ -104,13 +106,18 @@ function ViewAppointment() {
 						</div>
 					) : appointments.length > 0 ? (
 						<div className='flex-1 w-full px-4 flex flex-col gap-4'>
-						{	appointments.map((cita) => (
-								<PendingShifts
+							{	appointments.map((cita) => {
+								const matchedEvent = dataEvent.find(
+            			(e) => e.eventType?.slug === cita.slug
+         				);
+
+								return (<PendingShifts
 									key={cita.id}
 									cita={cita}
+									event={matchedEvent}
 									setAppointments={setAppointments}
-								/>
-							))}
+								/>)
+							})}
 						</div>
 					) : (
 						<div className='p-4 flex flex-col items-center gap-4'>
