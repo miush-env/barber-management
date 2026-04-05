@@ -4,6 +4,7 @@ import { formatDate, cancelBooking2 } from '../../../utils/Bookings'
 
 function PendingShifts({ setAppointments, cita, event }) {
 	const [isOpen, setIsOpen] = useState(false)
+	
 	const getPriceFromDescription = (description) => {
 		const match = description.match(/\$(\d+)/);
 		return match ? Number(match[1]) : null;
@@ -19,7 +20,7 @@ function PendingShifts({ setAppointments, cita, event }) {
 
 				<section className='flex-1 flex flex-col justify-between items-center px-4'>
 					<div className='flex justify-between w-full flex-1 items-center'>
-						<h3 className='font-semibold text-lg uppercase'>{event.title}</h3>
+						<h3 className='font-semibold text-lg uppercase'>{event.title || 'Servicio no encontrado'}</h3>
 
 						<span className={`text-sm ${cita.status === 'accepted' ? 'bg-green-300 text-green-800' : 'bg-red-300 text-red-800'} uppercase font-semibold rounded-xl p-[6px]`}>
 							{cita.status === 'accepted' ? 'Confirmada' : 'Cancelada'}
