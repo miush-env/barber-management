@@ -1,31 +1,20 @@
 import User from "../models/User.js";
 
-export const createUser = async (req, res) => {
+export const getUserAppointment = async (req, res) => {
+  const { clerkId } = req.params
+
   try {
-    const { userId } = req.auth; // 🔑 Clerk ID
+    const user = await User.findOne({clerkId}).select('appointments')
 
-    // 🔍 buscar en Mongo
-    let user = await User.findOne({ clerkId: userId });
-
-    if (!user) {
-      // ⚡ si NO existe → lo creo automáticamente
-      user = new User({
-        clerkId: userId,
-        point: "0",
-        appointments: []
-      });
-
-      await user.save();
-
-      console.log("Usuario creado en Mongo");
-    } else {
-      console.log("Usuario ya existe en Mongo");
+    if(!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" })
     }
 
-    res.json(user);
+    return res.status(200).json(user.appointments || [])
 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error al obtener citas:", error);
+    return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
 
