@@ -31,10 +31,15 @@ const User = new mongoose.Schema({
     required: true,
     unique: true
   },
-  appointments: {
-    type: Array,
-    default: []
-  },
+  appointments: [
+    {
+      id: String,
+      startTime: Date,
+      status: String,
+      service: String,
+      price: Number
+    }
+  ],
 });
 
 
