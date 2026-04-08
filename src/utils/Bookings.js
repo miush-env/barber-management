@@ -121,3 +121,27 @@ export const formatDate = (dateString, intuitive = true) => {
 		})
 		})
 }
+
+export  const getAppointments = async (clerkId) => {
+  try {
+    const res = await fetch("http://localhost:3000/api/users/appointments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ clerkId }),
+    });
+
+    const data = await res.json();
+
+    if (!data.ok) {
+      throw new Error(data.message);
+    }
+
+    return data.appointments;
+
+  } catch (error) {
+    console.error("Error:", error.message);
+    return [];
+  }
+};
