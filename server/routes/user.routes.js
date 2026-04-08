@@ -9,5 +9,6 @@ router.get("/", getUsers);
 router.get("/clerk", getUsersClerk);
 router.post("/relation", checkOrCreateUser, checkRelation);
 
-router.get("/my-appointments", getUserAppointment)
+router.post("/appointments", getUserAppointment)
+
 export default router;
