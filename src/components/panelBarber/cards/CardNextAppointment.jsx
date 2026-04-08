@@ -24,7 +24,7 @@ function CardNextAppointment({
 
 	return (
 		<article className='bg-white border border-slate-300 shadow-lg shadow-slate-200 rounded-xl p-4 '>
-			<section className='flex justify-between items-start'>
+			<section className='flex justify-between items-start border-b border-gray-300  py-2'>
 				<div className='flex gap-3'>
 					<img
 						src='https://i.pinimg.com/736x/01/73/df/0173df79cfd82180c0ccc0ae9eb36836.jpg'
@@ -33,7 +33,7 @@ function CardNextAppointment({
 					/>
 
 					<div className='flex flex-col'>
-						<h3 className='text-lg text-gray-900 font-bold'>{nameClient}</h3>
+						<h3 className='text-xl text-gray-900 font-bold'>{nameClient}</h3>
 
 						<span
 							className={`flex items-center gap-1 text-base font-medium ${statusStyle}`}
@@ -45,13 +45,12 @@ function CardNextAppointment({
 				</div>
 
 				<div className='flex flex-col items-end leading-none'>
-					<span className='text-3xl font-bold text-gray-900'>{time}</span>
-					<span className='text-xs uppercase text-gray-500'>am</span>
+					<span className='text-3xl font-bold text-blue-700'>{time}</span>
 				</div>
 			</section>
 			<section className='mt-3  flex justify-between items-center'>
 				<div className='flex flex-col text-sm text-gray-600'>
-					<span className='font-semibold text-gray-800'>{serviceName}</span>
+					<span className='text-gray-800 font-bold text-base'>{serviceName}</span>
 
 					<span className='font-semibold'>
 						{timeService} • ${price}
@@ -59,9 +58,9 @@ function CardNextAppointment({
 				</div>
 				<button
 					onClick={() => setIsOpen(!isOpen)}
-					className='flex items-center active:bg-blue-500 justify-center bg-blue-600/90 w-12 h-9 rounded-lg'
+					className='flex items-center active:bg-blue-500 justify-center bg-linear-to-tl from-blue-600/90 to-blue-600/70 h-10 w-10 rounded-lg'
 				>
-					<img src='./src/assets/edit.svg' alt='icon edit' width={22.5} />
+					<img src='./src/assets/edit.svg' alt='icon edit' width={20} />
 				</button>
 			</section>
 			<EditAppointment
