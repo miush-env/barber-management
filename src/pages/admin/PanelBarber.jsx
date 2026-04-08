@@ -42,14 +42,12 @@ function PanelBarber() {
 	return (
 		<main className='flex flex-col relative min-h-screen pb-20 '>
 			<Header
-				name='John Doe'
-				photo='https://i.pinimg.com/736x/4a/d1/13/4ad113eaace2e06b92f78dc15c1cf8de.jpg'
-				notifications={5}
+				notifications={1}
 			/>
 
 			<section className='flex justify-between gap-4 items-center px-4'>
-				<CardData title='Citas de hoy' value={5}/>
-				<CardData title='Ingresos totales' value={50000} style='earnings'/>
+				<CardData title='Citas de hoy' value={23}/>
+				<CardData title='Ingresos totales' value={140820} style='earnings'/>
 			</section>
 
 			<section>
