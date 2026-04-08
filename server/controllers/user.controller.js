@@ -1,20 +1,37 @@
 import User from "../models/User.js";
 
 export const getUserAppointment = async (req, res) => {
-  const { clerkId } = req.params
-
   try {
-    const user = await User.findOne({clerkId}).select('appointments')
+    const { clerkId } = req.body;
 
-    if(!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" })
+    // Validación más estricta
+    if (!clerkId || typeof clerkId !== "string") {
+      return res.status(400).json({ 
+        ok: false,
+        message: "clerkId es requerido y debe ser string" 
+      });
     }
 
-    return res.status(200).json(user.appointments || [])
+    const user = await User.findOne({ clerkId: clerkId });
+
+    if (!user) {
+      return res.status(404).json({ 
+        ok: false,
+        message: "Usuario no encontrado" 
+      });
+    }
+
+    return res.status(200).json({
+      ok: true,
+      appointments: user.appointments || 'no tiene citas',
+    });
 
   } catch (error) {
     console.error("Error al obtener citas:", error);
-    return res.status(500).json({ message: "Error interno del servidor" });
+    return res.status(500).json({ 
+      ok: false,
+      message: "Error interno del servidor" 
+    });
   }
 };
 
