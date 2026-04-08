@@ -10,7 +10,7 @@ function NextAppointment({
 }) {
 	return (
 		<article className='p-6 flex flex-col gap-2'>
-			<h2 className='text-xl text-black font-bold'>Cita Actual</h2>
+			<h2 className='text-gray-600 uppercase text-sm font-bold'>Cita Actual</h2>
 			<div>
 				<CardNextAppointment
 					nameClient={nameClient}
