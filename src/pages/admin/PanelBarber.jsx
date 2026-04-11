@@ -40,7 +40,7 @@ function PanelBarber() {
 	}, [])
 
 	return (
-		<main className='flex flex-col relative min-h-screen pb-20 '>
+		<main className='flex flex-col relative min-h-screen bg-gray-50 pb-20 '>
 			<Header
 				notifications={1}
 			/>
@@ -62,7 +62,7 @@ function PanelBarber() {
 				<UpcomingAppointment />
 			</section>
 
-			<section className='fixed bottom-0 w-full h-14'>
+			<section className='fixed bottom-0 w-full p-4 h-20'>
 				<NavBar />
 			</section>
 		</main>
