@@ -1,10 +1,16 @@
 import { NavLink } from 'react-router'
 // import { House } from 'lucide-react'
-import { IconHome, IconCalendarEvent, IconGroup, IconUser, IconAdd  } from '../assets/icons/IconsCustom'
+import {
+	IconHome,
+	IconCalendarEvent,
+	IconGroup,
+	IconUser,
+	IconAdd,
+} from '../assets/icons/IconsCustom'
 
 function NavBar() {
 	return (
-		<nav className=' *:font-semibold left-0 h-full bg-white border border-slate-100 shadow shadow-slate-300 w-full rounded-full flex justify-around items-center'>
+		<nav className=' *:font-semibold left-0 h-full bg-white border border-slate-100 mb-5 shadow shadow-slate-300 w-full rounded-full flex justify-around items-center'>
 			<NavLink
 				to='/inicio'
 				className={({ isActive }) =>
@@ -15,13 +21,16 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<IconHome fill='#fff' className={`transition-all duration-300 ${isActive ? 'fill-white scale-110' : 'fill-gray-300 scale-100'}`}/>
+						<IconHome
+							fill='#fff'
+							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
+						/>
 						<div
 							className={`
-								w-8 h-4 absolute bg-white opacity-100 rounded-full
+								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
 								${
 									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-8'
+										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
 										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
 								}
   						`}
@@ -40,13 +49,16 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<IconCalendarEvent fill='#fff' className={`transition-all duration-300 ${isActive ? 'fill-white scale-110' : 'fill-gray-300 scale-100'}`}/>
+						<IconCalendarEvent
+							fill='#fff'
+							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
+						/>
 						<div
 							className={`
-								w-8 h-4 absolute bg-white opacity-100 rounded-full
+								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
 								${
 									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-8'
+										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
 										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
 								}
   						`}
@@ -59,7 +71,7 @@ function NavBar() {
 				to='/crear-cita'
 				className='bg-blue-700 rounded-full p-2 relative -translate-y-4'
 			>
-				<IconAdd className='w-9 stroke-white'/>
+				<IconAdd className='w-9 stroke-white' />
 			</NavLink>
 
 			<NavLink
@@ -72,13 +84,16 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<IconGroup fill='#fff' className={`transition-all duration-300 ${isActive ? 'fill-white scale-110' : 'fill-gray-300 scale-100'}`}/>
+						<IconGroup
+							fill='#fff'
+							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
+						/>
 						<div
 							className={`
-								w-8 h-4 absolute bg-white opacity-100 rounded-full
+								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
 								${
 									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-8'
+										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
 										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
 								}
   						`}
@@ -97,13 +112,16 @@ function NavBar() {
 			>
 				{({ isActive }) => (
 					<>
-						<IconUser fill='#fff' className={`transition-all duration-300 ${isActive ? 'fill-white scale-110' : 'fill-gray-300 scale-100'}`}/>
+						<IconUser
+							fill='#fff'
+							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
+						/>
 						<div
 							className={`
-								w-8 h-4 absolute bg-white opacity-100
+								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
 								${
 									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-8'
+										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
 										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
 								}
   						`}

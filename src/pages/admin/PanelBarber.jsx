@@ -13,6 +13,7 @@ function PanelBarber() {
 
 	const sendEmail = async (email, clerkId, firstName, lastName, imageUrl) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const res = await fetch("http://localhost:3000/Api/users/relation", {
       method: "POST",
       headers: {
@@ -20,10 +21,6 @@ function PanelBarber() {
       },
       body: JSON.stringify({ email, clerkId, firstName, lastName, imageUrl })
     });
-
-    const data = await res.json();
-    console.log(data);
-
   } catch (error) {
     console.error(error);
   }
@@ -62,7 +59,7 @@ function PanelBarber() {
 				<UpcomingAppointment />
 			</section>
 
-			<section className='fixed bottom-0 w-full p-4 h-20'>
+			<section className='fixed bottom-0 w-full px-5'>
 				<NavBar />
 			</section>
 		</main>

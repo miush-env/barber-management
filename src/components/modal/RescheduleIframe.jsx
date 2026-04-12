@@ -1,5 +1,5 @@
 function RescheduleIframe({ calUsername, eventSlug, rescheduleUid }) {
-	const src = `https://cal.com/${calUsername}/${eventSlug}?rescheduleUid=${rescheduleUid}&hideEventTypeDetails=true`
+	const src = `https://cal.com/${calUsername}/${eventSlug}?rescheduleUid=${rescheduleUid}&hideEventTypeDetails=true&theme=light`
 
 	return (
 		<iframe

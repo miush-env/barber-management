@@ -2,7 +2,7 @@ import NavBar from '../components/NavBar'
 import PersonalInfo from '../components/profile/PersonalInfo.jsx'
 import AccountSettings from '../components/profile/AccountSettings.jsx'
 import Header from '../components/profile/Header.jsx'
-
+import { ChevronLeft } from 'lucide-react'
 import { useNavigate } from 'react-router'
 
 function Profile() {
@@ -10,31 +10,15 @@ function Profile() {
 
 	return (
 		<main>
-			<header className='flex items-center p-4 border-b border-gray-500 bg-white'>
-				<span
-					className=''
+			<header className='flex items-center p-4 border-b border-gray-300 bg-white'>
+				<button
+					className='p-1 active:bg-slate-200 rounded-full transition-colors'
 					onClick={() => {
 						navigate('/inicio')
 					}}
 				>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						width='24'
-						height='24'
-						viewBox='0 0 24 24'
-						fill='none'
-						stroke='#555'
-						stroke-width='2'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-						class='icon icon-tabler icons-tabler-outline icon-tabler-arrow-left'
-					>
-						<path stroke='none' d='M0 0h24v24H0z' fill='none' />
-						<path d='M5 12l14 0' />
-						<path d='M5 12l6 6' />
-						<path d='M5 12l6 -6' />
-					</svg>
-				</span>
+					  <ChevronLeft className="w-6 h-6 text-slate-600" />
+				</button>
 				<h2 className='text-xl font-bold text-center flex-1 '>Perfil</h2>
 			</header>
 
@@ -43,7 +27,7 @@ function Profile() {
 					<Header />
 				</section>
 				<section className='p-4'>
-          <h2 className='text-lg font-semibold'>Datos Personales</h2>
+          <h2 className='text-sm mb-2 font-bold uppercase text-gray-500/80 tracking-wider'>Datos Personales</h2>
 					<PersonalInfo />
 				</section>
 				<section className='p-4'>
@@ -51,7 +35,7 @@ function Profile() {
 				</section>
 			</article>
 
-			<section className='fixed bottom-0 w-full h-14'>
+			<section className='fixed bottom-0 w-full px-5'>
 				<NavBar />
 			</section>
 		</main>

@@ -1,4 +1,5 @@
 import RescheduleIframe from './RescheduleIframe'
+import { X } from 'lucide-react'
 
 function EditAppointment({ isOpen, setIsOpen, onCancel, cita }) {
 	const handleCancel = () => {
@@ -10,25 +11,10 @@ function EditAppointment({ isOpen, setIsOpen, onCancel, cita }) {
 			className={`bg-gray-800/70 backdrop-blur-xs min-h-screen min-w-screen z-100 fixed left-0 top-0 ${isOpen === true ? 'flex' : 'hidden'} items-center justify-center`}
 		>
 			<section className='rounded-xl bg-white dark:bg-[#171717] w-80 flex flex-col'>
-				<div className='flex justify-between items-center border-b border-gray-600 p-4'>
-					<h2 className='font-bold text-black dark:text-white'>Editar cita</h2>
-					<button onClick={() => setIsOpen(!isOpen)}>
-						<svg
-							xmlns='http://www.w3.org/2000/svg'
-							width='24'
-							height='24'
-							viewBox='0 0 24 24'
-							fill='none'
-							stroke='#aaa'
-							stroke-width='2'
-							stroke-linecap='round'
-							stroke-linejoin='round'
-							className='active:stroke-[#555] transition-colors duration-200'
-						>
-							<path stroke='none' d='M0 0h24v24H0z' fill='none' />
-							<path d='M18 6l-12 12' />
-							<path d='M6 6l12 12' />
-						</svg>
+				<div className='flex justify-between items-center bg-gray-100 rounded-t-xl p-4'>
+					<h2 className='font-bold text-lg text-black dark:text-white'>Editar cita</h2>
+					<button onClick={() => setIsOpen(!isOpen)} className='active:bg-gray-300 rounded-full p-[3px]'>
+						<X className='active:stroke-gray-700'/>
 					</button>
 				</div>
 

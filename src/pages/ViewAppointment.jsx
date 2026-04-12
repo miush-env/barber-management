@@ -4,6 +4,7 @@ import PendingShifts from '../components/viewAppointment/cards/PendingShifts.jsx
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
 import { bookingEvent, getNameEvent } from '../utils/Bookings.js'
+import { ChevronLeft } from 'lucide-react'
 
 function ViewAppointment() {
 	const navigate = useNavigate()
@@ -35,39 +36,23 @@ function ViewAppointment() {
 	}, [])
 
 	return (
-		<main className='bg-white min-h-screen flex flex-col pb-20'>
-			<header className='flex items-center p-4 border-b border-gray-500 bg-white'>
-				<span
-					className=''
+		<main className='bg-gray-50 min-h-screen flex flex-col pb-20'>
+			<header className='flex items-center p-4 border-b border-gray-300 bg-white'>
+				<button
+					className='p-1 active:bg-slate-200 rounded-full transition-colors'
 					onClick={() => {
 						navigate('/inicio')
 					}}
 				>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						width='24'
-						height='24'
-						viewBox='0 0 24 24'
-						fill='none'
-						stroke='#555'
-						stroke-width='2'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-						class='icon icon-tabler icons-tabler-outline icon-tabler-arrow-left'
-					>
-						<path stroke='none' d='M0 0h24v24H0z' fill='none' />
-						<path d='M5 12l14 0' />
-						<path d='M5 12l6 6' />
-						<path d='M5 12l6 -6' />
-					</svg>
-				</span>
-				<h1 className='text-xl font-bold text-center flex-1 '>Tus Citas</h1>
+					<ChevronLeft className="w-6 h-6 text-slate-600" />
+				</button>
+				<h1 className='text-xl font-bold text-slate-800 text-center flex-1'>Tus Citas</h1>
 			</header>
 
-			<article className='p-4 h-28 flex gap-4'>
-				<CardClientsStatus title='Totales' value='20' style='total' />
-				<CardClientsStatus title='Atendidos' value='20' style='complete' />
-				<CardClientsStatus title='Cancelados' value='20' style='delete' />
+			<article className='grid grid-cols-3 gap-4 p-4'>
+				<CardClientsStatus title='Totales' value='13' style='totals' />
+				<CardClientsStatus title='Atendidos' value='7' style='served' />
+				<CardClientsStatus title='Cancelados' value='3' />
 			</article>
 
 			<article className='flex-1 flex flex-col'>
@@ -126,7 +111,7 @@ function ViewAppointment() {
 				</section>
 			</article>
 
-			<section className='fixed bottom-0 w-full h-14'>
+			<section className='fixed bottom-0 w-full px-5'>
 				<NavBar />
 			</section>
 		</main>
