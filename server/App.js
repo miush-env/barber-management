@@ -22,7 +22,7 @@ app.use("/api/cal", calRoutes);
 // conectar DB
 connectDB();
 
-const PORT = 3000;
+const PORT = process.env.VITE_DB_PORT || 3300;
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
