@@ -16,6 +16,9 @@ app.use(express.json());
 app.use(clerkMiddleware());
 
 // rutas
+app.get("/", (req, res) => {
+  res.send("Backend funcionando 🚀");
+});
 app.use("/api/users", userRoutes);
 app.use("/api/cal", calRoutes);
 
