@@ -12,6 +12,11 @@ export const getCalEndPoint = async (req, res) => {
 export const webHookCal = async (req, res) => {
   const bookingData = req.body;
 
+  if (!bookingData || !bookingData.payload) {
+      console.log("Webhook sin payload:", bookingData);
+      return res.status(200).json({ received: true });
+    }
+
 	const getPriceFromDescription = (description) => {
 		const match = description.match(/\$(\d+)/);
 		return match ? Number(match[1]) : null;
@@ -25,6 +30,8 @@ export const webHookCal = async (req, res) => {
   }
 
   try {  
+      // console.log(bookingData);
+    console.log(JSON.stringify(bookingData, null, 2));
     // console.log(bookingData);
     console.log(userAppointment);
     res.status(200).json({ received: true });
