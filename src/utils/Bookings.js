@@ -18,7 +18,6 @@ export const getTodayBookings = async () => {
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {
-				//  cal_live_c144e9d89987946024fa42e93413a28b
 				Authorization: `Bearer ${API_KEY}`,
 				'cal-api-version': '2026-02-25',
 			},
