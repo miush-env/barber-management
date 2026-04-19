@@ -46,8 +46,8 @@ function PendingShifts({ setAppointments, cita, event }) {
 							{event.title}
 						</h3>
 					</div>
-					<div className='bg-emerald-100 text-emerald-700 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1'>
-						<div className='w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse'></div>
+					<div className={`${cita.status == "cancelled" ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}  text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1 `}>
+						<div className={`w-1.5 h-1.5 ${ cita.status == "cancelled" ? 'bg-red-500' : 'bg-emerald-500'} rounded-full animate-pulse`}></div>
 						{cita.status}
 					</div>
 				</div>
