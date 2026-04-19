@@ -7,7 +7,7 @@ function PendingShifts({ setAppointments, cita, event }) {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const getPriceFromDescription = (description) => {
-		const match = description.match(/\$(\d+)/)
+		const match = description?.match(/\$(\d+)/)
 		return match ? Number(match[1]) : null
 	}
 
@@ -43,7 +43,7 @@ function PendingShifts({ setAppointments, cita, event }) {
 							Servicio contratado
 						</p>
 						<h3 className='text-lg font-extrabold text-slate-800 leading-none'>
-							{event.title}
+							{event?.title || cita.eventType?.name || 'Servicio no disponible'}
 						</h3>
 					</div>
 					<div className={`${cita.status == "cancelled" ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}  text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1 `}>
@@ -58,7 +58,7 @@ function PendingShifts({ setAppointments, cita, event }) {
 							Precio total
 						</p>
 						<span className='text-2xl font-black text-slate-900 tracking-tight'>
-							{getPriceFromDescription(event.description)}
+							{getPriceFromDescription(event?.description)}
 						</span>
 					</div>
 
