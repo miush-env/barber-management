@@ -79,7 +79,6 @@ function TabletClient() {
 								photo={client.imageUrl}
 								phone={client.phone}
 								email={client.email}
-								point={client.points}
 								birthday={client.birthday}
 							/>
 						))
