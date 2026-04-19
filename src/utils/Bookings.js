@@ -76,11 +76,37 @@ export const bookingEvent = async () => {
 
 		const data = await response.json()
 		return data.data		
-		// console.log('Citas obtenidas:', data.data)
-		// setAppointments(data.data)
 	} catch (error) {
 		console.log('Error: ', error)
 	}
+}
+
+export const GetBookingsStatus = async (filterStatus, setAppointments) => {
+	try {
+		const params = new URLSearchParams();
+
+		if (filterStatus !== "totals") {
+			params.append("status", filterStatus);
+		}
+
+		const response = await fetch(
+			`https://api.cal.com/v2/bookings?${params}`,
+			{
+				headers: {
+					Authorization: `Bearer ${API_KEY}`,
+					"cal-api-version": "2026-02-25",
+					"Content-Type": "application/json"
+				},
+			}
+		);
+
+		const data = await response.json();
+		// console.log(data.data)
+		setAppointments(data.data || []);
+	} catch (error) {
+		console.log("Error trayendo citas:", error);
+	}
+
 }
 
 export const cancelBooking2 = async (uid, setAppointments) => {
@@ -105,6 +131,27 @@ export const cancelBooking2 = async (uid, setAppointments) => {
 	}
 }
 
+export const GetAppointmentsUser = async (email) => {
+	try {
+		const res = await fetch(
+  `https://api.cal.com/v2/bookings?attendeeEmail=${encodeURIComponent(email)}`,
+		{
+			method: "GET",
+			headers: {
+				"Authorization": `Bearer ${API_KEY}`,
+				"cal-api-version": "2026-02-25",
+				"Content-Type": "application/json"
+			}
+		}
+	);
+
+		const data = await res.json()
+		return data.data
+	} catch (error) {
+		console.log(error)	
+	}
+}
+
 export const formatDate = (dateString, intuitive = true) => {
 		const date = new Date(dateString)
 
@@ -120,27 +167,3 @@ export const formatDate = (dateString, intuitive = true) => {
 		})
 		})
 }
-
-export  const getAppointments = async (clerkId) => {
-  try {
-    const res = await fetch("http://localhost:3000/api/users/appointments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ clerkId }),
-    });
-
-    const data = await res.json();
-
-    if (!data.ok) {
-      throw new Error(data.message);
-    }
-
-    return data.appointments;
-
-  } catch (error) {
-    console.error("Error:", error.message);
-    return [];
-  }
-};
