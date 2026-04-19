@@ -6,7 +6,6 @@ import Login from './pages/Login'
 import PanelBarber from './pages/admin/PanelBarber.jsx'
 import CreateAppointment from './pages/CreateAppointment.jsx'
 import ViewAppointment from './pages/ViewAppointment.jsx'
-import ViewAppointmentsUser from './pages/ViewAppointmentsUser.jsx'
 import TabletClient from './pages/admin/TabletClient.jsx'
 import Profile from './pages/Profile.jsx'
 
@@ -31,11 +30,7 @@ function App() {
 						<ViewAppointment />
 					</ProtectedRoute>
 				} />
-				<Route path='/mis-citas' element={
-					<ProtectedRoute>
-						< ViewAppointmentsUser />
-					</ProtectedRoute>
-				} />
+			
 				<Route path='/ver-clientes' element={
 					<ProtectedRoute>
 						<TabletClient/>
