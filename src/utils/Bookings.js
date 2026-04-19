@@ -81,34 +81,6 @@ export const bookingEvent = async () => {
 	}
 }
 
-export const GetBookingsStatus = async (filterStatus, setAppointments) => {
-	try {
-		const params = new URLSearchParams();
-
-		if (filterStatus !== "totals") {
-			params.append("status", filterStatus);
-		}
-
-		const response = await fetch(
-			`https://api.cal.com/v2/bookings?${params}`,
-			{
-				headers: {
-					Authorization: `Bearer ${API_KEY}`,
-					"cal-api-version": "2026-02-25",
-					"Content-Type": "application/json"
-				},
-			}
-		);
-
-		const data = await response.json();
-		// console.log(data.data)
-		setAppointments(data.data || []);
-	} catch (error) {
-		console.log("Error trayendo citas:", error);
-	}
-
-}
-
 export const cancelBooking2 = async (uid, setAppointments) => {
 	try {
 		const res = await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
@@ -166,4 +138,32 @@ export const formatDate = (dateString, intuitive = true) => {
 			year: 'numeric',
 		})
 		})
+}
+
+export const GetBookingsStatus = async (email, status) => {
+	try {
+
+		const validateStatus = ['upcoming', 'cancelled'];
+
+		let URL = `https://api.cal.com/v2/bookings?take=100&attendeeEmail=${encodeURIComponent(email)}`
+
+		if ( validateStatus.includes(status) ) {
+			URL += `&status=${status}`
+		}
+
+		const res = await fetch( URL , {
+			method: 'GET',
+ 			headers: {
+				"Authorization": `Bearer ${API_KEY}`,
+   			'cal-api-version': '2026-02-25',
+				"Content-Type": "application/json"
+			}
+		})
+
+		const data = await res.json()
+		return data.data
+	} catch (error) {
+		console.log(error)
+		return [];
+	}
 }
