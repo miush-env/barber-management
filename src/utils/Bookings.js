@@ -167,3 +167,31 @@ export const GetBookingsStatus = async (email, status) => {
 		return [];
 	}
 }
+
+export const GetBookingsStatusAdmin = async (status) => {
+	try {
+
+		const validateStatus = ['upcoming', 'cancelled'];
+
+		let URL = `https://api.cal.com/v2/bookings?take=100`
+
+		if ( validateStatus.includes(status) ) {
+			URL += `&status=${status}`
+		}
+
+		const res = await fetch( URL , {
+			method: 'GET',
+ 			headers: {
+				"Authorization": `Bearer ${API_KEY}`,
+   			'cal-api-version': '2026-02-25',
+				"Content-Type": "application/json"
+			}
+		})
+
+		const data = await res.json()
+		return data.data
+	} catch (error) {
+		console.log(error)
+		return [];
+	}
+}
