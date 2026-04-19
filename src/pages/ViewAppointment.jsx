@@ -3,7 +3,7 @@ import CardClientsStatus from '@components/viewAppointment/cards/CardClientsStat
 import PendingShifts from '../components/viewAppointment/cards/PendingShifts.jsx'
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
-import { bookingEvent, getNameEvent, GetAppointmentsUser, GetBookingsStatus } from '../utils/Bookings.js'
+import { bookingEvent, getNameEvent, GetBookingsStatus, GetBookingsStatusAdmin } from '../utils/Bookings.js'
 import { ChevronLeft } from 'lucide-react'
 import { useUser } from '@clerk/react'
 
@@ -14,7 +14,7 @@ function ViewAppointment() {
 	const [appointmentsUser, setAppointmentsUser] = useState([])
 	const [isAdmin, setIsAdmin] = useState(false)
 	const [ dataEvent, setDataEvent ] = useState([])
-	const [filterStatus, setFilterStatus] = useState("totals");
+	const [filterStatus, setFilterStatus] = useState('all')
 	const [loading, setLoading] = useState(true)
 	const {user} = useUser()
 
@@ -28,10 +28,8 @@ function ViewAppointment() {
 
 			if (currentUser && currentUser.role === 'admin') {
 				setIsAdmin(true);
-				console.log('Sos admin');
 			} else {
 				setIsAdmin(false);
-				console.log('No sos admin');
 			}
 
 		} catch (error) {
@@ -57,42 +55,44 @@ function ViewAppointment() {
 			}
 		};
 
-	const userAccount = async () => {
-		if (user.primaryEmailAddress.emailAddress) {
-			const res = await GetAppointmentsUser(user.primaryEmailAddress.emailAddress)
-			setAppointmentsUser(res)
-		}
-	}
 	useEffect(() => {
-	  loadAllData();
-		userAccount()
+		loadAllData();
 	}, [])
 
 	useEffect(() => {
 		if (user?.id) {
 			checkAdminRole();
-			}
+		}
 	}, [user]);
 
 	useEffect(() => {
-	if (!user?.primaryEmailAddress?.emailAddress) return;
+		if (!user?.primaryEmailAddress?.emailAddress) return;
 
-	const loadBookings = async () => {
-		setLoading(true);
+		const loadBookings = async () => {
+			setLoading(true);
 
-		const resApiCal = await GetBookingsStatus(
-			user.primaryEmailAddress.emailAddress,
-			filterStatus
-		);
+			try {
+				if (isAdmin) {
+					const resApiCal = await GetBookingsStatusAdmin(filterStatus)
+					setAppointments(resApiCal || [])
+				} else {
+					const resApiCal = await GetBookingsStatus(
+						user.primaryEmailAddress.emailAddress,
+						filterStatus,
+					)
+					setAppointmentsUser(resApiCal || [])
+				}
+			} catch (error) {
+				console.error('Error cargando citas:', error)
+			} finally {
+				setLoading(false);
+			}
+		};
 
-		setAppointmentsUser(resApiCal || []);
-		setLoading(false);
-	};
+		loadBookings();
+	}, [filterStatus, user, isAdmin]);
 
-	loadBookings();
-}, [filterStatus, user]);
-
-	const appointmentsToShow = isAdmin ? appointments || [] : appointmentsUser || []
+	const appointmentsToShow = isAdmin ? appointments : appointmentsUser
 
 	return (
 		<main className='bg-gray-50 min-h-screen flex flex-col pb-20'>
