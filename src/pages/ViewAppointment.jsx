@@ -75,16 +75,24 @@ function ViewAppointment() {
 	}, [user]);
 
 	useEffect(() => {
-		const loadBookings = async () => {
-			setLoading(true);
-			await GetBookingsStatus(filterStatus, setAppointments);
-			setLoading(false);
-		};
+	if (!user?.primaryEmailAddress?.emailAddress) return;
 
-		loadBookings();
-}, [filterStatus]);
+	const loadBookings = async () => {
+		setLoading(true);
 
-	const appointmentsToShow = isAdmin ? appointments : appointmentsUser;
+		const resApiCal = await GetBookingsStatus(
+			user.primaryEmailAddress.emailAddress,
+			filterStatus
+		);
+
+		setAppointmentsUser(resApiCal || []);
+		setLoading(false);
+	};
+
+	loadBookings();
+}, [filterStatus, user]);
+
+	const appointmentsToShow = isAdmin ? appointments || [] : appointmentsUser || []
 
 	return (
 		<main className='bg-gray-50 min-h-screen flex flex-col pb-20'>
@@ -109,8 +117,8 @@ function ViewAppointment() {
 			<article className='flex-1 flex flex-col'>
 				<h2 className='text-xl pl-4 font-bold uppercase my-8'>
 					<select name="select-turn-filter" value={filterStatus} onChange={(e)=>{ setFilterStatus(e.target.value)}}>
-						<option value="totals">Turnos totales</option>
-						<option value="past">Turnos confirmados</option>
+						<option value="all">Turnos totales</option>
+						<option value="upcoming">Turnos confirmados</option>
 						<option value="cancelled">Turnos cancelados</option>
 					</select>
 				</h2>
