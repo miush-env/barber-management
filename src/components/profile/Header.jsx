@@ -35,10 +35,6 @@ function Header() {
 					Dueño
 				</span>
 			</div>
-			<button className='w-full bg-blue-600 rounded-full p-2 flex items-center justify-center gap-3 active:bg-blue-500'>
-				<Edit3 className='w-4 h-4 text-white' />
-				<span className='font-semibold text-white'>Editar Perfil</span>
-			</button>
 		</section>
 	)
 }
