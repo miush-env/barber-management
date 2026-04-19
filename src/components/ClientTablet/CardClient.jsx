@@ -5,7 +5,6 @@ function CardClient({
 	photo,
 	phone,
 	email,
-	point,
 	birthday,
 }) {
 	return (
@@ -18,7 +17,6 @@ function CardClient({
 			<section className='flex flex-col gap-1 w-full'>
 				<div className='flex justify-between items-center gap-2'>
 					<h2 className='text-lg font-bold'>{name}</h2>
-					<span className="py-1 px-2 text-center bg-blue-500 rounded-full font-semibold text-white">{point} pts</span>
 				</div>
 				<div className='flex items-center gap-2'>
 					<svg
