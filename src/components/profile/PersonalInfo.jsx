@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import { useUser } from '@clerk/react'
 import { Smartphone, Cake, Mail } from 'lucide-react'
+import { validatePhone } from '../../utils/phone'
 
-function PersonalInfo() {
+const PersonalInfo = forwardRef(({ edit }, ref) => {
 	const { user } = useUser()
-	
+	const [phone, setPhone] = useState(user?.unsafeMetadata?.phone || '')
+	const [birthdate, setBirthdate] = useState(user?.unsafeMetadata?.birthdate || '')
+
+	useImperativeHandle(ref, () => ({
+		save: async () => {
+			const validation = validatePhone(phone)
+			if (validation.valid) {
+				await user.update({
+					unsafeMetadata: {
+						...user.unsafeMetadata,
+						phone: validation.formatted,
+						birthdate
+					}
+				})
+			}
+		}
+	}))
+
 	return (
 		<section className='flex flex-col gap-4 [&>div]:flex [&>div]:items [&>div]:p-2 [&>div]:gap-4 bg-white rounded-xl p-2'>
 			<div>
@@ -29,9 +47,18 @@ function PersonalInfo() {
 					<span className='text-sm font-semibold text-gray-500'>
 						Fecha de nacimiento
 					</span>
-					<span className='text-md font-bold text-gray-800 uppercase'>
-						05 sep 2008
-					</span>
+					{edit ? (
+						<input
+							type='date'
+							value={birthdate}
+							onChange={(e) => setBirthdate(e.target.value)}
+							className='text-md font-bold text-gray-800 uppercase outline-none border rounded px-2 py-1'
+						/>
+					) : (
+						<span className='text-md font-bold text-gray-800 uppercase'>
+							{user?.unsafeMetadata?.birthdate || 'No especificada'}
+						</span>
+					)}
 				</div>
 			</div>
 
@@ -43,13 +70,22 @@ function PersonalInfo() {
 					<span className='text-sm font-semibold text-gray-500'>
 						Teléfono
 					</span>
-					<span className='text-md font-bold text-gray-800 uppercase'>
-						11 34228644
-					</span>
+					{edit ? (
+						<input
+							value={phone}
+							onChange={(e) => setPhone(e.target.value)}
+							placeholder='9 11 1234-5678'
+							className='text-md font-bold text-gray-800 uppercase outline-none border rounded px-2 py-1'
+						/>
+					) : (
+						<span className='text-md font-bold text-gray-800 uppercase'>
+							{user?.unsafeMetadata?.phone || 'No especificado'}
+						</span>
+					)}
 				</div>
 			</div>
 		</section>
 	)
-}
+})
 
 export default PersonalInfo
