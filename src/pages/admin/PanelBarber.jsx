@@ -4,40 +4,37 @@ import UpcomingAppointment from '../../components/panelBarber/UpcomingAppointmen
 import CardData from '../../components/panelBarber/cards/CardData'
 import NavBar from '../../components/NavBar'
 import { useEffect } from 'react'
-import { getTodayBookings } from '../../utils/Bookings'
+import { GetTodayBookings } from '../../utils/Bookings'
+import gradientBg from '../../assets/gradient-bg.png'
 
-import { useUser } from '@clerk/react'
+import { useLocation } from 'react-router'
+import { useState } from 'react'
 
 function PanelBarber() {
-	const { user, isSignedIn } = useUser()
+	const  location = useLocation()
 
-	const sendEmail = async (email, clerkId, firstName, lastName, imageUrl) => {
-  try {
-    // eslint-disable-next-line no-unused-vars
-    const res = await fetch("http://localhost:3000/Api/users/relation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, clerkId, firstName, lastName, imageUrl })
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
+	const [todayAppointments, setTodayAppointments] = useState([])
+	const currentQuote = todayAppointments.length > 0 ? todayAppointments[0] : null
 
 	useEffect(() => {
-		if (isSignedIn) {
-			sendEmail(user.emailAddresses[0].emailAddress, user.id, user.firstName, user.lastName, user.imageUrl);
-		} else {
-			console.log('no tienes sesión iniciada')
+		const loadTodayBookings = async () => {
+			try {
+				const bookings = await GetTodayBookings()
+				setTodayAppointments(bookings)
+				console.log('Citas de hoy:', bookings)
+				bookings?.forEach((booking, index) => {
+					console.log(`Cita ${index + 1}:`, booking)
+				})
+			} catch (error) {
+				console.error('Error al obtener las citas de hoy:', error)
+			}
 		}
 
-		getTodayBookings()
-	}, [])
+		loadTodayBookings()
+	}, [location])
 
 	return (
-		<main className='flex flex-col relative min-h-screen bg-gray-50 pb-20 '>
+		<main className='flex flex-col relative min-h-screen bg-cover bg-center pb-20 ' style={{ backgroundImage: `url(${gradientBg})`}}>
 			<Header
 				notifications={1}
 			/>
@@ -48,15 +45,8 @@ function PanelBarber() {
 			</section>
 
 			<section>
-				<NextAppointment
-					nameClient='Ariel Dundo'
-					status='confirmada'
-					time='10:30'
-					serviceName='Corte clasico'
-					timeService='30 min'
-					price='7000'
-				/>
-				<UpcomingAppointment />
+				<NextAppointment appointment={currentQuote}/>
+				<UpcomingAppointment appointments={todayAppointments} />
 			</section>
 
 			<section className='fixed bottom-0 w-full px-5'>
