@@ -1,23 +1,19 @@
 import EditAppointment from '@components/modal/EditAppointment.jsx'
 import { useState } from 'react';
+import { cancelBooking } from '../../../utils/Bookings';
 
 function CardNextAppointment({
-	nameClient,
-	status,
-	time,
-	serviceName,
-	timeService,
-	price,
+	appointment
 }) {
 	let statusStyle = "";
   let dotColor = "";
 
 	const [isOpen, setIsOpen] = useState(false)
 
-  if (status === "confirmada") {
+  if (appointment?.status === "accepted") {
     statusStyle = "text-green-700";
     dotColor = "bg-green-500";
-  } else if (status === "cancelada") {
+  } else if (appointment?.status === "cancelled") {
     statusStyle = "text-red-700";
     dotColor = "bg-red-500";
   }
@@ -33,27 +29,32 @@ function CardNextAppointment({
 					/>
 
 					<div className='flex flex-col'>
-						<h3 className='text-xl text-gray-900 font-bold'>{nameClient}</h3>
+						<h3 className='text-xl text-gray-900 font-bold'>{appointment?.bookingFieldsResponses?.name || 'Cliente no especificado'}</h3>
 
 						<span
 							className={`flex items-center gap-1 text-base font-medium ${statusStyle}`}
 						>
 							<span className={`w-2 h-2 rounded-full ${dotColor}`}></span>
-							{status}
+							{appointment?.status === "accepted" ? 'Aceptado' : 'Cancelado'}
 						</span>
 					</div>
 				</div>
 
 				<div className='flex flex-col items-end leading-none'>
-					<span className='text-3xl font-bold text-blue-700'>{time}</span>
+					<span className='text-3xl font-bold text-blue-700'>
+						 {new Date(appointment?.start).toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}
+					</span>
 				</div>
 			</section>
 			<section className='mt-3  flex justify-between items-center'>
 				<div className='flex flex-col text-sm text-gray-600'>
-					<span className='text-gray-800 font-bold text-base'>{serviceName}</span>
+					<span className='text-gray-800 font-bold text-base'>{appointment?.eventType?.slug || 'Servicio no especificado'}</span>
 
 					<span className='font-semibold'>
-						{timeService} • ${price}
+						{appointment?.duration + ` min`} • ${8000}
 					</span>
 				</div>
 				<button
@@ -66,7 +67,8 @@ function CardNextAppointment({
 			<EditAppointment
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
-				services={[1,2,3]}
+				onCancel={(uid) => cancelBooking(uid)}
+				cita={appointment}
 				time='12:23'
 			/>
 		</article>
