@@ -1,6 +1,6 @@
 const API_KEY = import.meta.env.VITE_API_SECRET
 
-export const getTodayBookings = async () => {
+export const GetTodayBookings = async () => {
 		const today = new Date()
 		const startOfDay = new Date(
 			today.getFullYear(),
@@ -24,7 +24,6 @@ export const getTodayBookings = async () => {
 		})
 
 		const data = await response.json()
-		console.log(data.data)
 		return data.data
 }
 
@@ -81,6 +80,38 @@ export const bookingEvent = async () => {
 	}
 }
 
+export const cancelBooking = async (uid) => {
+	try {
+		const res = await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${import.meta.env.VITE_API_SECRET}`,
+				'cal-api-version': '2026-02-25',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				cancellationReason: 'Cancelado desde mi app en la pagina de inicio',
+				cancelSubsequentBookings: false,
+			}),
+		})
+
+		if (!res.ok) {
+			const errorText = await res.text()
+			console.error('Error al cancelar en la pagina de inicio', {
+				status: res.status,
+				statusText: res.statusText,
+				body: errorText,
+			})
+			throw new Error(`Error al cancelar en la pagina de inicio (${res.status})`)
+		}
+
+		return await res.json()
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
 export const cancelBooking2 = async (uid, setAppointments) => {
 	try {
 		const res = await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
@@ -91,7 +122,7 @@ export const cancelBooking2 = async (uid, setAppointments) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				cancellationReason: 'Cancelado desde la app',
+				cancellationReason: 'Cancelado desde mi app y actualización del estado en la UI',
 			}),
 		})
 
@@ -143,12 +174,12 @@ export const formatDate = (dateString, intuitive = true) => {
 export const GetBookingsStatus = async (email, status) => {
 	try {
 
-		const validateStatus = ['upcoming', 'cancelled'];
-
 		let URL = `https://api.cal.com/v2/bookings?take=100&attendeeEmail=${encodeURIComponent(email)}`
 
-		if ( validateStatus.includes(status) ) {
-			URL += `&status=${status}`
+		if ( status === "cancelled" ) {
+			URL += `&status=cancelled`
+		} else if (status === "upcoming") {
+			URL += `&status=upcoming,past`
 		}
 
 		const res = await fetch( URL , {
@@ -171,24 +202,33 @@ export const GetBookingsStatus = async (email, status) => {
 export const GetBookingsStatusAdmin = async (status) => {
 	try {
 
-		const validateStatus = ['upcoming', 'cancelled'];
+		let URL = `https://api.cal.com/v2/bookings?take=100&sortStart=desc`;
 
-		let URL = `https://api.cal.com/v2/bookings?take=100`
-
-		if ( validateStatus.includes(status) ) {
-			URL += `&status=${status}`
+		if (status === "cancelled") {
+			URL += `&status=cancelled`;
+		} else if (status === "upcoming") {
+			// confirmadas pasadas + futuras
+			URL += `&status=upcoming,past`;
 		}
+		// si status === "all", no añadimos filtro
 
-		const res = await fetch( URL , {
-			method: 'GET',
+		const res = await fetch(URL, {
+			method: "GET",
  			headers: {
-				"Authorization": `Bearer ${API_KEY}`,
+				Authorization: `Bearer ${API_KEY}`,
    			'cal-api-version': '2026-02-25',
 				"Content-Type": "application/json"
 			}
 		})
 
 		const data = await res.json()
+
+		if (status === "upcoming") {
+			return data.data.filter(
+				(b) => b.status !== "cancelled" && b.status !== "rejected"
+			)
+		}
+
 		return data.data
 	} catch (error) {
 		console.log(error)
