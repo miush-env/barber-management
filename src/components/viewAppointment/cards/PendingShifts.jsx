@@ -10,7 +10,7 @@ function PendingShifts({ setAppointments, cita, event }) {
 		const match = description?.match(/\$(\d+)/)
 		return match ? Number(match[1]) : null
 	}
-
+	// console.log(cita)
 	return (
 		<article
 			key={cita.id}
@@ -62,7 +62,7 @@ function PendingShifts({ setAppointments, cita, event }) {
 						</span>
 					</div>
 
-					<button onClick={() => setIsOpen(!isOpen)} className='flex items-center gap-2 bg-slate-900 hover:bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-slate-200 transform active:scale-95 group'>
+					<button onClick={() => setIsOpen(!isOpen)} className={`flex items-center gap-2 bg-slate-900 hover:bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-slate-200 transform active:scale-95 group ${cita.status === "cancelled" ? 'hidden' : ''}`}>
 						<Edit3 className='w-4 h-4' />
 						Editar
 					</button>
