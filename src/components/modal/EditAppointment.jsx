@@ -2,8 +2,18 @@ import RescheduleIframe from './RescheduleIframe'
 import { X } from 'lucide-react'
 
 function EditAppointment({ isOpen, setIsOpen, onCancel, cita }) {
-	const handleCancel = () => {
-		onCancel(cita.uid)
+	const handleCancel = async () => {
+		if (cita?.status === 'cancelled') {
+			console.warn('La cita ya está cancelada, no se puede volver a cancelar.', cita.uid)
+			return
+		}
+
+		try {
+			await onCancel(cita.uid)
+			setIsOpen(false)
+		} catch (error) {
+			console.error('Error al cancelar la cita:', error)
+		}
 	}
 
 	return (
