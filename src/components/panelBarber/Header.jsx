@@ -11,7 +11,7 @@ function Header({ notifications }) {
 	})
 
 	return (
-		<header className='flex w-full items-center justify-between px-6 h-24 '>
+		<header className='flex w-full items-center justify-between px-6 h-20 bg-gray-50/40 backdrop-blur-md mb-4'>
 			<div className='flex gap-2 items-center'>
 				<img
 					src={user.imageUrl}
