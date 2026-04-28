@@ -1,7 +1,13 @@
 import { ChevronRight } from "lucide-react";
 
 function CardUpcomingAppointment({appointment}) {
-	const isAccepted = appointment.status === true;
+  const hour = new Date(appointment.start).toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).slice(0,5)
+
+  const period = new Date(appointment.start).getHours() < 12 ? "AM" : "PM";
 
   return (
     <div 
@@ -10,23 +16,27 @@ function CardUpcomingAppointment({appointment}) {
     >
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-center min-w-[50px] py-1 border-r border-slate-100 dark:border-white/10">
-          <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{appointment.time}</span>
-          <span className="text-[10px] text-slate-400 uppercase font-medium">AM</span>
+          <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{hour}</span>
+          <span className={`text-[10px] uppercase font-medium ${
+            period === "AM" ? "text-emerald-500" : "text-orange-500"}`}
+          >
+            {period}
+          </span>
         </div>
 
         <div>
           <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-100">
-            {appointment.clientName}
+            {appointment.bookingFieldsResponses.name}
           </h4>
           <div className="flex items-center gap-2">
             <span className="text-[11px] text-slate-500 dark:text-slate-400">
-              {appointment.service}
+              {appointment.eventType.slug}
             </span>
             <span className="text-[10px] opacity-20 dark:text-slate-600">•</span>
             <span className={`text-[10px] font-bold uppercase tracking-wider ${
-              isAccepted ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'
+              appointment.status === "accepted" ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'
             }`}>
-              {isAccepted ? 'Aceptado' : 'Cancelado'}
+              {appointment.status === "accepted" ? 'Aceptado' : 'Cancelado'}
             </span>
           </div>
         </div>
