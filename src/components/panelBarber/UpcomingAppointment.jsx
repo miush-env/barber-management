@@ -1,37 +1,6 @@
 import CardUpcomingAppointment from './cards/CardUpcomingAppointment'
 
-function UpcomingAppointment() {
-
-	const appointments = [
-		{
-			id: 1,
-			clientName: 'Juan Ramirez',
-			time: '11:00',
-			service: 'Corte Clásico',
-			status: true,
-		},
-		{
-			id: 2,
-			clientName: 'Mateo Vazquez',
-			time: '12:00',
-			service: 'Degradado + Barba',
-			status: true,
-		},
-		{
-			id: 3,
-			clientName: 'Ariel Dundo',
-			time: '13:30',
-			service: 'Corte Clásico',
-			status: false,
-		},
-		{
-			id: 4,
-			clientName: 'Ariel Dundo',
-			time: '13:30',
-			service: 'Corte Clásico',
-			status: true,
-		},
-	]
+function UpcomingAppointment({ appointments }) {
 
 	return (
 		<article className='px-6 flex flex-col gap-2'>
