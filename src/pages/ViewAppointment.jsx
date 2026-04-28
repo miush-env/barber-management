@@ -16,26 +16,8 @@ function ViewAppointment() {
 	const [ dataEvent, setDataEvent ] = useState([])
 	const [filterStatus, setFilterStatus] = useState('all')
 	const [loading, setLoading] = useState(true)
+	const [currentPage, setCurrentPage] = useState(1)
 	const {user} = useUser()
-
-	const checkAdminRole = async () => {
-		try {
-			const response = await fetch('http://localhost:3000/api/users/');
-			const users = await response.json();
-
-			// Buscar usuario actual por clerkId
-			const currentUser = users.find((u) => u.clerkId === user.id);
-
-			if (currentUser && currentUser.role === 'admin') {
-				setIsAdmin(true);
-			} else {
-				setIsAdmin(false);
-			}
-
-		} catch (error) {
-			console.log('Error al verificar rol:', error);
-		}
-	};
 
 	const loadAllData = async () => {
 			setLoading(true); // Aseguramos que empiece en true
@@ -60,10 +42,8 @@ function ViewAppointment() {
 	}, [])
 
 	useEffect(() => {
-		if (user?.id) {
-			checkAdminRole();
-		}
-	}, [user]);
+		setCurrentPage(1)
+	}, [filterStatus, isAdmin])
 
 	useEffect(() => {
 		if (!user?.primaryEmailAddress?.emailAddress) return;
@@ -94,6 +74,13 @@ function ViewAppointment() {
 
 	const appointmentsToShow = isAdmin ? appointments : appointmentsUser
 
+	const itemsPerPage = 5
+	const totalPages = Math.ceil(appointmentsToShow.length / itemsPerPage)
+	const paginatedAppointments = appointmentsToShow.slice(
+		(currentPage - 1) * itemsPerPage,
+		currentPage * itemsPerPage
+	)
+
 	return (
 		<main className='bg-gray-50 min-h-screen flex flex-col pb-20'>
 			<header className='flex items-center p-4 border-b border-gray-300 bg-white'>
@@ -101,7 +88,7 @@ function ViewAppointment() {
 					className='p-1 active:bg-slate-200 rounded-full transition-colors'
 					onClick={() => {
 						navigate('/inicio')
-					}}
+				}}
 				>
 					<ChevronLeft className="w-6 h-6 text-slate-600" />
 				</button>
@@ -146,9 +133,9 @@ function ViewAppointment() {
 								Cargando...
 							</p>
 						</div>
-					) : appointmentsToShow.length > 0 ? (
+					) : paginatedAppointments.length > 0 ? (
 						<div className='flex-1 w-full px-4 flex flex-col gap-4'>
-							{	appointmentsToShow.map((cita) => {
+							{	paginatedAppointments.map((cita) => {
 								const matchedEvent = dataEvent.find(
             			(e) => e.slug === cita.eventType?.slug
          				);
@@ -173,6 +160,41 @@ function ViewAppointment() {
 					)}
 				</section>
 			</article>
+
+			{/* Paginación */}
+			{totalPages > 1 && (
+				<section className='flex justify-center items-center gap-2 p-4 bg-white border-t border-gray-200'>
+					<button
+						onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+						disabled={currentPage === 1}
+						className='px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors'
+					>
+						Anterior
+					</button>
+					
+					{Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+						<button
+							key={page}
+							onClick={() => setCurrentPage(page)}
+							className={`px-3 py-2 rounded-lg transition-colors ${
+								currentPage === page
+									? 'bg-blue-600 text-white'
+									: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+							}`}
+						>
+							{page}
+						</button>
+					))}
+					
+					<button
+						onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+						disabled={currentPage === totalPages}
+						className='px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors'
+					>
+						Siguiente
+					</button>
+				</section>
+			)}
 
 			<section className='fixed bottom-0 w-full px-5'>
 				<NavBar />
