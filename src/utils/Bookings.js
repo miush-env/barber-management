@@ -199,6 +199,40 @@ export const GetBookingsStatus = async (email, status) => {
 	}
 }
 
+export const GetBookingsTodayCount = async (email) => {
+	const today = new Date()
+
+	const startOfDay = new Date(
+		today.getFullYear(),
+		today.getMonth(),
+		today.getDate(),
+		0,
+		0,
+		0
+	).toISOString()
+
+	const endOfDay = new Date(
+ 		today.getFullYear(),
+  	today.getMonth(),
+		today.getDate(),
+		23,
+		59,
+		59
+	).toISOString()
+
+	const res = await fetch(
+		`https://api.cal.com/v2/bookings?attendeeEmail=${encodeURIComponent(email)}&startTime=${startOfDay}&endTime=${endOfDay}`,
+		{
+			headers: {
+				Authorization: `Bearer ${API_KEY}`
+			}
+		}
+	)
+
+	const data = await res.json()
+	return data.data.totalCount
+}
+
 export const GetBookingsStatusAdmin = async (status) => {
 	try {
 
