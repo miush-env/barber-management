@@ -12,6 +12,7 @@ function ViewAppointment() {
 
 	const [appointments, setAppointments] = useState([])
 	const [appointmentsUser, setAppointmentsUser] = useState([])
+	// eslint-disable-next-line no-unused-vars
 	const [isAdmin, setIsAdmin] = useState(false)
 	const [ dataEvent, setDataEvent ] = useState([])
 	const [filterStatus, setFilterStatus] = useState('all')
