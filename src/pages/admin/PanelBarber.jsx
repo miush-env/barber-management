@@ -4,16 +4,19 @@ import UpcomingAppointment from '../../components/panelBarber/UpcomingAppointmen
 import CardData from '../../components/panelBarber/cards/CardData'
 import NavBar from '../../components/NavBar'
 import { useEffect } from 'react'
-import { GetTodayBookings } from '../../utils/Bookings'
+import { GetTodayBookings, GetBookingsTodayCount } from '../../utils/Bookings'
 import gradientBg from '../../assets/gradient-bg.png'
 
 import { useLocation } from 'react-router'
 import { useState } from 'react'
+import { useUser } from '@clerk/react'
 
 function PanelBarber() {
 	const  location = useLocation()
-
+	const { user } = useUser()
+	console.log(user)
 	const [todayAppointments, setTodayAppointments] = useState([])
+	const [todayBookingsCount, setTodayBookingsCount] = useState(0)
 	const currentQuote = todayAppointments.length > 0 ? todayAppointments[0] : null
 
 	useEffect(() => {
@@ -21,10 +24,9 @@ function PanelBarber() {
 			try {
 				const bookings = await GetTodayBookings()
 				setTodayAppointments(bookings)
-				console.log('Citas de hoy:', bookings)
-				bookings?.forEach((booking, index) => {
-					console.log(`Cita ${index + 1}:`, booking)
-				})
+				// bookings?.forEach((booking, index) => {
+				// 	console.log(`Cita ${index + 1}:`, booking)
+				// })
 			} catch (error) {
 				console.error('Error al obtener las citas de hoy:', error)
 			}
@@ -33,6 +35,19 @@ function PanelBarber() {
 		loadTodayBookings()
 	}, [location])
 
+	useEffect(()=>{
+		const loadTodayBookingsCount = async () => {
+			try {
+				const count = await GetBookingsTodayCount(user.primaryEmailAddress.emailAddress)
+				setTodayBookingsCount(count)
+			} catch (error) {
+				console.error('Error al obtener el conteo de citas de hoy:', error)
+			}
+		}
+
+		loadTodayBookingsCount()
+	}, [user.primaryEmailAddress.emailAddress])
+
 	return (
 		<main className='flex flex-col relative min-h-screen bg-cover bg-center pb-20 ' style={{ backgroundImage: `url(${gradientBg})`}}>
 			<Header
@@ -40,7 +55,7 @@ function PanelBarber() {
 			/>
 
 			<section className='flex justify-between gap-4 items-center px-4'>
-				<CardData title='Citas de hoy' value={23}/>
+				<CardData title='Citas de hoy' value={todayBookingsCount}/>
 				<CardData title='Ingresos totales' value={140820} style='earnings'/>
 			</section>
 
