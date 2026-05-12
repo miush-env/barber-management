@@ -1,6 +1,7 @@
 import EditAppointment from '@components/modal/EditAppointment.jsx'
 import { useState } from 'react';
 import { cancelBooking } from '../../../utils/Bookings';
+import { Edit3 } from 'lucide-react';
 
 function CardNextAppointment({
 	appointment
@@ -45,6 +46,7 @@ function CardNextAppointment({
 						 {new Date(appointment?.start).toLocaleTimeString("es-AR", {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   })}
 					</span>
 				</div>
@@ -59,9 +61,9 @@ function CardNextAppointment({
 				</div>
 				<button
 					onClick={() => setIsOpen(!isOpen)}
-					className='flex items-center active:bg-blue-500 justify-center bg-linear-to-tl from-blue-600/90 to-blue-600/70 h-10 w-10 rounded-lg'
+					className='flex items-center gap-2 bg-slate-900 hover:bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-slate-200 transform active:scale-95'
 				>
-					<img src='./src/assets/edit.svg' alt='icon edit' width={20} />
+					<Edit3 className='w-4 h-4' />
 				</button>
 			</section>
 			<EditAppointment
