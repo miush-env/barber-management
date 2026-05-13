@@ -199,7 +199,7 @@ export const GetBookingsStatus = async (email, status) => {
 	}
 }
 
-export const GetBookingsTodayCount = async (email) => {
+export const GetBookingsTodayData = async (email) => {
 	const today = new Date()
 
 	const startOfDay = new Date(
