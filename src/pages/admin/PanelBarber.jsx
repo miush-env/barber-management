@@ -4,29 +4,28 @@ import UpcomingAppointment from '../../components/panelBarber/UpcomingAppointmen
 import CardData from '../../components/panelBarber/cards/CardData'
 import NavBar from '../../components/NavBar'
 import { useEffect } from 'react'
-import { GetTodayBookings, GetBookingsTodayCount } from '../../utils/Bookings'
+import { GetTodayBookings, GetBookingsTodayData } from '../../utils/Bookings'
 import gradientBg from '../../assets/gradient-bg.png'
 
 import { useLocation } from 'react-router'
 import { useState } from 'react'
 import { useUser } from '@clerk/react'
 
+import { checkRole } from '../../utils/UserCheckRol'
+
 function PanelBarber() {
 	const  location = useLocation()
 	const { user } = useUser()
-	console.log(user)
 	const [todayAppointments, setTodayAppointments] = useState([])
 	const [todayBookingsCount, setTodayBookingsCount] = useState(0)
 	const currentQuote = todayAppointments.length > 0 ? todayAppointments[0] : null
+	const [isAdmin, setIsAdmin] = useState(false)
 
 	useEffect(() => {
 		const loadTodayBookings = async () => {
 			try {
 				const bookings = await GetTodayBookings()
 				setTodayAppointments(bookings)
-				// bookings?.forEach((booking, index) => {
-				// 	console.log(`Cita ${index + 1}:`, booking)
-				// })
 			} catch (error) {
 				console.error('Error al obtener las citas de hoy:', error)
 			}
@@ -38,7 +37,7 @@ function PanelBarber() {
 	useEffect(()=>{
 		const loadTodayBookingsCount = async () => {
 			try {
-				const count = await GetBookingsTodayCount(user.primaryEmailAddress.emailAddress)
+				const count = await GetBookingsTodayData(user.primaryEmailAddress.emailAddress)
 				setTodayBookingsCount(count)
 			} catch (error) {
 				console.error('Error al obtener el conteo de citas de hoy:', error)
@@ -48,6 +47,14 @@ function PanelBarber() {
 		loadTodayBookingsCount()
 	}, [user.primaryEmailAddress.emailAddress])
 
+	useEffect(() => {
+		const checkRoleAsync = async () => {
+			const checkRoleResult = await checkRole(user.id);
+			setIsAdmin(checkRoleResult.ok);
+		};
+		checkRoleAsync();
+	}, [user.id])
+
 	return (
 		<main className='flex flex-col relative min-h-screen bg-cover bg-center pb-20 ' style={{ backgroundImage: `url(${gradientBg})`}}>
 			<Header
@@ -55,8 +62,8 @@ function PanelBarber() {
 			/>
 
 			<section className='flex justify-between gap-4 items-center px-4'>
-				<CardData title='Citas de hoy' value={todayBookingsCount}/>
-				<CardData title='Ingresos totales' value={140820} style='earnings'/>
+				<CardData title='Citas del dia' value={todayBookingsCount}/>
+				<CardData title={isAdmin ? 'Ingresos del dia' : 'Gasto estimado'} value={140820} style='earnings'/>
 			</section>
 
 			<section>
