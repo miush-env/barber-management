@@ -6,7 +6,7 @@ import { ChevronLeft } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { UserProfile } from '@clerk/react'
 import { Edit3, Check } from 'lucide-react'
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 
 function Profile() {
 	const navigate = useNavigate()
@@ -22,9 +22,6 @@ function Profile() {
 		}
 	}
 
-	useEffect(() => {
-		console.log(edit)
-	}, [edit])
 	return (
 		<main>
 			<header className='flex items-center p-4 border-b border-gray-300 bg-white'>
