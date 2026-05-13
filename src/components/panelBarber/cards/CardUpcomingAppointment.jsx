@@ -1,4 +1,7 @@
 import { ChevronRight } from "lucide-react";
+import EditAppointment from "../../modal/EditAppointment";
+import { useState } from "react";
+import { cancelBooking } from "../../../utils/Bookings";
 
 function CardUpcomingAppointment({appointment}) {
   const hour = new Date(appointment.start).toLocaleTimeString("es-AR", {
@@ -8,11 +11,13 @@ function CardUpcomingAppointment({appointment}) {
   }).slice(0,5)
 
   const period = new Date(appointment.start).getHours() < 12 ? "AM" : "PM";
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div 
       className="group flex items-center justify-between p-3 rounded-2xl transition-all active:scale-[0.98] cursor-pointer
                  bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 shadow-sm hover:border-blue-500/30 active:border-blue-500/30"
+      onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-center min-w-[50px] py-1 border-r border-slate-100 dark:border-white/10">
@@ -45,6 +50,12 @@ function CardUpcomingAppointment({appointment}) {
       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 dark:bg-white/5 group-hover:bg-blue-500/10 group-active:bg-blue-500/10 transition-colors">
         <ChevronRight size={14} className="text-slate-700 dark:text-slate-600 group-active:text-blue-700 group-hover:text-blue-500" />
       </div>
+      	<EditAppointment
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				onCancel={(uid) => cancelBooking(uid)}
+				cita={appointment}
+			/>
     </div>
 	)
 }
