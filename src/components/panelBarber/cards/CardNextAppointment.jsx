@@ -71,7 +71,6 @@ function CardNextAppointment({
 				setIsOpen={setIsOpen}
 				onCancel={(uid) => cancelBooking(uid)}
 				cita={appointment}
-				time='12:23'
 			/>
 		</article>
 	)
