@@ -1,8 +1,24 @@
 import { useUser } from '@clerk/react'
 import { Edit3 } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { checkRole } from '../../utils/UserCheckRol'
 
 function Header() {
 	const { user } = useUser()
+	const [ isAdmin, setIsAdmin ] = useState(false)
+	console.log(user)
+	useEffect(() => {
+		if (!user?.id) return;
+
+		const checkRoleAsync = async () => {
+			const checkRoleResult = await checkRole(user.id);
+			setIsAdmin(checkRoleResult.ok);
+		};
+		checkRoleAsync();
+	},[user?.id])
+
+	console.log(isAdmin)
+
   return (
 		<section className='p-4 flex flex-col items-center gap-2'>
 			<div className='relative'>
@@ -31,8 +47,7 @@ function Header() {
 			<div className='flex flex-col items-center gap-2 my-2'>
 				<h1 className='text-xl font-black	 uppercase'>{user?.fullName}</h1>
 				<span className='text-sm inline-flex items-center px-3 py-1 bg-blue-100 text-blue-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-full border border-blue-100'>
-					{/* TODO: realizar una petición de tipo get a la base de datos para saber si es admin o usuario */}
-					Dueño
+					{isAdmin ? 'Dueño' : 'Usuario'}
 				</span>
 			</div>
 		</section>
