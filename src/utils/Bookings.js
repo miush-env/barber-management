@@ -208,8 +208,9 @@ export const GetBookingsTodayData = async (email) => {
 		today.getDate(),
 		0,
 		0,
+		0,
 		0
-	).toISOString()
+	)
 
 	const endOfDay = new Date(
  		today.getFullYear(),
@@ -217,20 +218,22 @@ export const GetBookingsTodayData = async (email) => {
 		today.getDate(),
 		23,
 		59,
-		59
-	).toISOString()
+		59,
+		999
+	)
 
 	const res = await fetch(
-		`https://api.cal.com/v2/bookings?attendeeEmail=${encodeURIComponent(email)}&startTime=${startOfDay}&endTime=${endOfDay}`,
+		`https://api.cal.com/v2/bookings?attendeeEmail=${encodeURIComponent(email)}&afterStart=${encodeURIComponent(startOfDay.toISOString())}&beforeEnd=${encodeURIComponent(endOfDay.toISOString())}&status=upcoming`,
 		{
 			headers: {
+				'cal-api-version': '2026-05-01',
 				Authorization: `Bearer ${API_KEY}`
 			}
 		}
 	)
 
 	const data = await res.json()
-	return data.data.totalCount
+	return data.data
 }
 
 export const GetBookingsStatusAdmin = async (status) => {

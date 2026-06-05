@@ -2,7 +2,7 @@ import NavBar from '../components/NavBar'
 import { useNavigate } from 'react-router'
 import ServiceCard	from '@components/CreateAppointment/ServiceCard'
 import ButtonCallCal from '../components/CreateAppointment/Cal.com/ButtonCallCal'
-import { serviceCorte, serviceCorteBarba, serviceSoloPuntas, serviceGlobal } from '../utils/ServiceCal'
+import { serviceCorte, serviceCorteBarba, serviceSoloPuntas, serviceGlobal, serviceBarba } from '../utils/ServiceCal'
 import { getNameEvent } from '../utils/Bookings'
 import { useEffect, useState } from 'react'
 
@@ -14,7 +14,8 @@ function CreateAppointment() {
 		"corte-clasico": serviceCorte,
 		"corte-clasico-barba": serviceCorteBarba,
 		"tinte-solo-puntas": serviceSoloPuntas,
-		"global": serviceGlobal
+		"global": serviceGlobal,
+		"barba": serviceBarba
 	};
 
 	useEffect(() => {

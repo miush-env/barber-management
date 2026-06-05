@@ -23,7 +23,7 @@ function EditAppointment({ isOpen, setIsOpen, onCancel, cita }) {
 			<section className='rounded-xl bg-white dark:bg-[#171717] w-80 flex flex-col'>
 				<div className='flex justify-between items-center bg-gray-100 rounded-t-xl p-4'>
 					<h2 className='font-bold text-lg text-black dark:text-white'>Editar cita</h2>
-					<button onClick={() => setIsOpen(!isOpen)} className='active:bg-gray-300 rounded-full p-[3px]'>
+					<button onClick={() => setIsOpen(false)} className='active:bg-gray-300 rounded-full p-[3px]'>
 						<X className='active:stroke-gray-700'/>
 					</button>
 				</div>

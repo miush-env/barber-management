@@ -11,6 +11,16 @@ export const serviceCorte = async ({name, email}) => {
 	})
 }
 
+export const serviceBarba = async ({name, email}) => {
+	const cal = await getCalApi({"namespace":"barba"});
+	cal('modal', {
+		calLink: `${CALL_LINK}/barba?name=${name}&email=${email}`,
+		config: {
+			layout:"month_view"
+		}
+	})
+}
+
 export const serviceCorteBarba = async ({name, email}) => {
 		const cal = await getCalApi({ namespace: 'corte-clasico-barba' })
 		cal('modal', {

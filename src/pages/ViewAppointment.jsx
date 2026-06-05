@@ -12,6 +12,8 @@ function ViewAppointment() {
 
 	const [appointments, setAppointments] = useState([])
 	const [appointmentsUser, setAppointmentsUser] = useState([])
+	const [allAppointments, setAllAppointments] = useState([])
+	const [allAppointmentsUser, setAllAppointmentsUser] = useState([])
 	// eslint-disable-next-line no-unused-vars
 	const [isAdmin, setIsAdmin] = useState(false)
 	const [ dataEvent, setDataEvent ] = useState([])
@@ -23,7 +25,6 @@ function ViewAppointment() {
 	const loadAllData = async () => {
 			setLoading(true); // Aseguramos que empiece en true
 			try {
-				// Ejecutamos ambas peticiones en paralelo para mayor velocidad
 				const [booking, events] = await Promise.all([
 					bookingEvent(),
 					getNameEvent()
@@ -54,14 +55,31 @@ function ViewAppointment() {
 
 			try {
 				if (isAdmin) {
-					const resApiCal = await GetBookingsStatusAdmin(filterStatus)
-					setAppointments(resApiCal || [])
+					const [currentBookings, allBookings] = await Promise.all([
+						GetBookingsStatusAdmin(filterStatus),
+						filterStatus === 'all'
+							? Promise.resolve([])
+							: GetBookingsStatusAdmin('all'),
+					])
+
+					setAppointments(currentBookings || [])
+					setAllAppointments(filterStatus === 'all' ? currentBookings || [] : allBookings || [])
 				} else {
-					const resApiCal = await GetBookingsStatus(
-						user.primaryEmailAddress.emailAddress,
-						filterStatus,
-					)
-					setAppointmentsUser(resApiCal || [])
+					const [currentBookings, allBookings] = await Promise.all([
+						GetBookingsStatus(
+							user.primaryEmailAddress.emailAddress,
+							filterStatus,
+						),
+						filterStatus === 'all'
+							? Promise.resolve([])
+							: GetBookingsStatus(
+								user.primaryEmailAddress.emailAddress,
+								'all',
+							),
+					])
+
+					setAppointmentsUser(currentBookings || [])
+					setAllAppointmentsUser(filterStatus === 'all' ? currentBookings || [] : allBookings || [])
 				}
 			} catch (error) {
 				console.error('Error cargando citas:', error)
@@ -74,6 +92,15 @@ function ViewAppointment() {
 	}, [filterStatus, user, isAdmin]);
 
 	const appointmentsToShow = isAdmin ? appointments : appointmentsUser
+	const allCurrentAppointments = isAdmin ? allAppointments : allAppointmentsUser
+
+	const totalCount = allCurrentAppointments.length
+	const upcomingCount = allCurrentAppointments.filter(
+		(cita) => cita.status !== 'cancelled' && cita.status !== 'rejected'
+	).length
+	const cancelledCount = allCurrentAppointments.filter(
+		(cita) => cita.status === 'cancelled'
+	).length
 
 	const itemsPerPage = 5
 	const totalPages = Math.ceil(appointmentsToShow.length / itemsPerPage)
@@ -97,11 +124,9 @@ function ViewAppointment() {
 			</header>
 
 			<article className='grid grid-cols-3 gap-4 p-4'>
-				<CardClientsStatus title='Totales' value='13' style='totals' />
-				<CardClientsStatus title='Confirmadas' value='7' style='served' />
-				<CardClientsStatus title='Cancelados' value='3' />
-			</article>
-
+			<CardClientsStatus title='Totales' count={totalCount} style='totals' />
+			<CardClientsStatus title='Confirmadas' count={upcomingCount} style='served' />
+			<CardClientsStatus title='Cancelados' count={cancelledCount} />		</article>
 			<article className='flex-1 flex flex-col'>
 				<h2 className='text-xl pl-4 font-bold uppercase my-8'>
 					<select name="select-turn-filter" value={filterStatus} onChange={(e)=>{ setFilterStatus(e.target.value)}}>

@@ -1,25 +1,7 @@
-import { useEffect, useState } from "react";
 import { BarChart3, CheckCircle2, XCircle } from "lucide-react";
 import { GetBookingsStatusAdmin } from "../../../utils/Bookings";
 
-function CardClientsStatus({ title, status = "all", style = 'none' }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadCount = async () => {
-      const data = await GetBookingsStatusAdmin(status);
-      if (!isMounted) return;
-      setCount(Array.isArray(data) ? data.length : 0);
-    };
-
-    loadCount();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [status]);
+function CardClientsStatus({ title, count = 0, style = 'none' }) {
 
   const colors_icon = [
     { icon: <BarChart3 className="w-5 h-5 text-blue-600" />, color: 'bg-blue-50 text-blue-600 border-blue-100' },

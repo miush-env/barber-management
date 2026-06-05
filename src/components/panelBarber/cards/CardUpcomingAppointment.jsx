@@ -1,29 +1,37 @@
 import { ChevronRight } from "lucide-react";
-import EditAppointment from "../../modal/EditAppointment";
+// import EditAppointment from "../../modal/EditAppointment";
 import { useState } from "react";
 import { cancelBooking } from "../../../utils/Bookings";
+import EditAppointmentPanel from "../../modal/EditAppointmentPanel";
+import { Dialog, DialogTrigger, DialogContent } from "@components/ui/dialog";
 
-function CardUpcomingAppointment({appointment}) {
-  const hour = new Date(appointment.start).toLocaleTimeString("es-AR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).slice(0,5)
+function CardUpcomingAppointment({ appointment }) {
+  const hour = new Date(appointment.start)
+    .toLocaleTimeString("es-AR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })
+    .slice(0, 5);
 
   const period = new Date(appointment.start).getHours() < 12 ? "AM" : "PM";
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div 
+    <div
       className="group flex items-center justify-between p-3 rounded-2xl transition-all active:scale-[0.98] cursor-pointer
                  bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 shadow-sm hover:border-blue-500/30 active:border-blue-500/30"
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-center min-w-[50px] py-1 border-r border-slate-100 dark:border-white/10">
-          <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{hour}</span>
-          <span className={`text-[10px] uppercase font-medium ${
-            period === "AM" ? "text-emerald-500" : "text-orange-500"}`}
+          <span className="text-sm font-bold text-slate-700 dark:text-slate-200">
+            {hour}
+          </span>
+          <span
+            className={`text-[10px] uppercase font-medium ${
+              period === "AM" ? "text-emerald-500" : "text-orange-500"
+            }`}
           >
             {period}
           </span>
@@ -37,27 +45,41 @@ function CardUpcomingAppointment({appointment}) {
             <span className="text-[11px] text-slate-500 dark:text-slate-400">
               {appointment.eventType.slug}
             </span>
-            <span className="text-[10px] opacity-20 dark:text-slate-600">•</span>
-            <span className={`text-[10px] font-bold uppercase tracking-wider ${
-              appointment.status === "accepted" ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'
-            }`}>
-              {appointment.status === "accepted" ? 'Aceptado' : 'Cancelado'}
+            <span className="text-[10px] opacity-20 dark:text-slate-600">
+              •
+            </span>
+            <span
+              className={`text-[10px] font-bold uppercase tracking-wider ${
+                appointment.status === "accepted"
+                  ? "text-emerald-500 dark:text-emerald-400"
+                  : "text-rose-500 dark:text-rose-400"
+              }`}
+            >
+              {appointment.status === "accepted" ? "Aceptado" : "Cancelado"}
             </span>
           </div>
         </div>
       </div>
 
       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 dark:bg-white/5 group-hover:bg-blue-500/10 group-active:bg-blue-500/10 transition-colors">
-        <ChevronRight size={14} className="text-slate-700 dark:text-slate-600 group-active:text-blue-700 group-hover:text-blue-500" />
+        <ChevronRight
+          size={14}
+          className="text-slate-700 dark:text-slate-600 group-active:text-blue-700 group-hover:text-blue-500"
+        />
       </div>
-      	<EditAppointment
-				isOpen={isOpen}
-				setIsOpen={setIsOpen}
-				onCancel={(uid) => cancelBooking(uid)}
-				cita={appointment}
-			/>
+
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="" showCloseButton={false}>
+          <EditAppointmentPanel
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            onCancel={(uid) => cancelBooking(uid)}
+            cita={appointment}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
-	)
+  );
 }
 
-export default CardUpcomingAppointment
+export default CardUpcomingAppointment;
