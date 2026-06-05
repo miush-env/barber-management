@@ -1,7 +1,7 @@
 export const checkRole = async (clerkId) => {
 	try {
 		const response = await fetch(
-			`https://dbbarber-management-production.up.railway.app/api/users/isAdmin?clerkId=${clerkId}`,
+			`https://db-barber-management.onrender.com/api/users/isAdmin?clerkId=${clerkId}`,
 		)
 
 		if (!response.ok) {
@@ -12,6 +12,6 @@ export const checkRole = async (clerkId) => {
 		return data
 	} catch (error) {
 		console.error(error)
-    return { ok: false }
+		return { ok: false }
 	}
 }
