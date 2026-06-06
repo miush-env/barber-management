@@ -191,15 +191,15 @@ function ViewAppointment() {
 						</div>
 					) : paginatedAppointments.length > 0 ? (
 						<div className='flex-1 w-full px-4 flex flex-col gap-4'>
-							{paginatedAppointments.map((cita) => {
+							{paginatedAppointments.map((appointment) => {
 								const matchedEvent = dataEvent.find(
-									(e) => e.slug === cita.eventType?.slug,
+									(e) => e.slug === appointment.eventType?.slug,
 								)
 
 								return (
 									<PendingShifts
-										key={cita.id}
-										cita={cita}
+										key={appointment.id}
+										appointment={appointment}
 										event={matchedEvent}
 										setAppointments={setAppointments}
 									/>
