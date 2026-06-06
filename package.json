@@ -19,6 +19,8 @@
     "@fontsource-variable/noto-sans": "^5.2.10",
     "@fontsource-variable/public-sans": "^5.2.7",
     "@react-awesome-query-builder/ui": "^6.7.0-alpha.0",
+    "@tabler/core": "^1.4.0",
+    "@tabler/icons-react": "^3.44.0",
     "@tailwindcss/vite": "^4.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
