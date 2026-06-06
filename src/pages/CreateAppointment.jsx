@@ -1,5 +1,4 @@
 import NavBar from '../components/NavBar'
-import { useNavigate } from 'react-router'
 import ServiceCard from '@components/CreateAppointment/ServiceCard'
 import ButtonCallCal from '../components/CreateAppointment/Cal.com/ButtonCallCal'
 import {
@@ -10,12 +9,13 @@ import {
 	serviceBarba,
 } from '../utils/ServiceCal'
 import { getNameEvent } from '../utils/Bookings'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Header from './Header'
 
 function CreateAppointment() {
 	const [nameEvent, setNameEvent] = useState([])
-	const navigate = useNavigate()
+	const [filterText, setFilterText] = useState('')
+	const [activeTag, setActiveTag] = useState('')
 
 	const functionMapper = {
 		'corte-clasico': serviceCorte,
@@ -39,27 +39,117 @@ function CreateAppointment() {
 		fetchNameEvent()
 	}, [])
 
+	console.log(nameEvent)
+
+	const buttonFilters = [
+		{ label: 'color', value: 'color' },
+		{ label: 'barba', value: 'barba' },
+		{ label: 'cortes', value: 'corte' },
+	]
+
+	// Mapeo de filtros a slugs de servicios
+	const filterMapping = {
+		color: ['tinte-solo-puntas', 'global'],
+		barba: ['barba'],
+		corte: ['corte-clasico', 'corte-clasico-barba'],
+	}
+
+	const filteredEvents = useMemo(() => {
+		const normalizedFilter = filterText.trim().toLowerCase()
+
+		// Si se seleccionó un botón de filtro (activeTag está activo)
+		if (activeTag && filterMapping[filterText]) {
+			const allowedSlugs = filterMapping[filterText]
+			return nameEvent.filter((event) => allowedSlugs.includes(event.slug))
+		}
+
+		// Si no hay filtro, mostrar todos
+		if (!normalizedFilter) {
+			return nameEvent
+		}
+
+		// Búsqueda por texto
+		return nameEvent.filter((event) => {
+			const text = [event.title, event.description, event.slug]
+				.filter(Boolean)
+				.join(' ')
+				.toLowerCase()
+			return text.includes(normalizedFilter)
+		})
+	}, [filterText, nameEvent, activeTag])
+
+	const handleTagClick = (filterValue, label) => {
+		setFilterText(filterValue)
+		setActiveTag(label)
+	}
+
+	const handleInputChange = (event) => {
+		setFilterText(event.target.value)
+		setActiveTag('')
+	}
+
 	return (
-		<main className='bg-gray-100 min-h-screen'>
+		<main className='bg-slate-50 min-h-screen pb-16'>
 			<Header path='/inicio' name='Agendar Cita' />
 
-			<div className='h-full bg-gray-100'>
+			<div className='bg-slate-50'>
 				<section className='mb-6' aria-labelledby='services-title'>
 					<div className='flex flex-col gap-4 p-4'>
-						{nameEvent.map((s, index) => {
-							const calFunction = functionMapper[s.slug] || serviceCorte
+						<div className='flex flex-col gap-3'>
+							<label
+								htmlFor='service-filter'
+								className='text-sm font-semibold text-slate-700'
+							>
+								Buscar servicios
+							</label>
+							<input
+								id='service-filter'
+								type='text'
+								value={filterText}
+								onChange={handleInputChange}
+								placeholder='Escribe para filtrar servicios...'
+								className='rounded-2xl border border-slate-100 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none transition-all'
+							/>
 
-							return (
-								<ButtonCallCal key={index} service={calFunction}>
-									<ServiceCard key={index} {...s} />
-								</ButtonCallCal>
-							)
-						})}
+							<div className='flex flex-wrap gap-3'>
+								{buttonFilters.map((button) => (
+									<button
+										key={button.label}
+										type='button'
+										className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 ${
+											activeTag === button.label
+												? 'border-blue-600 bg-blue-600 text-white shadow-sm'
+												: 'border-slate-200 bg-white text-slate-600 hover:border-blue-500 hover:text-blue-600'
+										}`}
+										onClick={() => handleTagClick(button.value, button.label)}
+									>
+										{button.label}
+									</button>
+								))}
+							</div>
+						</div>
+						{filteredEvents.length === 0 ? (
+							<div className='rounded-2xl border border-dashed border-slate-200 bg-white/80 p-6 text-center text-sm text-slate-500'>
+								No se encontraron servicios que coincidan con la búsqueda.
+							</div>
+						) : (
+							<div className='flex flex-col gap-4'>
+								{filteredEvents.map((s, index) => {
+									const calFunction = functionMapper[s.slug] || serviceCorte
+
+									return (
+										<ButtonCallCal key={index} service={calFunction}>
+											<ServiceCard {...s} />
+										</ButtonCallCal>
+									)
+								})}
+							</div>
+						)}
 					</div>
 				</section>
 			</div>
 
-			<section className='fixed bottom-0 w-full h-14'>
+			<section className='fixed bottom-0 w-full px-5'>
 				<NavBar />
 			</section>
 		</main>
