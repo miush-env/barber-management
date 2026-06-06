@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router'
-// import { House } from 'lucide-react'
 import {
 	IconHome,
 	IconCalendarEvent,
@@ -7,65 +6,23 @@ import {
 	IconUser,
 	IconAdd,
 } from '../assets/icons/IconsCustom'
+import NavItem from './NavItem'
 
 function NavBar() {
 	return (
-		<nav className=' *:font-semibold left-0 h-full bg-white border border-slate-100 mb-5 shadow shadow-slate-300 w-full rounded-full flex justify-around items-center'>
-			<NavLink
-				to='/inicio'
-				className={({ isActive }) =>
-					`flex flex-col items-center text-sm rounded-full relative${
-						isActive ? 'text-white ' : 'text-gray-400'
-					}`
-				}
-			>
-				{({ isActive }) => (
-					<>
-						<IconHome
-							fill='#fff'
-							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
-						/>
-						<div
-							className={`
-								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
-								${
-									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
-										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
-								}
-  						`}
-						/>
-					</>
-				)}
-			</NavLink>
+		<nav
+			className=' 
+				*:font-semibold left-0 mb-5  shadow-slate-300 w-full  flex justify-around items-center 
+				h-14
+				bg-white/95
+				backdrop-blur-xl
+				rounded-full
+				border border-slate-200
+				shadow-[0_10px_35px_rgba(15,23,42,0.08)]'
+		>
+			<NavItem to='/inicio' label='Inicio' Icon={IconHome} />
 
-			<NavLink
-				to='/ver-citas'
-				className={({ isActive }) =>
-					`flex flex-col items-center  ${
-						isActive ? 'text-slate-900' : 'text-gray-400'
-					}`
-				}
-			>
-				{({ isActive }) => (
-					<>
-						<IconCalendarEvent
-							fill='#fff'
-							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
-						/>
-						<div
-							className={`
-								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
-								${
-									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
-										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
-								}
-  						`}
-						/>
-					</>
-				)}
-			</NavLink>
+			<NavItem to='/ver-citas' label='Agenda' Icon={IconCalendarEvent} />
 
 			<NavLink
 				to='/crear-cita'
@@ -74,61 +31,9 @@ function NavBar() {
 				<IconAdd className='w-9 stroke-white' />
 			</NavLink>
 
-			<NavLink
-				to='/ver-clientes'
-				className={({ isActive }) =>
-					`flex flex-col items-center  ${
-						isActive ? 'text-slate-900' : 'text-gray-400'
-					}`
-				}
-			>
-				{({ isActive }) => (
-					<>
-						<IconGroup
-							fill='#fff'
-							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
-						/>
-						<div
-							className={`
-								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
-								${
-									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
-										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
-								}
-  						`}
-						/>
-					</>
-				)}
-			</NavLink>
+			<NavItem to='/ver-clientes' label='Clientes' Icon={IconGroup} />
 
-			<NavLink
-				to='/perfil'
-				className={({ isActive }) =>
-					`flex flex-col items-center  ${
-						isActive ? 'text-slate-900' : 'text-gray-400'
-					}`
-				}
-			>
-				{({ isActive }) => (
-					<>
-						<IconUser
-							fill='#fff'
-							className={`transition-all duration-300 ${isActive ? 'fill-blue-500 scale-110' : 'fill-gray-400 scale-100'}`}
-						/>
-						<div
-							className={`
-								w-7 h-1 absolute bg-blue-500 opacity-100 rounded-full
-								${
-									isActive
-										? 'animate-[clipReveal_0.4s_ease-out_forwards] translate-y-7'
-										: 'animate-[clipHide_0.3s_ease-in_forwards] translate-y-100'
-								}
-  						`}
-						/>
-					</>
-				)}
-			</NavLink>
+			<NavItem to='/perfil' label='Perfil' Icon={IconUser} />
 		</nav>
 	)
 }
