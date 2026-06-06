@@ -5,21 +5,21 @@ import { checkRole } from '../../utils/UserCheckRol'
 
 function Header() {
 	const { user } = useUser()
-	const [ isAdmin, setIsAdmin ] = useState(false)
-	console.log(user)
+	const [isAdmin, setIsAdmin] = useState(false)
+
 	useEffect(() => {
-		if (!user?.id) return;
+		if (!user?.id) return
 
 		const checkRoleAsync = async () => {
-			const checkRoleResult = await checkRole(user.id);
-			setIsAdmin(checkRoleResult.ok);
-		};
-		checkRoleAsync();
-	},[user?.id])
+			const checkRoleResult = await checkRole(user.id)
+			setIsAdmin(checkRoleResult.ok)
+		}
+		checkRoleAsync()
+	}, [user?.id])
 
 	console.log(isAdmin)
 
-  return (
+	return (
 		<section className='p-4 flex flex-col items-center gap-2'>
 			<div className='relative'>
 				<img

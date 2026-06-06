@@ -3,9 +3,20 @@ import CardClientsStatus from '@components/viewAppointment/cards/CardClientsStat
 import PendingShifts from '../components/viewAppointment/cards/PendingShifts.jsx'
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
-import { bookingEvent, getNameEvent, GetBookingsStatus, GetBookingsStatusAdmin } from '../utils/Bookings.js'
-import { ChevronLeft } from 'lucide-react'
+import {
+	bookingEvent,
+	getNameEvent,
+	GetBookingsStatus,
+	GetBookingsStatusAdmin,
+} from '../utils/Bookings.js'
 import { useUser } from '@clerk/react'
+import Header from './Header.jsx'
+import {
+	IconFilter,
+	IconChevronDown,
+	IconChevronRight,
+	IconChevronLeft,
+} from '@tabler/icons-react'
 
 function ViewAppointment() {
 	const navigate = useNavigate()
@@ -16,31 +27,31 @@ function ViewAppointment() {
 	const [allAppointmentsUser, setAllAppointmentsUser] = useState([])
 	// eslint-disable-next-line no-unused-vars
 	const [isAdmin, setIsAdmin] = useState(false)
-	const [ dataEvent, setDataEvent ] = useState([])
+	const [dataEvent, setDataEvent] = useState([])
 	const [filterStatus, setFilterStatus] = useState('all')
 	const [loading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
-	const {user} = useUser()
+	const { user } = useUser()
 
 	const loadAllData = async () => {
-			setLoading(true); // Aseguramos que empiece en true
-			try {
-				const [booking, events] = await Promise.all([
-					bookingEvent(),
-					getNameEvent()
-				]);
+		setLoading(true) // Aseguramos que empiece en true
+		try {
+			const [booking, events] = await Promise.all([
+				bookingEvent(),
+				getNameEvent(),
+			])
 
-				setAppointments(booking);
-				if (events) setDataEvent(events);
-			} catch (error) {
-				console.error('Error cargando datos:', error);
-			} finally {
-				setLoading(false);
-			}
-		};
+			setAppointments(booking)
+			if (events) setDataEvent(events)
+		} catch (error) {
+			console.error('Error cargando datos:', error)
+		} finally {
+			setLoading(false)
+		}
+	}
 
 	useEffect(() => {
-		loadAllData();
+		loadAllData()
 	}, [])
 
 	useEffect(() => {
@@ -48,10 +59,10 @@ function ViewAppointment() {
 	}, [filterStatus, isAdmin])
 
 	useEffect(() => {
-		if (!user?.primaryEmailAddress?.emailAddress) return;
+		if (!user?.primaryEmailAddress?.emailAddress) return
 
 		const loadBookings = async () => {
-			setLoading(true);
+			setLoading(true)
 
 			try {
 				if (isAdmin) {
@@ -63,7 +74,9 @@ function ViewAppointment() {
 					])
 
 					setAppointments(currentBookings || [])
-					setAllAppointments(filterStatus === 'all' ? currentBookings || [] : allBookings || [])
+					setAllAppointments(
+						filterStatus === 'all' ? currentBookings || [] : allBookings || [],
+					)
 				} else {
 					const [currentBookings, allBookings] = await Promise.all([
 						GetBookingsStatus(
@@ -72,72 +85,89 @@ function ViewAppointment() {
 						),
 						filterStatus === 'all'
 							? Promise.resolve([])
-							: GetBookingsStatus(
-								user.primaryEmailAddress.emailAddress,
-								'all',
-							),
+							: GetBookingsStatus(user.primaryEmailAddress.emailAddress, 'all'),
 					])
 
 					setAppointmentsUser(currentBookings || [])
-					setAllAppointmentsUser(filterStatus === 'all' ? currentBookings || [] : allBookings || [])
+					setAllAppointmentsUser(
+						filterStatus === 'all' ? currentBookings || [] : allBookings || [],
+					)
 				}
 			} catch (error) {
 				console.error('Error cargando citas:', error)
 			} finally {
-				setLoading(false);
+				setLoading(false)
 			}
-		};
+		}
 
-		loadBookings();
-	}, [filterStatus, user, isAdmin]);
+		loadBookings()
+	}, [filterStatus, user, isAdmin])
 
 	const appointmentsToShow = isAdmin ? appointments : appointmentsUser
 	const allCurrentAppointments = isAdmin ? allAppointments : allAppointmentsUser
 
 	const totalCount = allCurrentAppointments.length
 	const upcomingCount = allCurrentAppointments.filter(
-		(cita) => cita.status !== 'cancelled' && cita.status !== 'rejected'
+		(cita) => cita.status !== 'cancelled' && cita.status !== 'rejected',
 	).length
 	const cancelledCount = allCurrentAppointments.filter(
-		(cita) => cita.status === 'cancelled'
+		(cita) => cita.status === 'cancelled',
 	).length
 
 	const itemsPerPage = 5
 	const totalPages = Math.ceil(appointmentsToShow.length / itemsPerPage)
 	const paginatedAppointments = appointmentsToShow.slice(
 		(currentPage - 1) * itemsPerPage,
-		currentPage * itemsPerPage
+		currentPage * itemsPerPage,
 	)
 
 	return (
-		<main className='bg-gray-50 min-h-screen flex flex-col pb-20'>
-			<header className='flex items-center p-4 border-b border-gray-300 bg-white'>
-				<button
-					className='p-1 active:bg-slate-200 rounded-full transition-colors'
-					onClick={() => {
-						navigate('/inicio')
-				}}
-				>
-					<ChevronLeft className="w-6 h-6 text-slate-600" />
-				</button>
-				<h1 className='text-xl font-bold text-slate-800 text-center flex-1'>Tus Citas</h1>
-			</header>
+		<main className='bg-gray-100/50 min-h-screen flex flex-col pb-20'>
+			<Header path='/inicio' name='Tus Citas' />
 
 			<article className='grid grid-cols-3 gap-4 p-4'>
-			<CardClientsStatus title='Totales' count={totalCount} style='totals' />
-			<CardClientsStatus title='Confirmadas' count={upcomingCount} style='served' />
-			<CardClientsStatus title='Cancelados' count={cancelledCount} />		</article>
+				<CardClientsStatus title='Totales' count={totalCount} style='totals' />
+				<CardClientsStatus
+					title='Aceptadas'
+					count={upcomingCount}
+					style='served'
+				/>
+				<CardClientsStatus title='Canceladas' count={cancelledCount} />{' '}
+			</article>
+
 			<article className='flex-1 flex flex-col'>
-				<h2 className='text-xl pl-4 font-bold uppercase my-8'>
-					<select name="select-turn-filter" value={filterStatus} onChange={(e)=>{ setFilterStatus(e.target.value)}}>
-						<option value="all">Turnos totales</option>
-						<option value="upcoming">Turnos confirmados</option>
-						<option value="cancelled">Turnos cancelados</option>
+				<h2 className='text-xl px-4 font-bold uppercase my-8 relative overflow-hidden'>
+					<div className='pointer-events-none absolute inset-y-0 left-4 flex items-center pl-4 text-blue-600'>
+						<IconFilter stroke={2} />
+					</div>
+
+					<select
+						name='select-turn-filter'
+						value={filterStatus}
+						className='
+							w-full appearance-none bg-white 
+							font-bold
+							text-slate-800 border border-slate-300 
+							rounded-2xl pl-12 pr-10 py-3.5 text-base a
+						  shadow-[0_4px_12px_rgba(0,0,0,0.03)] 
+							cursor-pointer transition-all duration-200 
+							focus:border-blue-500 focus:outline-none 
+							hover:border-slate-200'
+						id='select-turn-filter'
+						onChange={(e) => {
+							setFilterStatus(e.target.value)
+						}}
+					>
+						<option value='all'>Turnos totales</option>
+						<option value='upcoming'>Turnos confirmados</option>
+						<option value='cancelled'>Turnos cancelados</option>
 					</select>
+
+					<div className='pointer-events-none absolute inset-y-0 right-4 flex items-center pr-4 text-slate-400'>
+						<IconChevronDown stroke={2} />
+					</div>
 				</h2>
-				<section
-					className='flex-1 flex flex-col items-center justify-center'
-				>
+				<section className='flex-1 flex flex-col items-center justify-center'>
 					{loading ? (
 						<div className='flex flex-col items-center gap-4'>
 							<svg
@@ -161,10 +191,10 @@ function ViewAppointment() {
 						</div>
 					) : paginatedAppointments.length > 0 ? (
 						<div className='flex-1 w-full px-4 flex flex-col gap-4'>
-							{	paginatedAppointments.map((cita) => {
+							{paginatedAppointments.map((cita) => {
 								const matchedEvent = dataEvent.find(
-            			(e) => e.slug === cita.eventType?.slug
-         				);
+									(e) => e.slug === cita.eventType?.slug,
+								)
 
 								return (
 									<PendingShifts
@@ -189,35 +219,39 @@ function ViewAppointment() {
 
 			{/* Paginación */}
 			{totalPages > 1 && (
-				<section className='flex justify-center items-center gap-2 p-4 bg-white border-t border-gray-200'>
+				<section className='flex overflow-hidden justify-center items-center gap-2 p-4 bg-white border-t border-gray-200'>
 					<button
-						onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+						onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
 						disabled={currentPage === 1}
 						className='px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors'
 					>
-						Anterior
+						<IconChevronLeft stroke={2} />
 					</button>
-					
-					{Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-						<button
-							key={page}
-							onClick={() => setCurrentPage(page)}
-							className={`px-3 py-2 rounded-lg transition-colors ${
-								currentPage === page
-									? 'bg-blue-600 text-white'
-									: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-							}`}
-						>
-							{page}
-						</button>
-					))}
-					
+
+					<div className='flex overflow-x-auto py-2 gap-2'>
+						{Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+							<button
+								key={page}
+								onClick={() => setCurrentPage(page)}
+								className={`px-3 py-2 rounded-lg transition-colors ${
+									currentPage === page
+										? 'bg-blue-600 text-white'
+										: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+								}`}
+							>
+								{page}
+							</button>
+						))}
+					</div>
+
 					<button
-						onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+						onClick={() =>
+							setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+						}
 						disabled={currentPage === totalPages}
 						className='px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors'
 					>
-						Siguiente
+						<IconChevronRight stroke={2} />
 					</button>
 				</section>
 			)}
@@ -230,4 +264,3 @@ function ViewAppointment() {
 }
 
 export default ViewAppointment
-
