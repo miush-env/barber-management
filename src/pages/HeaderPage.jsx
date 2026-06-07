@@ -1,7 +1,7 @@
 import { IconChevronLeft } from '@tabler/icons-react'
 import { useNavigate } from 'react-router'
 
-function Header({ path, name }) {
+function HeaderPage({ path, name }) {
 	const navigate = useNavigate()
 
 	return (
@@ -22,4 +22,4 @@ function Header({ path, name }) {
 	)
 }
 
-export default Header
+export default HeaderPage
