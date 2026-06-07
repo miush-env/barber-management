@@ -1,61 +1,77 @@
-import { Clock, Star, ChevronRight } from 'lucide-react';
+import { Clock, Star, ChevronRight } from 'lucide-react'
+import { Services } from '../../utils/services'
+import { IconChevronRight, IconClock } from '@tabler/icons-react'
+import parse from 'html-react-parser'
 
-function ServiceCard({ title, description, length }) {
+function ServiceCard({ title, description, length, id, safeDescription }) {
+	const service = Services[id]
 
-  const getPriceFromDescription = (description) => {
-    const match = description.match(/\$(\d+)/);
-    return match ? Number(match[1]) : null;
-  };
+	const formatMinutes = (totalMinutes) => {
+		const minutesNum = Number(totalMinutes)
 
-  return (
-     <article className="group relative flex h-32 w-full overflow-hidden rounded-2xl bg-zinc-900 transition-all active:scale-[0.98]">
-      <figure className="absolute inset-0 w-full m-0">
-        <img 
-          src='https://images.unsplash.com/photo-1620331311520-246422fd82f9?q=80&w=800&auto=format&fit=crop' 
-          alt={`Imagen del servicio ${title}`}
-          className="h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110"
-          onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800&auto=format&fit=crop'; }}
-        />
+		if (isNaN(minutesNum) || minutesNum <= 0)
+			return { text: '0 min', iso: 'PT0M' }
 
-        <div className="absolute inset-0 bg-linear-to-r from-zinc-950 via-zinc-950/80 to-transparent" aria-hidden="true" />
-        <div className="absolute inset-0 bg-linear-to-t from-zinc-950/50 to-transparent" aria-hidden="true" />
-      </figure>
+		const hours = Math.floor(minutesNum / 60)
+		const minutes = minutesNum % 60
 
-      <div className="relative flex w-full items-center justify-between px-5">
-        <header className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <h3 className="text-lg font-bold text-white leading-tight">{title}</h3>
-            {title.includes("Degrade") && (
-              <Star size={12} className="fill-cyan-500 text-cyan-500" aria-label="Servicio destacado" />
-            )}
-          </div>
-          <div className="flex items-center gap-3 text-[11px] font-medium text-zinc-400">
-            <span className="flex items-center gap-1">
-              <Clock size={12} className="text-cyan-500" />
-              <time dateTime={`PT${length}M`}>{length} min</time>
-            </span>
-            <span className="h-1 w-1 rounded-full bg-zinc-700" aria-hidden="true" />
-            <span className="text-cyan-400">Peluquería</span>
-          </div>
-        </header>
+		const textParts = []
+		if (hours > 0) textParts.push(`${hours}h`)
+		if (minutes > 0 || hours === 0) textParts.push(`${minutes} min`)
 
-        <section className="flex items-center gap-4">
-          <div className="text-right">
-            <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold">Precio</p>
-            <data className="text-xl font-black text-white" value={getPriceFromDescription(description)}>
-              ${getPriceFromDescription(description)}
-            </data>
-          </div>
-          <div 
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md"
-            aria-label={`Reservar ${title}`}
-          >
-            <ChevronRight size={18} />
-          </div>
-        </section>
-      </div>
-    </article>
-  )
+		let iso = 'PT'
+		if (hours > 0) iso += `${hours}H`
+		if (minutes > 0 || hours === 0) iso += `${minutes}M`
+
+		return {
+			text: textParts.join(' '),
+			iso: iso,
+		}
+	}
+
+	return (
+		<article className='flex gap-4 items-center rounded-lg border border-slate-200 bg-white p-4 transition-all '>
+			<section className='max-h-20 max-w-20 object-cover rounded-lg'>
+				<picture className=''>
+					{service?.imgUrl && (
+						<img
+							src={service.imgUrl}
+							alt={title}
+							className='max-h-20 max-w-20 object-cover rounded-lg'
+						/>
+					)}
+				</picture>
+			</section>
+
+			<section className='flex flex-col flex-1 items-start'>
+				<h2 className='text-start font-bold'>{title}</h2>
+				<div className='flex items-center gap-1 font-semibold text-sm text-slate-600'>
+					<IconClock stroke={1.75} size={18} />
+					{(() => {
+						const { text, iso } = formatMinutes(length)
+						return (
+							<time dateTime={iso} className=''>
+								{text}
+							</time>
+						)
+					})()}
+				</div>
+				<p className='text-sm text-gray-500 text-start'>
+					{parse(safeDescription)}
+				</p>
+			</section>
+
+			<section className='flex items-center gap-2'>
+				<span className='text-blue-700 font-bold text-lg'>
+					$ {service.price}
+				</span>
+
+				<div className='p-1 rounded-full border border-slate-200 text-slate-600 active:border-blue-500 active:text-blue-600 transition-all duration-200'>
+					<IconChevronRight stroke={2} />
+				</div>
+			</section>
+		</article>
+	)
 }
 
 export default ServiceCard

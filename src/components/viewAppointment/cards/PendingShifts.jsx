@@ -8,13 +8,10 @@ import {
 	IconSettings,
 } from '@tabler/icons-react'
 
+import { Services } from '../../../utils/services'
+
 function PendingShifts({ setAppointments, appointment, event }) {
 	const [isOpen, setIsOpen] = useState(false)
-
-	const getPriceFromDescription = (description) => {
-		const match = description?.match(/\$(\d+)/)
-		return match ? Number(match[1]) : null
-	}
 
 	const canEditBooking = (date) => {
 		const now = new Date()
@@ -65,7 +62,7 @@ function PendingShifts({ setAppointments, appointment, event }) {
 									Precio total
 								</h4>
 								<span className='font-bold'>
-									{getPriceFromDescription(event?.description)}
+									{Services[appointment.eventType.id]?.price}
 								</span>
 							</div>
 						</div>

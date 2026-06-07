@@ -10,7 +10,9 @@ import {
 } from '../utils/ServiceCal'
 import { getNameEvent } from '../utils/Bookings'
 import { useEffect, useMemo, useState } from 'react'
-import Header from './Header'
+import HeaderPage from './HeaderPage'
+
+import { IconScissors, IconMoustache, IconDroplet } from '@tabler/icons-react'
 
 function CreateAppointment() {
 	const [nameEvent, setNameEvent] = useState([])
@@ -39,12 +41,10 @@ function CreateAppointment() {
 		fetchNameEvent()
 	}, [])
 
-	console.log(nameEvent)
-
 	const buttonFilters = [
-		{ label: 'color', value: 'color' },
-		{ label: 'barba', value: 'barba' },
-		{ label: 'cortes', value: 'corte' },
+		{ label: 'color', value: 'color', icon: <IconDroplet size={16} /> },
+		{ label: 'barba', value: 'barba', icon: <IconMoustache size={16} /> },
+		{ label: 'cortes', value: 'corte', icon: <IconScissors size={16} /> },
 	]
 
 	// Mapeo de filtros a slugs de servicios
@@ -90,18 +90,12 @@ function CreateAppointment() {
 
 	return (
 		<main className='bg-slate-50 min-h-screen pb-16'>
-			<Header path='/inicio' name='Agendar Cita' />
+			<HeaderPage path='/inicio' name='Agendar Cita' />
 
 			<div className='bg-slate-50'>
 				<section className='mb-6' aria-labelledby='services-title'>
 					<div className='flex flex-col gap-4 p-4'>
 						<div className='flex flex-col gap-3'>
-							<label
-								htmlFor='service-filter'
-								className='text-sm font-semibold text-slate-700'
-							>
-								Buscar servicios
-							</label>
 							<input
 								id='service-filter'
 								type='text'
@@ -116,14 +110,15 @@ function CreateAppointment() {
 									<button
 										key={button.label}
 										type='button'
-										className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 ${
+										className={`rounded-full flex gap-2 items-center border px-4 py-2 text-sm font-medium transition-all duration-200 ${
 											activeTag === button.label
 												? 'border-blue-600 bg-blue-600 text-white shadow-sm'
 												: 'border-slate-200 bg-white text-slate-600 hover:border-blue-500 hover:text-blue-600'
 										}`}
 										onClick={() => handleTagClick(button.value, button.label)}
 									>
-										{button.label}
+										{button.icon}
+										<span>{button.label}</span>
 									</button>
 								))}
 							</div>
@@ -136,7 +131,7 @@ function CreateAppointment() {
 							<div className='flex flex-col gap-4'>
 								{filteredEvents.map((s, index) => {
 									const calFunction = functionMapper[s.slug] || serviceCorte
-
+									// console.log(s)
 									return (
 										<ButtonCallCal key={index} service={calFunction}>
 											<ServiceCard {...s} />

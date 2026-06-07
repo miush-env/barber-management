@@ -17,8 +17,6 @@ function Header() {
 		checkRoleAsync()
 	}, [user?.id])
 
-	console.log(isAdmin)
-
 	return (
 		<section className='p-4 flex flex-col items-center gap-2'>
 			<div className='relative'>
@@ -45,7 +43,7 @@ function Header() {
 				</svg>
 			</div>
 			<div className='flex flex-col items-center gap-2 my-2'>
-				<h1 className='text-xl font-black	 uppercase'>{user?.fullName}</h1>
+				<h2 className='text-2xl font-black'>{user?.fullName}</h2>
 				<span className='text-sm inline-flex items-center px-3 py-1 bg-blue-100 text-blue-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-full border border-blue-100'>
 					{isAdmin ? 'Dueño' : 'Usuario'}
 				</span>

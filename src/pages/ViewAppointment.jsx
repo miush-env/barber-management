@@ -10,7 +10,7 @@ import {
 	GetBookingsStatusAdmin,
 } from '../utils/Bookings.js'
 import { useUser } from '@clerk/react'
-import Header from './Header.jsx'
+import HeaderPage from './HeaderPage.jsx'
 import {
 	IconFilter,
 	IconChevronDown,
@@ -123,7 +123,7 @@ function ViewAppointment() {
 
 	return (
 		<main className='bg-gray-100/50 min-h-screen flex flex-col pb-20'>
-			<Header path='/inicio' name='Tus Citas' />
+			<HeaderPage path='/inicio' name='Tus Citas' />
 
 			<article className='grid grid-cols-3 gap-4 p-4'>
 				<CardClientsStatus title='Totales' count={totalCount} style='totals' />

@@ -43,7 +43,6 @@ function PanelBarber() {
 				const count = await GetBookingsTodayData(
 					user.primaryEmailAddress.emailAddress,
 				)
-				console.log(count)
 				setTodayBookingsCount(count.length)
 			} catch (error) {
 				console.error('Error al obtener el conteo de citas de hoy:', error)

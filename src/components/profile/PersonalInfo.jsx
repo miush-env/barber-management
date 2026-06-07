@@ -6,7 +6,9 @@ import { validatePhone } from '../../utils/phone'
 const PersonalInfo = forwardRef(({ edit }, ref) => {
 	const { user } = useUser()
 	const [phone, setPhone] = useState(user?.unsafeMetadata?.phone || '')
-	const [birthdate, setBirthdate] = useState(user?.unsafeMetadata?.birthdate || '')
+	const [birthdate, setBirthdate] = useState(
+		user?.unsafeMetadata?.birthdate || '',
+	)
 
 	useImperativeHandle(ref, () => ({
 		save: async () => {
@@ -16,24 +18,40 @@ const PersonalInfo = forwardRef(({ edit }, ref) => {
 					unsafeMetadata: {
 						...user.unsafeMetadata,
 						phone: validation.formatted,
-						birthdate
-					}
+						birthdate,
+					},
 				})
 			}
-		}
+		},
 	}))
+
+	const formatDateToSpanish = (dateString) => {
+		if (!dateString) return 'No especificada'
+
+		const [year, month, day] = dateString.split('-')
+
+		const date = new Date(year, month - 1, day)
+
+		return new Intl.DateTimeFormat('es-ES', {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+		}).format(date)
+	}
+
+	const rawBirthdate = user?.unsafeMetadata?.birthdate
 
 	return (
 		<section className='flex flex-col gap-4 [&>div]:flex [&>div]:items [&>div]:p-2 [&>div]:gap-4 bg-white rounded-xl p-2'>
 			<div>
 				<div className='flex items-center justify-center bg-blue-100 p-2 rounded-full'>
-					<Mail className='text-blue-700 '/>
+					<Mail className='text-blue-700 ' />
 				</div>
 				<div className='flex flex-col gap-1'>
 					<span className='text-sm font-semibold text-gray-500'>
 						Correo Electrónico
 					</span>
-					<span className='text-md font-bold text-gray-800 uppercase'>
+					<span className='text-md font-bold text-gray-800 '>
 						{user.emailAddresses[0].emailAddress}
 					</span>
 				</div>
@@ -41,7 +59,7 @@ const PersonalInfo = forwardRef(({ edit }, ref) => {
 
 			<div>
 				<div className='flex items-center justify-center bg-green-100 p-2 rounded-full'>
-					<Cake className='text-green-700'/>
+					<Cake className='text-green-700' />
 				</div>
 				<div className='flex flex-col gap-1'>
 					<span className='text-sm font-semibold text-gray-500'>
@@ -56,7 +74,7 @@ const PersonalInfo = forwardRef(({ edit }, ref) => {
 						/>
 					) : (
 						<span className='text-md font-bold text-gray-800 uppercase'>
-							{user?.unsafeMetadata?.birthdate || 'No especificada'}
+							{formatDateToSpanish(rawBirthdate)}
 						</span>
 					)}
 				</div>
@@ -64,12 +82,10 @@ const PersonalInfo = forwardRef(({ edit }, ref) => {
 
 			<div>
 				<div className='flex items-center justify-center bg-amber-100 rounded-full p-2'>
-				<Smartphone className='text-amber-700'/>
+					<Smartphone className='text-amber-700' />
 				</div>
 				<div className='flex flex-col gap-1'>
-					<span className='text-sm font-semibold text-gray-500'>
-						Teléfono
-					</span>
+					<span className='text-sm font-semibold text-gray-500'>Teléfono</span>
 					{edit ? (
 						<input
 							value={phone}

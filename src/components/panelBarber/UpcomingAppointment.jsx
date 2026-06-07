@@ -1,5 +1,6 @@
 import CardUpcomingAppointment from './cards/CardUpcomingAppointment'
 import { NavLink } from 'react-router'
+import { IconPlus } from '@tabler/icons-react'
 
 function UpcomingAppointment({ appointments }) {
 	return (
@@ -16,6 +17,20 @@ function UpcomingAppointment({ appointments }) {
 				</NavLink>
 			</div>
 			<div className='flex flex-col gap-4'>
+				{appointments.length === 0 && (
+					<div className='flex flex-col items-center gap-2 py-10'>
+						<span className='text-lg font-semibold'>
+							No tienes citas pendientes aun
+						</span>
+						<div className='flex gap-1 items-center bg-blue-300/60 text-blue-500 p-3 rounded-full active:bg-blue-300/80 cursor-pointer'>
+							<IconPlus stroke={3} />
+							<NavLink to='/crear-cita' className='font-bold'>
+								Agendar una Cita
+							</NavLink>
+						</div>
+					</div>
+				)}
+
 				{appointments.map((client) => (
 					<CardUpcomingAppointment key={client.id} appointment={client} />
 				))}
