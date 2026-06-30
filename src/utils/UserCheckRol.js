@@ -1,17 +1,18 @@
-export const checkRole = async (clerkId) => {
-	try {
-		const response = await fetch(
-			`https://db-barber-management.onrender.com/api/users/isAdmin?clerkId=${clerkId}`,
-		)
+export const checkRole = async (email) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/check-role?email=${encodeURIComponent(email)}`,
+    );
 
-		if (!response.ok) {
-			throw new Error('Error verificando rol')
-		}
+    if (!response.ok) {
+      throw new Error("Error verificando rol");
+    }
 
-		const data = await response.json()
-		return data
-	} catch (error) {
-		console.error(error)
-		return { ok: false }
-	}
-}
+    const data = await response.json();
+
+    return data.isOwner;
+  } catch (error) {
+    console.error("Error verificando rol:", error);
+    return false;
+  }
+};
