@@ -10,6 +10,8 @@ import {
 	GetBookingsStatusAdmin,
 } from '../utils/Bookings.js'
 import { useUser } from '@clerk/react'
+// import { useIsOwner } from '../hooks/useIsOwner.js'
+import { checkRole } from '../utils/UserCheckRol.js'
 import HeaderPage from './HeaderPage.jsx'
 import {
 	IconFilter,
@@ -25,13 +27,23 @@ function ViewAppointment() {
 	const [appointmentsUser, setAppointmentsUser] = useState([])
 	const [allAppointments, setAllAppointments] = useState([])
 	const [allAppointmentsUser, setAllAppointmentsUser] = useState([])
-	// eslint-disable-next-line no-unused-vars
 	const [isAdmin, setIsAdmin] = useState(false)
 	const [dataEvent, setDataEvent] = useState([])
 	const [filterStatus, setFilterStatus] = useState('all')
 	const [loading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
 	const { user } = useUser()
+
+	useEffect(() => {
+		const verifyRole = async () => {
+			if (!user?.id) return
+
+			const isOwner = await checkRole(user.id)
+			setIsAdmin(isOwner)
+		}
+
+		verifyRole()
+	}, [user])
 
 	const loadAllData = async () => {
 		setLoading(true) // Aseguramos que empiece en true

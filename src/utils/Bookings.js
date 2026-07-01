@@ -79,7 +79,7 @@ export const bookingEvent = async () => {
   }
 };
 
-export const cancelBooking = async (uid) => {
+export const cancelBooking = async (uid, setAppointments) => {
   try {
     const res = await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
       method: "POST",
@@ -106,33 +106,16 @@ export const cancelBooking = async (uid) => {
       );
     }
 
-    return await res.json();
+    const data = await res.json();
+
+    if (setAppointments) {
+      setAppointments((prev) => prev.filter((cita) => cita.uid !== uid));
+    }
+
+    return data;
   } catch (error) {
     console.error(error);
     throw error;
-  }
-};
-
-export const cancelBooking2 = async (uid, setAppointments) => {
-  try {
-    const res = await fetch(`https://api.cal.com/v2/bookings/${uid}/cancel`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_API_SECRET}`,
-        "cal-api-version": "2024-08-13",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cancellationReason:
-          "Cancelado desde mi app y actualización del estado en la UI",
-      }),
-    });
-
-    if (!res.ok) throw new Error("Error al cancelar");
-
-    setAppointments((prev) => prev.filter((cita) => cita.uid !== uid));
-  } catch (error) {
-    console.error(error);
   }
 };
 

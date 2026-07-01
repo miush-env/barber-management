@@ -9,36 +9,41 @@ function TabletClient() {
 	const [search, setSearch] = useState('')
 	const [clients, setClients] = useState([])
 
-	useEffect(()=>{
+	useEffect(() => {
 		const clients = async () => {
 			try {
-				const res = await fetch('http://localhost:3000/api/users')
+				const res = await fetch('http://localhost:3000/api/users/clerk')
 				const data = await res.json()
 				setClients(data)
-			
 			} catch (error) {
 				console.log(error)
 			}
 		}
 
 		clients()
-	},[])
+	}, [])
 
-	const userClient = clients
-
-	const filteredClients = userClient.filter((client) =>{
-		const name = client.firstName + ' ' + client.lastName
-		return name.toLowerCase().includes(search.toLowerCase())
-	}
+	const userClient = clients.filter(
+		(client) => client.private_metadata?.role !== 'owner',
 	)
+
+	const filteredClients = userClient.filter((client) => {
+		const name = client.first_name + ' ' + client.last_name
+		return name.toLowerCase().includes(search.toLowerCase())
+	})
 
 	return (
 		<main className='min-h-screen bg-gray-50 pb-20'>
 			<header className='flex items-center border-b border-gray-300 bg-white p-4'>
-				<span onClick={() => navigate('/inicio')} className='cursor-pointer p-1 active:bg-slate-200 rounded-full transition-colors'>
-					<ChevronLeft className="w-6 h-6 text-slate-600" />	
+				<span
+					onClick={() => navigate('/inicio')}
+					className='cursor-pointer p-1 active:bg-slate-200 rounded-full transition-colors'
+				>
+					<ChevronLeft className='w-6 h-6 text-slate-600' />
 				</span>
-				<h1 className='text-xl font-bold text-slate-800 text-center flex-1'>Clientes</h1>
+				<h1 className='text-xl font-bold text-slate-800 text-center flex-1'>
+					Clientes
+				</h1>
 			</header>
 
 			<section className='p-4'>
@@ -75,11 +80,11 @@ function TabletClient() {
 						filteredClients.map((client) => (
 							<CardClient
 								key={client.id}
-								name={client.firstName + ' ' + client.lastName}
-								photo={client.imageUrl}
-								phone={client.phone}
-								email={client.email}
-								birthday={client.birthday}
+								name={client.first_name + ' ' + client.last_name}
+								photo={client.image_url}
+								phone={client.unsafe_metadata?.phone || 'No tiene teléfono'}
+								email={client.email_addresses[0]?.email_address}
+								birthday={client.unsafe_metadata?.birthdate}
 							/>
 						))
 					) : (

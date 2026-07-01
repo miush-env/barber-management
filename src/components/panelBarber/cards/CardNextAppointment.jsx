@@ -2,7 +2,7 @@ import EditAppointment from '@components/modal/EditAppointment.jsx'
 import { useState } from 'react'
 import { cancelBooking } from '../../../utils/Bookings'
 import { Edit3 } from 'lucide-react'
-import { Services } from '../../../utils/services.js'
+import { getService } from '../../../utils/services.js'
 import { IconScissors, IconTag, IconSettings } from '@tabler/icons-react'
 
 function CardNextAppointment({ appointment }) {
@@ -19,7 +19,7 @@ function CardNextAppointment({ appointment }) {
 		dotColor = 'bg-red-500'
 	}
 
-	const comparisonSlugService = Services[appointment?.eventTypeId]
+	const comparisonSlugService = getService(appointment?.eventTypeId)
 
 	return (
 		<article className='bg-white h-46 border-l-4 border-2 border-slate-300/50 border-l-blue-500 shadow-md shadow-slate-200 rounded-xl p-4'>

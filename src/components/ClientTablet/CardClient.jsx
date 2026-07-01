@@ -70,7 +70,7 @@ function CardClient({
 						<path d='M12 4l1.465 1.638a2 2 0 1 1 -3.015 .099l1.55 -1.737' />
 					</svg>
 					<span className='text-gray-500 text-sm font-semibold'>
-						{formatDate(birthday, false)}
+						{birthday ? formatDate(birthday, false) : 'No especificada'}
 					</span>
 				</div>
 			</section>

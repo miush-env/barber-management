@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { cancelBooking } from '../../../utils/Bookings'
 import EditAppointmentPanel from '../../modal/EditAppointmentPanel'
 import { Dialog, DialogTrigger, DialogContent } from '@components/ui/dialog'
-import { Services } from '../../../utils/Services'
+import { getService } from '../../../utils/services'
 
 function CardUpcomingAppointment({ appointment }) {
 	const hour = new Date(appointment.start)
@@ -18,7 +18,7 @@ function CardUpcomingAppointment({ appointment }) {
 	const period = new Date(appointment.start).getHours() < 12 ? 'AM' : 'PM'
 	const [isOpen, setIsOpen] = useState(false)
 
-	const comparisonSlugService = Services[appointment?.eventTypeId]
+	const comparisonSlugService = getService(appointment?.eventTypeId)
 
 	return (
 		<div

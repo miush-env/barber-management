@@ -1,6 +1,6 @@
 import { useState } from "react";
 import EditAppointment from "../../modal/EditAppointment";
-import { formatDate, cancelBooking2 } from "../../../utils/Bookings";
+import { formatDate, cancelBooking } from "../../../utils/Bookings";
 import {
   IconCalendarFilled,
   IconTag,
@@ -8,7 +8,7 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 
-import { Services } from "../../../utils/services";
+import { getService } from "../../../utils/services";
 
 function PendingShifts({ setAppointments, appointment, event }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +62,7 @@ function PendingShifts({ setAppointments, appointment, event }) {
                   Precio total
                 </h4>
                 <span className="font-bold">
-                  {Services[appointment.eventType?.id]?.price}
+                  {getService(appointment.eventType?.id)?.price}
                 </span>
               </div>
             </div>
@@ -98,7 +98,7 @@ function PendingShifts({ setAppointments, appointment, event }) {
       <EditAppointment
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        onCancel={(uid) => cancelBooking2(uid, setAppointments)}
+        onCancel={(uid) => cancelBooking(uid, setAppointments)}
         cita={appointment}
       />
     </article>

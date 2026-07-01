@@ -14,9 +14,9 @@ function Profile() {
   const [edit, setIsEdit] = useState(false);
   const personalInfoRef = useRef();
 
-  const handleEditClick = () => {
+  const handleEditClick = async () => {
     if (edit) {
-      personalInfoRef.current.save();
+      await personalInfoRef.current.save();
       setIsEdit(false);
     } else {
       setIsEdit(true);
@@ -51,7 +51,7 @@ function Profile() {
           <h2 className="text-sm mb-2 font-bold text-gray-500/80 tracking-wider">
             Datos Personales
           </h2>
-          <PersonalInfo ref={personalInfoRef} edit={edit} />
+          <PersonalInfo key={edit} ref={personalInfoRef} edit={edit} />
         </section>
         <section className="p-4">
           <AccountSettings />

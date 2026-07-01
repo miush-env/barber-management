@@ -1,10 +1,10 @@
 import { Clock, Star, ChevronRight } from 'lucide-react'
-import { Services } from '../../utils/services'
+import { getService } from '../../utils/services'
 import { IconChevronRight, IconClock } from '@tabler/icons-react'
 import parse from 'html-react-parser'
 
 function ServiceCard({ title, description, length, id, safeDescription }) {
-	const service = Services[id]
+	const service = getService(id)
 
 	const formatMinutes = (totalMinutes) => {
 		const minutesNum = Number(totalMinutes)

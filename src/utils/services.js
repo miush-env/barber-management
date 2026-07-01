@@ -1,3 +1,5 @@
+export const getService = (eventTypeId) => Services[eventTypeId]
+
 export const Services = {
 	5065863: {
 		id: 5065863,
