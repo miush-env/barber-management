@@ -96,12 +96,17 @@ function PanelBarber() {
 	}, [todayAppointments])
 
 	return (
-		<main className='flex flex-col bg-gray-100/50 relative min-h-screen bg-cover bg-center pb-20 '>
-			<div className='mb-5'>
+		<main className='flex flex-col relative min-h-screen overflow-hidden bg-[#141419] bg-cover bg-center pb-24'>
+			{/* Iluminación ambiental con animación azulada y acento dorado luminoso */}
+			<div className='pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.09),transparent_60%)]' />
+			<div className='pointer-events-none fixed top-[-12%] left-1/2 -translate-x-1/2 h-[560px] w-[780px] rounded-full bg-blue-500/[0.1] blur-[170px] animate-[pulseSoft_9s_ease-in-out_infinite]' />
+			<div className='pointer-events-none fixed bottom-0 -right-20 h-[400px] w-[400px] rounded-full bg-[#e3b869]/[0.08] blur-[150px]' />
+
+			<div className='relative z-10'>
 				<Header />
 			</div>
 
-			<section className='flex justify-between gap-4 items-center px-4'>
+			<section className='relative z-10 flex justify-between gap-4 items-stretch px-4 mt-6'>
 				<CardData title='Citas del dia' value={todayBookingsCount} />
 				<CardData
 					title={isAdmin ? 'Ingresos del dia' : 'Gasto estimado'}
@@ -110,12 +115,12 @@ function PanelBarber() {
 				/>
 			</section>
 
-			<section>
+			<section className='relative z-10'>
 				<NextAppointment appointment={currentQuote} />
 				<UpcomingAppointment appointments={todayAppointments} />
 			</section>
 
-			<section className='fixed bottom-0 w-full px-5'>
+			<section className='fixed bottom-0 w-full px-5 z-20'>
 				<NavBar />
 			</section>
 		</main>

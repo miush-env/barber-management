@@ -42,9 +42,21 @@ function CreateAppointment() {
   }, []);
 
   const buttonFilters = [
-    { label: "cortes", value: "corte", icon: <IconScissors size={16} /> },
-    { label: "color", value: "color", icon: <IconDroplet size={16} /> },
-    { label: "barba", value: "barba", icon: <IconMoustache size={16} /> },
+    {
+      label: "cortes",
+      value: "corte",
+      icon: <IconScissors size={16} className="text-[#e3b869]" />,
+    },
+    {
+      label: "color",
+      value: "color",
+      icon: <IconDroplet size={16} className="text-[#e3b869]" />,
+    },
+    {
+      label: "barba",
+      value: "barba",
+      icon: <IconMoustache size={16} className="text-[#e3b869]" />,
+    },
   ];
 
   // Mapeo de filtros a slugs de servicios
@@ -89,10 +101,20 @@ function CreateAppointment() {
   };
 
   return (
-    <main className="bg-slate-50 min-h-screen pb-16">
-      <HeaderPage path="/inicio" name="Agendar Cita" />
+    <main className="relative min-h-screen overflow-hidden bg-[#141419] pb-16">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.09),transparent_60%)]" />
+      <div className="pointer-events-none fixed top-[-12%] left-1/2 -translate-x-1/2 h-[560px] w-[780px] rounded-full bg-blue-500/[0.1] blur-[170px] animate-[pulseSoft_9s_ease-in-out_infinite]" />
+      <div className="pointer-events-none fixed bottom-0 -right-20 h-[400px] w-[400px] rounded-full bg-[#e3b869]/[0.06] blur-[150px]" />
 
-      <div className="bg-slate-50">
+      <div className="relative z-10">
+        <HeaderPage
+          path="/inicio"
+          name="Agendar Cita"
+          titleClassName="text-[#e3b869] drop-shadow-[0_0_10px_rgba(227,184,105,0.3)]"
+        />
+      </div>
+
+      <div className="relative z-10">
         <section className="mb-6" aria-labelledby="services-title">
           <div className="flex flex-col gap-4 p-4">
             <div className="flex flex-col gap-3">
@@ -102,7 +124,7 @@ function CreateAppointment() {
                 value={filterText}
                 onChange={handleInputChange}
                 placeholder="Escribe para filtrar servicios..."
-                className="rounded-2xl border border-slate-100 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none transition-all"
+                className="rounded-2xl border border-white/[0.14] bg-white/[0.05] backdrop-blur-xl px-4 py-3 text-sm text-white/85 placeholder-white/30 shadow-[0_10px_30px_rgba(0,0,0,0.35)] focus:border-[#e3b869]/40 focus:outline-none transition-all"
               />
 
               <div className="flex flex-wrap gap-3">
@@ -112,8 +134,8 @@ function CreateAppointment() {
                     type="button"
                     className={`rounded-full flex gap-2 items-center border px-4 py-2 text-sm font-medium transition-all duration-200 ${
                       activeTag === button.label
-                        ? "border-blue-600 bg-blue-600 text-white shadow-sm"
-                        : "border-slate-200 bg-white text-slate-600 hover:border-blue-500 hover:text-blue-600"
+                        ? "border-[#e3b869]/40 bg-[#e3b869]/15 text-[#e3b869] shadow-sm"
+                        : "border-white/[0.14] bg-white/[0.04] text-white/50 hover:border-[#e3b869]/30 hover:text-[#e3b869]"
                     }`}
                     onClick={() => handleTagClick(button.value, button.label)}
                   >
@@ -124,7 +146,7 @@ function CreateAppointment() {
               </div>
             </div>
             {filteredEvents.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-white/80 p-6 text-center text-sm text-slate-500">
+              <div className="rounded-2xl border border-dashed border-white/[0.14] bg-white/[0.02] p-6 text-center text-sm text-white/40">
                 No se encontraron servicios que coincidan con la búsqueda.
               </div>
             ) : (

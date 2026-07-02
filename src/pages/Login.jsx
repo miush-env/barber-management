@@ -2,44 +2,46 @@ import { SignIn } from '@clerk/react'
 
 function Login() {
 	return (
-		<main className='relative w-full h-screen overflow-hidden justify-center p-6 flex flex-col gap-12'>
+		<main className='relative w-full h-screen overflow-hidden justify-center p-6 flex flex-col gap-12 bg-[#141419]'>
+			<div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08),transparent_60%)]' />
+
 			<div
-				className='bg-blue-700 blur-xl w-50 rounded-full h-50 absolute -top-15 -left-15 -z-999'
+				className='bg-blue-500/20 blur-2xl w-50 rounded-full h-50 absolute -top-15 -left-15 -z-10'
 				style={{
 					animation: 'pulseSoft 3s ease-in-out infinite',
 				}}
 			></div>
 			<div
-				className='bg-blue-400 blur-xl w-40 rounded-full h-40 absolute -top-15 -left-15 -z-980'
+				className='bg-blue-400/10 blur-2xl w-40 rounded-full h-40 absolute -top-15 -left-15 -z-10'
 				style={{
 					animation: 'pulseSoft 3s ease-in-out infinite',
 				}}
 			></div>
 			<div
-				className='bg-blue-700 blur-xl w-70 rounded-full h-70 absolute top-1/2 -right-30 -z-999'
+				className='bg-blue-500/20 blur-2xl w-70 rounded-full h-70 absolute top-1/2 -right-30 -z-10'
 				style={{
 					animation: 'pulseSoft 4s ease-in-out infinite',
 				}}
 			></div>
 			<div
-				className='bg-blue-400 blur-xl w-60 rounded-full h-60 absolute top-1/2 -right-30 -z-980'
+				className='bg-blue-400/10 blur-2xl w-60 rounded-full h-60 absolute top-1/2 -right-30 -z-10'
 				style={{
 					animation: 'pulseSoft 4s ease-in-out infinite',
 				}}
 			></div>
 			<div
-				className='bg-blue-700 blur-xl w-70 rounded-full h-70 absolute -bottom-20 -left-30 -z-999'
+				className='bg-blue-500/20 blur-2xl w-70 rounded-full h-70 absolute -bottom-20 -left-30 -z-10'
 				style={{
 					animation: 'pulseSoft 5s ease-in-out infinite',
 				}}
 			></div>
 			<div
-				className='bg-blue-400 blur-xl w-60 rounded-full h-60 absolute -bottom-20 -left-30 -z-980'
+				className='bg-blue-400/10 blur-2xl w-60 rounded-full h-60 absolute -bottom-20 -left-30 -z-10'
 				style={{
 					animation: 'pulseSoft 5s ease-in-out infinite',
 				}}
 			></div>
-			<header className='flex w-full items-center justify-center flex-col gap-2'>
+			<header className='relative flex w-full items-center justify-center flex-col gap-2'>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					width='70'
@@ -50,7 +52,7 @@ function Login() {
 					strokeWidth='2'
 					strokeLinecap='round'
 					strokeLinejoin='round'
-					className='icon icon-tabler icons-tabler-outline icon-tabler-user-key stroke-blue-700'
+					className='icon icon-tabler icons-tabler-outline icon-tabler-user-key stroke-[#e3b869] drop-shadow-[0_0_10px_rgba(227,184,105,0.3)]'
 				>
 					<path stroke='none' d='M0 0h24v24H0z' fill='none' />
 					<path d='M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0' />
@@ -59,10 +61,12 @@ function Login() {
 					<path d='M18.554 18.414a2 2 0 1 1 2.828 -2.828a2 2 0 0 1 -2.828 2.828' />
 					<path d='M16 19l1 1' />
 				</svg>
-				<h1 className='text-4xl uppercase font-extrabold'>Iniciar Sesion</h1>
-				<p className='text-gray-500 font-semibold'>Bienvenido de vuelta</p>
+				<h1 className='text-4xl uppercase font-extrabold text-white/90'>
+					Iniciar Sesion
+				</h1>
+				<p className='text-white/45 font-semibold'>Bienvenido de vuelta</p>
 			</header>
-			<article className="flex w-full items-center justify-center">
+			<article className='relative flex w-full items-center justify-center'>
 				<SignIn fallbackRedirectUrl={'/perfil'} />
 			</article>
 		</main>

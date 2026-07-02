@@ -18,13 +18,13 @@ function EditAppointment({ isOpen, setIsOpen, onCancel, cita }) {
 
 	return (
 		<article
-			className={`bg-gray-800/70 backdrop-blur-xs min-h-screen min-w-screen z-100 fixed left-0 top-0 ${isOpen === true ? 'flex' : 'hidden'} items-center justify-center`}
+			className={`bg-black/60 backdrop-blur-sm min-h-screen min-w-screen z-100 fixed left-0 top-0 ${isOpen === true ? 'flex' : 'hidden'} items-center justify-center`}
 		>
-			<section className='rounded-xl bg-white dark:bg-[#171717] w-80 flex flex-col'>
-				<div className='flex justify-between items-center bg-gray-100 rounded-t-xl p-4'>
-					<h2 className='font-bold text-lg text-black dark:text-white'>Editar cita</h2>
-					<button onClick={() => setIsOpen(false)} className='active:bg-gray-300 rounded-full p-[3px]'>
-						<X className='active:stroke-gray-700'/>
+			<section className='rounded-2xl border border-white/[0.16] bg-[#191a1e] shadow-[0_20px_60px_rgba(0,0,0,0.6)] w-80 flex flex-col overflow-hidden'>
+				<div className='flex justify-between items-center bg-white/[0.04] border-b border-white/[0.08] p-4'>
+					<h2 className='font-bold text-lg text-white/90'>Editar cita</h2>
+					<button onClick={() => setIsOpen(false)} className='hover:bg-white/[0.1] active:bg-white/[0.1] rounded-full p-[3px] transition-colors'>
+						<X className='stroke-white/60'/>
 					</button>
 				</div>
 

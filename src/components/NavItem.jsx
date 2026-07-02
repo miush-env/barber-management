@@ -7,7 +7,7 @@ export default function NavItem({ to, label, Icon }) {
 				<div className='relative flex flex-col items-center justify-center min-w-16'>
 					<div
 						className={`
-							absolute -top-3 h-1 rounded-full bg-blue-600
+							absolute -top-3 h-1 rounded-full bg-[#e3b869]
 							transition-all duration-300
 							${isActive ? 'w-10 opacity-100' : 'w-0 opacity-0'}
 						`}
@@ -16,7 +16,7 @@ export default function NavItem({ to, label, Icon }) {
 					<Icon
 						className={`
 							transition-all duration-300
-							${isActive ? 'fill-blue-600 scale-110 -translate-y-1' : 'fill-slate-400'}
+							${isActive ? 'fill-[#e3b869] scale-110 -translate-y-1' : 'fill-white/25'}
 						`}
 					/>
 				</div>

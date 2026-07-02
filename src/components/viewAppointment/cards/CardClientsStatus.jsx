@@ -4,19 +4,19 @@ import { GetBookingsStatusAdmin } from '../../../utils/Bookings'
 function CardClientsStatus({ title, count = 0, style = 'none' }) {
 	const colors_icon = [
 		{
-			icon: <BarChart3 className='w-5 h-5 text-blue-600' />,
-			color: 'bg-blue-100/60 text-blue-600 border-blue-100',
-			bgIcon: 'bg-blue-300/60',
+			icon: <BarChart3 className='w-5 h-5 text-blue-300' />,
+			color: 'bg-white/[0.05] text-white/85 border-white/[0.14]',
+			bgIcon: 'bg-blue-400/10',
 		},
 		{
-			icon: <CheckCircle2 className='w-5 h-5 text-emerald-600' />,
-			color: 'bg-emerald-100/60 text-emerald-600 border-emerald-100',
-			bgIcon: 'bg-emerald-300/60',
+			icon: <CheckCircle2 className='w-5 h-5 text-emerald-300' />,
+			color: 'bg-white/[0.05] text-white/85 border-white/[0.14]',
+			bgIcon: 'bg-emerald-400/10',
 		},
 		{
-			icon: <XCircle className='w-5 h-5 text-rose-600' />,
-			color: 'bg-rose-100/60 text-rose-600 border-rose-100',
-			bgIcon: 'bg-rose-300/60',
+			icon: <XCircle className='w-5 h-5 text-rose-300' />,
+			color: 'bg-white/[0.05] text-white/85 border-white/[0.14]',
+			bgIcon: 'bg-rose-400/10',
 		},
 	]
 
@@ -32,13 +32,13 @@ function CardClientsStatus({ title, count = 0, style = 'none' }) {
 
 	return (
 		<div
-			className={`flex flex-col items-start justify-center p-4 rounded-2xl border ${styleComponent.color} transition-transform active:scale-95`}
+			className={`flex flex-col items-start justify-center p-4 rounded-2xl border backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-transform active:scale-95 ${styleComponent.color}`}
 		>
 			<div className={`mb-2 p-2 rounded-full ${styleComponent.bgIcon}`}>
 				{styleComponent.icon}
 			</div>
-			<span className='text-2xl font-black'>{count}</span>
-			<span className='text-xs font-bold tracking-wider text-gray-500'>
+			<span className='text-2xl font-black text-white/90'>{count}</span>
+			<span className='text-xs font-bold tracking-wider text-white/40'>
 				{title}
 			</span>
 		</div>

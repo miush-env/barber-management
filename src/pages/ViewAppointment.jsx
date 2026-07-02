@@ -134,10 +134,16 @@ function ViewAppointment() {
 	)
 
 	return (
-		<main className='bg-gray-100/50 min-h-screen flex flex-col pb-20'>
-			<HeaderPage path='/inicio' name='Tus Citas' />
+		<main className='relative bg-[#141419] min-h-screen flex flex-col overflow-hidden pb-20'>
+			<div className='pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.09),transparent_60%)]' />
+			<div className='pointer-events-none fixed top-[-12%] left-1/2 -translate-x-1/2 h-[560px] w-[780px] rounded-full bg-blue-500/[0.1] blur-[170px] animate-[pulseSoft_9s_ease-in-out_infinite]' />
+			<div className='pointer-events-none fixed bottom-0 -right-20 h-[400px] w-[400px] rounded-full bg-[#e3b869]/[0.06] blur-[150px]' />
 
-			<article className='grid grid-cols-3 gap-4 p-4'>
+			<div className='relative z-10'>
+				<HeaderPage path='/inicio' name='Tus Citas' />
+			</div>
+
+			<article className='relative z-10 grid grid-cols-3 gap-4 p-4'>
 				<CardClientsStatus title='Totales' count={totalCount} style='totals' />
 				<CardClientsStatus
 					title='Aceptadas'
@@ -147,9 +153,9 @@ function ViewAppointment() {
 				<CardClientsStatus title='Canceladas' count={cancelledCount} />{' '}
 			</article>
 
-			<article className='flex-1 flex flex-col'>
+			<article className='relative z-10 flex-1 flex flex-col'>
 				<h2 className='text-xl px-4 font-bold uppercase my-8 relative overflow-hidden'>
-					<div className='pointer-events-none absolute inset-y-0 left-4 flex items-center pl-4 text-blue-600'>
+					<div className='pointer-events-none absolute inset-y-0 left-4 flex items-center pl-4 text-[#e3b869]'>
 						<IconFilter stroke={2} />
 					</div>
 
@@ -157,14 +163,14 @@ function ViewAppointment() {
 						name='select-turn-filter'
 						value={filterStatus}
 						className='
-							w-full appearance-none bg-white 
+							w-full appearance-none bg-white/[0.05] backdrop-blur-xl
 							font-bold
-							text-slate-800 border border-slate-300 
-							rounded-2xl pl-12 pr-10 py-3.5 text-base a
-						  shadow-[0_4px_12px_rgba(0,0,0,0.03)] 
-							cursor-pointer transition-all duration-200 
-							focus:border-blue-500 focus:outline-none 
-							hover:border-slate-200'
+							text-white/85 border border-white/[0.14]
+							rounded-2xl pl-12 pr-10 py-3.5 text-base
+						  shadow-[0_10px_30px_rgba(0,0,0,0.35)]
+							cursor-pointer transition-all duration-200
+							focus:border-[#e3b869]/40 focus:outline-none
+							hover:border-white/[0.22]'
 						id='select-turn-filter'
 						onChange={(e) => {
 							setFilterStatus(e.target.value)
@@ -175,7 +181,7 @@ function ViewAppointment() {
 						<option value='cancelled'>Turnos cancelados</option>
 					</select>
 
-					<div className='pointer-events-none absolute inset-y-0 right-4 flex items-center pr-4 text-slate-400'>
+					<div className='pointer-events-none absolute inset-y-0 right-4 flex items-center pr-4 text-white/30'>
 						<IconChevronDown stroke={2} />
 					</div>
 				</h2>
@@ -191,13 +197,13 @@ function ViewAppointment() {
 								strokeLinecap='round'
 								strokeLinejoin='round'
 								strokeWidth='2'
-								className='animate-spin stroke-blue-700'
+								className='animate-spin stroke-[#e3b869]'
 								viewBox='0 0 24 24'
 							>
 								<path fill='none' stroke='none' d='M0 0h24v24H0z' />
 								<path d='M4.05 11a8 8 0 1 1 .5 4m-.5 5v-5h5' />
 							</svg>
-							<p className='text-center animate-pulse text-xl font-bold text-gray-700'>
+							<p className='text-center animate-pulse text-xl font-bold text-white/60'>
 								Cargando...
 							</p>
 						</div>
@@ -220,7 +226,7 @@ function ViewAppointment() {
 						</div>
 					) : (
 						<div className='p-4 flex flex-col items-center gap-4'>
-							<p className='text-center text-3xl font-bold text-blue-600'>
+							<p className='text-center text-3xl font-bold text-[#e3b869]'>
 								No tienes citas pendientes
 							</p>
 							<img src='/src/assets/relax-home.svg' alt='SVG de espera' />
@@ -231,11 +237,11 @@ function ViewAppointment() {
 
 			{/* Paginación */}
 			{totalPages > 1 && (
-				<section className='flex overflow-hidden justify-center items-center gap-2 p-4 bg-white border-t border-gray-200'>
+				<section className='relative z-10 flex overflow-hidden justify-center items-center gap-2 p-4 bg-white/[0.03] border-t border-white/[0.1]'>
 					<button
 						onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
 						disabled={currentPage === 1}
-						className='px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors'
+						className='px-4 py-2 bg-white/[0.06] border border-white/[0.14] text-white/70 rounded-lg disabled:bg-white/[0.02] disabled:text-white/20 disabled:cursor-not-allowed hover:bg-white/[0.1] transition-colors'
 					>
 						<IconChevronLeft stroke={2} />
 					</button>
@@ -245,10 +251,10 @@ function ViewAppointment() {
 							<button
 								key={page}
 								onClick={() => setCurrentPage(page)}
-								className={`px-3 py-2 rounded-lg transition-colors ${
+								className={`px-3 py-2 rounded-lg transition-colors border ${
 									currentPage === page
-										? 'bg-blue-600 text-white'
-										: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+										? 'bg-[#e3b869]/15 border-[#e3b869]/40 text-[#e3b869]'
+										: 'bg-white/[0.04] border-white/[0.1] text-white/50 hover:bg-white/[0.08]'
 								}`}
 							>
 								{page}
@@ -261,14 +267,14 @@ function ViewAppointment() {
 							setCurrentPage((prev) => Math.min(prev + 1, totalPages))
 						}
 						disabled={currentPage === totalPages}
-						className='px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors'
+						className='px-4 py-2 bg-white/[0.06] border border-white/[0.14] text-white/70 rounded-lg disabled:bg-white/[0.02] disabled:text-white/20 disabled:cursor-not-allowed hover:bg-white/[0.1] transition-colors'
 					>
 						<IconChevronRight stroke={2} />
 					</button>
 				</section>
 			)}
 
-			<section className='fixed bottom-0 w-full px-5'>
+			<section className='fixed bottom-0 w-full px-5 z-20'>
 				<NavBar />
 			</section>
 		</main>

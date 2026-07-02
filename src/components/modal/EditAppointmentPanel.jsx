@@ -24,9 +24,9 @@ function EditAppointmentPanel({ isOpen, setIsOpen, onCancel, cita }) {
       onClick={(event) => event.stopPropagation()}
       className={` z-100 flex items-center justify-center`}
     >
-      <section className="rounded-xl bg-white dark:bg-[#171717] w-80 flex flex-col">
-        <div className="flex justify-between items-center bg-gray-100 rounded-t-xl p-4">
-          <h2 className="font-bold text-lg text-black dark:text-white">
+      <section className="rounded-2xl border border-white/[0.16] bg-[#191a1e] shadow-[0_20px_60px_rgba(0,0,0,0.6)] w-80 flex flex-col overflow-hidden">
+        <div className="flex justify-between items-center bg-white/[0.04] border-b border-white/[0.08] p-4">
+          <h2 className="font-bold text-lg text-white/90">
             Editar cita
           </h2>
           <button
@@ -34,9 +34,9 @@ function EditAppointmentPanel({ isOpen, setIsOpen, onCancel, cita }) {
               event.stopPropagation();
               setIsOpen(false);
             }}
-            className="active:bg-gray-300 rounded-full p-[3px]"
+            className="hover:bg-white/[0.1] active:bg-white/[0.1] rounded-full p-[3px] transition-colors"
           >
-            <X className="active:stroke-gray-700" />
+            <X className="stroke-white/60" />
           </button>
         </div>
 

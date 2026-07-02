@@ -30,7 +30,7 @@ function ServiceCard({ title, description, length, id, safeDescription }) {
 	}
 
 	return (
-		<article className='flex gap-4 items-center rounded-lg border border-slate-200 bg-white p-4 transition-all '>
+		<article className='flex gap-4 items-center rounded-2xl border border-white/[0.14] bg-white/[0.05] backdrop-blur-xl p-4 shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-all'>
 			<section className='max-h-20 max-w-20 object-cover rounded-lg'>
 				<picture className=''>
 					{service?.imgUrl && (
@@ -44,8 +44,8 @@ function ServiceCard({ title, description, length, id, safeDescription }) {
 			</section>
 
 			<section className='flex flex-col flex-1 items-start'>
-				<h2 className='text-start font-bold'>{title}</h2>
-				<div className='flex items-center gap-1 font-semibold text-sm text-slate-600'>
+				<h2 className='text-start font-bold text-white/90'>{title}</h2>
+				<div className='flex items-center gap-1 font-semibold text-sm text-white/45'>
 					<IconClock stroke={1.75} size={18} />
 					{(() => {
 						const { text, iso } = formatMinutes(length)
@@ -56,17 +56,17 @@ function ServiceCard({ title, description, length, id, safeDescription }) {
 						)
 					})()}
 				</div>
-				<p className='text-sm text-gray-500 text-start'>
+				<p className='text-sm text-white/35 text-start'>
 					{parse(safeDescription)}
 				</p>
 			</section>
 
 			<section className='flex items-center gap-2'>
-				<span className='text-blue-700 font-bold text-lg'>
+				<span className='text-[#e3b869] font-bold text-lg drop-shadow-[0_0_6px_rgba(227,184,105,0.25)]'>
 					$ {service.price}
 				</span>
 
-				<div className='p-1 rounded-full border border-slate-200 text-slate-600 active:border-blue-500 active:text-blue-600 transition-all duration-200'>
+				<div className='p-1 rounded-full border border-white/[0.14] text-white/50 active:border-[#e3b869]/40 active:text-[#e3b869] transition-all duration-200'>
 					<IconChevronRight stroke={2} />
 				</div>
 			</section>
